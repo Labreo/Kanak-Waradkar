@@ -47,9 +47,10 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
   - Full Written Specification: [generate/identity/schema_spec.md](file:///Users/sanjaywaradkar/TRIAD/generate/identity/schema_spec.md)
   - Programmatic JSON Schema: [generate/identity/identity_schema.json](file:///Users/sanjaywaradkar/TRIAD/generate/identity/identity_schema.json)
 - **Generate (`generate/identity/generator.py`)**:
-  - *Inputs*: `--n <count>` (batch size), `--seed <int>` (reproducibility seed), `--frankenstein-ratio <float>` (ratio of fabricated to real anchor attributes, default 0.75).
-  - *Outputs*: Batch file of labeled synthetic profiles and accompanying document metadata (`data/generated/identity_batch.json`).
-  - *Guaranteed Top-Level Batch Fields*: `batch_id`, `generated_at`, `generator_version`, `total_records`, `profiles`.
+  - *Inputs*: `--n <count>` (batch size, default `500`), `--seed <int>` (reproducibility seed, default `42`), `--frankenstein-ratio <float>` (default `0.75`), `--output <path>` (default `data/generated/identity_batch.json`).
+  - *Outputs*: Batch file of labeled synthetic profiles and accompanying document metadata saved at `data/generated/identity_batch.json`.
+  - *Standard Baseline Batch*: `data/generated/identity_batch.json` (500 records: 150 Legitimate [30%], 275 Frankenstein [55%], 75 Fully Synthetic [15%], generated with `--seed 42`).
+  - *Guaranteed Top-Level Batch Fields*: `batch_id` (`batch_identity_v1_seed<seed>_n<count>`), `generated_at` (ISO 8601), `generator_version` (`1.0.0`), `total_records`, `profiles`.
   - *Guaranteed Profile Object Fields*:
     - `profile_id`: Unique identifier string matching `^ID-[A-Z0-9]{8,16}$`.
     - `synthesis_metadata`: `{ is_synthetic, synthesis_type, attack_technique_id, frankenstein_ratio, generation_seed, evasion_target_tier }`.
@@ -64,6 +65,7 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
       - `field_layout_plausibility`: `{ template_alignment_score, font_kerning_anomaly_score, bounding_box_jitter_score, photo_tamper_artifact_score, ocr_confidence_score, mrz_format_validity }`.
       - `checksum_validity`: `{ national_id_format_valid, algorithmic_checksum_valid, checksum_spoofing_method, mrz_check_digits_match, barcode_pdf417_payload_match }`.
       - `creation_tool_fingerprint`: `{ file_format, exif_software_header, color_space, dpi_resolution, compression_quantization_profile, layer_flattening_detected, metadata_creation_date, temporal_issuance_delta_days }`.
+  - *Downstream Consumption Contract for S06, S07, S08*: Downstream modules (Fidelity pass in S06, Risk Scorer in S07, Evaluation in S08) directly consume `data/generated/identity_batch.json` without needing to re-run the generator.
 - **Defend (`defend/identity/risk_scorer.py`)**:
   - *Inputs*: Profile objects or batch files conforming to the Vector A schema.
   - *Outputs*: Evaluated risk scoring decisions (`defend/identity/results.json`).
