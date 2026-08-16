@@ -66,12 +66,54 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
       - `checksum_validity`: `{ national_id_format_valid, algorithmic_checksum_valid, checksum_spoofing_method, mrz_check_digits_match, barcode_pdf417_payload_match }`.
       - `creation_tool_fingerprint`: `{ file_format, exif_software_header, color_space, dpi_resolution, compression_quantization_profile, layer_flattening_detected, metadata_creation_date, temporal_issuance_delta_days }`.
   - *Downstream Consumption Contract for S06, S07, S08*: Downstream modules (Fidelity pass in S06, Risk Scorer in S07, Evaluation in S08) directly consume `data/generated/identity_batch.json` without needing to re-run the generator.
+- **Fidelity & Plausibility Scorer (`generate/identity/score_fidelity.py`)**:
+  - *Inputs*: `--input <path>` (default `data/generated/identity_batch.json`), `--output <path>` (default `generate/identity/fidelity_report.md`), `--json-output <path>` (default `generate/identity/fidelity_summary.json`).
+  - *Outputs*: Comprehensive Markdown evaluation report ([generate/identity/fidelity_report.md](file:///Users/sanjaywaradkar/TRIAD/generate/identity/fidelity_report.md)) and machine-readable metrics summary ([generate/identity/fidelity_summary.json](file:///Users/sanjaywaradkar/TRIAD/generate/identity/fidelity_summary.json)).
+  - *Guaranteed Metrics*: Multi-tier macro plausibility indices (`benchmark_legitimate`: `0.9598`, `frankenstein_stolen_anchor`: `0.4233`, `fully_synthetic`: `0.2514`), checksum/barcode parity cuts (`100.00%` vs `0.00%`), demographic inversion rates (`0.00%` vs `63.64%`), CMRA parcel rates (`0.00%` vs `76.36%`), and EXIF hardware authenticity separation (`100.00%` vs `8.36%`).
 - **Defend (`defend/identity/risk_scorer.py`)**:
-  - *Inputs*: Profile objects or batch files conforming to the Vector A schema.
-  - *Outputs*: Evaluated risk scoring decisions (`defend/identity/results.json`).
-  - *Guaranteed Record Output Fields*: `profile_id`, `risk_score` (0.0–1.0), `verdict` (`ALLOW` | `REVIEW` | `BLOCK`), `tier_triggered` (`TIER_1_DETERMINISTIC` | `TIER_2_STATISTICAL` | `TIER_3_FORENSICS`), `primary_risk_driver` (plain-language string explaining decision rationale for fraud analyst UI), `sub_scores` (breakdown across checksum, demographic coherence, contact endpoints, and forensic document checks), `evaluated_at`.
+  - *CLI Invocation*: `.venv/bin/python defend/identity/risk_scorer.py --input <path> --output <path> [--block-threshold 0.70] [--review-threshold 0.25] [--summary]`
+  - *Python API*: `from defend.identity import VectorARiskScorer; scorer = VectorARiskScorer(); results = scorer.score_batch(profiles)`
+  - *Inputs*: Profile objects or batch JSON files conforming to the Vector A schema (`generate/identity/identity_schema.json`).
+  - *Outputs*: Batch risk scoring decisions saved to `defend/identity/results.json`.
+  - *Top-Level Results Structure*:
+    - `metadata`: `{ model_name, model_version, input_file, total_evaluated, block_threshold, review_threshold, evaluated_at }`
+    - `verdict_distribution`: `{ ALLOW, REVIEW, BLOCK }`
+    - `tier_distribution`: `{ TIER_1_DETERMINISTIC, TIER_2_STATISTICAL, TIER_3_FORENSICS }`
+    - `decisions`: Array of individual profile decision objects.
+  - *Guaranteed Record Decision Fields*:
+    - `profile_id`: Unique identifier string matching `^ID-[A-Z0-9]{8,16}$`.
+    - `risk_score`: Continuous calibrated score `0.0000` to `1.0000`.
+    - `verdict`: `ALLOW` (score < `review_threshold`), `REVIEW` (`review_threshold` <= score < `block_threshold`), or `BLOCK` (score >= `block_threshold`).
+    - `tier_triggered`: `TIER_1_DETERMINISTIC` | `TIER_2_STATISTICAL` | `TIER_3_FORENSICS`.
+    - `primary_risk_driver`: Grounded, natural-language diagnostic narrative for Fraud Analyst UI interpretability quoting specific feature values.
+    - `sub_scores`: `{ checksum_risk, demographic_coherence_risk, contact_endpoint_risk, forensic_document_risk }` (all `0.0`–`1.0`).
+    - `contributing_factors`: Array of `{ signal, tier, severity, description, impact }`.
+    - `evaluated_at`: ISO 8601 UTC timestamp.
+  - *Downstream Consumption Contract for S08 (Evaluation)*: S08 evaluation scripts consume `defend/identity/results.json` along with ground truth labels (`synthesis_metadata.is_synthetic`) from `data/generated/identity_batch.json` to compute precision, recall, F1, and false-positive rates.
+- **Evaluation & Metrics Engine (`defend/identity/evaluate.py`)**:
+  - *CLI Invocation*: `.venv/bin/python defend/identity/evaluate.py --input <path> --output-json defend/identity/metrics.json --output-report defend/identity/eval_report.md [--block-threshold 0.70] [--review-threshold 0.25]`
+  - *Python API*: `from defend.identity import VectorAEvaluator; evaluator = VectorAEvaluator(); summary = evaluator.evaluate_file("data/generated/identity_heldout_batch.json")`
+  - *Inputs*: Held-out synthetic batch JSON file (`data/generated/identity_heldout_batch.json`, generated with isolated PRNG seed `2026`).
+  - *Outputs*: Standardized machine-readable metrics JSON ([defend/identity/metrics.json](file:///Users/sanjaywaradkar/TRIAD/defend/identity/metrics.json)) and human-readable Markdown evaluation report with confusion matrices ([defend/identity/eval_report.md](file:///Users/sanjaywaradkar/TRIAD/defend/identity/eval_report.md)).
+  - *Guaranteed JSON Fields in `defend/identity/metrics.json`*:
+    - `vector_id`: `"A"`
+    - `vector_name`: `"Synthetic Identity & Document Fraud"`
+    - `evaluated_at`: ISO 8601 UTC timestamp.
+    - `model_metadata`: `{ name, version, block_threshold, review_threshold, weights, pipeline_tiers }`
+    - `dataset_metadata`: `{ split_name, dataset_path, generation_seed, total_samples, class_balance, archetype_distribution }`
+    - `summary_metrics`: `{ precision, recall, f1_score, false_positive_rate, specificity, accuracy, roc_auc, pr_auc }`
+    - `operational_detection`: `{ threshold: 0.25, policy_description, confusion_matrix: { true_positives, false_positives, true_negatives, false_negatives, total_samples }, metrics }`
+    - `strict_block`: `{ threshold: 0.70, policy_description, confusion_matrix, metrics }`
+    - `confusion_matrix_3x3`: Ground truth (`BENCHMARK_LEGITIMATE`, `FRANKENSTEIN_STOLEN_ANCHOR`, `FULLY_SYNTHETIC`) vs Verdict (`ALLOW`, `REVIEW`, `BLOCK`).
+    - `tier_distribution`: Tier counts per archetype.
+    - `sub_score_distributions`: `{ checksum_risk, demographic_coherence_risk, contact_endpoint_risk, forensic_document_risk }` stats (`mean, std, min, p25, p50, p75, p95, max`).
+    - `evasion_tier_breakdown`: Per-tier counts, autonomous blocks, review flags, and recall.
+    - `adversarial_stress_test`: Stress test results across `scenario_a_tier1_barcode_bypass`, `scenario_b_stealth_frankenstein`, and `scenario_c_thin_file_legitimate_stress`.
+    - `investigation_notes`: Verification and root-cause analysis for high metric separability per Part K quality standards.
+  - *Downstream Consumption Contract for S22 (API), S24 (Dashboard), S29 (Deck)*: The walkthrough deck draft (S29) and frontend stats endpoints (S22) will consume `defend/identity/metrics.json` directly.
 
 ---
+
 
 ## 3. Vector B — Behavioral & Transaction Fraud
 - **Generate (`generate/transaction/`)**:

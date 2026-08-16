@@ -1,0 +1,1181 @@
+{
+  "metadata": {
+    "batch_id": "batch_identity_v1_seed42_n500",
+    "generated_at": "2026-08-17T04:00:00Z",
+    "generator_version": "1.0.0",
+    "scored_at": "2026-08-17T04:15:00Z",
+    "total_records": 500,
+    "sample_counts": {
+      "benchmark_legitimate": 150,
+      "frankenstein_stolen_anchor": 275,
+      "fully_synthetic": 75
+    },
+    "sample_rates_pct": {
+      "benchmark_legitimate": 30.0,
+      "frankenstein_stolen_anchor": 55.0,
+      "fully_synthetic": 15.0
+    }
+  },
+  "evasion_tier_distribution": {
+    "TIER_1_EVASION": {
+      "count": 322,
+      "percentage": 64.4
+    },
+    "TIER_2_EVASION": {
+      "count": 93,
+      "percentage": 18.6
+    },
+    "TIER_3_EVASION": {
+      "count": 85,
+      "percentage": 17.0
+    }
+  },
+  "attack_technique_distribution": {
+    "CLEAN": {
+      "count": 150,
+      "percentage": 30.0
+    },
+    "TECH_A_01": {
+      "count": 75,
+      "percentage": 15.0
+    },
+    "TECH_A_02": {
+      "count": 149,
+      "percentage": 29.8
+    },
+    "TECH_A_04": {
+      "count": 126,
+      "percentage": 25.2
+    }
+  },
+  "checksum_and_cryptographic_validity": {
+    "overall": {
+      "total_records": 500,
+      "national_id_format_valid_count": 500,
+      "national_id_format_valid_rate_pct": 100.0,
+      "algorithmic_checksum_valid_count": 382,
+      "algorithmic_checksum_valid_rate_pct": 76.4,
+      "mrz_check_digits_match_count": 388,
+      "mrz_check_digits_match_rate_pct": 77.6,
+      "barcode_pdf417_payload_match_count": 150,
+      "barcode_pdf417_payload_match_rate_pct": 30.0,
+      "spoofing_methods_breakdown": {
+        "ALGORITHMIC_BYPASS": {
+          "count": 106,
+          "pct": 21.2
+        },
+        "CALCULATED_VALID": {
+          "count": 276,
+          "pct": 55.2
+        },
+        "NAIVE_RANDOM_DIGIT": {
+          "count": 118,
+          "pct": 23.6
+        }
+      }
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "national_id_format_valid_count": 150,
+      "national_id_format_valid_rate_pct": 100.0,
+      "algorithmic_checksum_valid_count": 150,
+      "algorithmic_checksum_valid_rate_pct": 100.0,
+      "mrz_check_digits_match_count": 150,
+      "mrz_check_digits_match_rate_pct": 100.0,
+      "barcode_pdf417_payload_match_count": 150,
+      "barcode_pdf417_payload_match_rate_pct": 100.0,
+      "spoofing_methods_breakdown": {
+        "CALCULATED_VALID": {
+          "count": 150,
+          "pct": 100.0
+        }
+      }
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "national_id_format_valid_count": 275,
+      "national_id_format_valid_rate_pct": 100.0,
+      "algorithmic_checksum_valid_count": 232,
+      "algorithmic_checksum_valid_rate_pct": 84.36,
+      "mrz_check_digits_match_count": 238,
+      "mrz_check_digits_match_rate_pct": 86.55,
+      "barcode_pdf417_payload_match_count": 0,
+      "barcode_pdf417_payload_match_rate_pct": 0.0,
+      "spoofing_methods_breakdown": {
+        "ALGORITHMIC_BYPASS": {
+          "count": 106,
+          "pct": 38.55
+        },
+        "CALCULATED_VALID": {
+          "count": 126,
+          "pct": 45.82
+        },
+        "NAIVE_RANDOM_DIGIT": {
+          "count": 43,
+          "pct": 15.64
+        }
+      }
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "national_id_format_valid_count": 75,
+      "national_id_format_valid_rate_pct": 100.0,
+      "algorithmic_checksum_valid_count": 0,
+      "algorithmic_checksum_valid_rate_pct": 0.0,
+      "mrz_check_digits_match_count": 0,
+      "mrz_check_digits_match_rate_pct": 0.0,
+      "barcode_pdf417_payload_match_count": 0,
+      "barcode_pdf417_payload_match_rate_pct": 0.0,
+      "spoofing_methods_breakdown": {
+        "NAIVE_RANDOM_DIGIT": {
+          "count": 75,
+          "pct": 100.0
+        }
+      }
+    }
+  },
+  "field_layout_plausibility": {
+    "overall": {
+      "total_records": 500,
+      "template_alignment_score": {
+        "mean": 0.8453,
+        "std": 0.1126,
+        "median": 0.8605,
+        "min": 0.555,
+        "max": 0.99
+      },
+      "font_kerning_anomaly_score": {
+        "mean": 0.3863,
+        "std": 0.2519,
+        "median": 0.41,
+        "min": 0.02,
+        "max": 0.875
+      },
+      "bounding_box_jitter_score": {
+        "mean": 0.2967,
+        "std": 0.2198,
+        "median": 0.2735,
+        "min": 0.011,
+        "max": 0.799
+      },
+      "photo_tamper_artifact_score": {
+        "mean": 0.4456,
+        "std": 0.302,
+        "median": 0.476,
+        "min": 0.01,
+        "max": 0.946
+      },
+      "ocr_confidence_score": {
+        "mean": 0.8759,
+        "std": 0.08,
+        "median": 0.8935,
+        "min": 0.651,
+        "max": 0.99
+      },
+      "mrz_format_validity_rate_pct": 79.4
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "template_alignment_score": {
+        "mean": 0.9652,
+        "std": 0.0144,
+        "median": 0.968,
+        "min": 0.94,
+        "max": 0.99
+      },
+      "font_kerning_anomaly_score": {
+        "mean": 0.0703,
+        "std": 0.031,
+        "median": 0.0705,
+        "min": 0.02,
+        "max": 0.12
+      },
+      "bounding_box_jitter_score": {
+        "mean": 0.0395,
+        "std": 0.0167,
+        "median": 0.039,
+        "min": 0.011,
+        "max": 0.069
+      },
+      "photo_tamper_artifact_score": {
+        "mean": 0.0508,
+        "std": 0.0231,
+        "median": 0.051,
+        "min": 0.01,
+        "max": 0.09
+      },
+      "ocr_confidence_score": {
+        "mean": 0.9559,
+        "std": 0.0204,
+        "median": 0.9565,
+        "min": 0.92,
+        "max": 0.99
+      },
+      "mrz_format_validity_rate_pct": 100.0
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "template_alignment_score": {
+        "mean": 0.8291,
+        "std": 0.0697,
+        "median": 0.828,
+        "min": 0.7,
+        "max": 0.948
+      },
+      "font_kerning_anomaly_score": {
+        "mean": 0.4797,
+        "std": 0.16,
+        "median": 0.48,
+        "min": 0.203,
+        "max": 0.75
+      },
+      "bounding_box_jitter_score": {
+        "mean": 0.3595,
+        "std": 0.1462,
+        "median": 0.338,
+        "min": 0.121,
+        "max": 0.641
+      },
+      "photo_tamper_artifact_score": {
+        "mean": 0.5678,
+        "std": 0.175,
+        "median": 0.575,
+        "min": 0.254,
+        "max": 0.85
+      },
+      "ocr_confidence_score": {
+        "mean": 0.8648,
+        "std": 0.0552,
+        "median": 0.873,
+        "min": 0.761,
+        "max": 0.96
+      },
+      "mrz_format_validity_rate_pct": 89.82
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "template_alignment_score": {
+        "mean": 0.6649,
+        "std": 0.0637,
+        "median": 0.676,
+        "min": 0.555,
+        "max": 0.779
+      },
+      "font_kerning_anomaly_score": {
+        "mean": 0.6757,
+        "std": 0.1067,
+        "median": 0.677,
+        "min": 0.482,
+        "max": 0.875
+      },
+      "bounding_box_jitter_score": {
+        "mean": 0.5811,
+        "std": 0.1235,
+        "median": 0.556,
+        "min": 0.404,
+        "max": 0.799
+      },
+      "photo_tamper_artifact_score": {
+        "mean": 0.7871,
+        "std": 0.1043,
+        "median": 0.773,
+        "min": 0.604,
+        "max": 0.946
+      },
+      "ocr_confidence_score": {
+        "mean": 0.7564,
+        "std": 0.056,
+        "median": 0.764,
+        "min": 0.651,
+        "max": 0.849
+      },
+      "mrz_format_validity_rate_pct": 0.0
+    }
+  },
+  "forensic_tool_fingerprints": {
+    "overall": {
+      "total_records": 500,
+      "hardware_camera_exif_rate_pct": 34.6,
+      "synthetic_tool_exif_rate_pct": 65.4,
+      "layer_flattening_detected_rate_pct": 70.0,
+      "file_formats": {
+        "JPEG": {
+          "count": 139,
+          "pct": 27.8
+        },
+        "PDF": {
+          "count": 219,
+          "pct": 43.8
+        },
+        "PNG": {
+          "count": 142,
+          "pct": 28.4
+        }
+      },
+      "color_spaces": {
+        "DeviceRGB": {
+          "count": 211,
+          "pct": 42.2
+        },
+        "Display-P3": {
+          "count": 69,
+          "pct": 13.8
+        },
+        "sRGB": {
+          "count": 220,
+          "pct": 44.0
+        }
+      },
+      "dpi_resolutions": {
+        "150": {
+          "count": 123,
+          "pct": 24.6
+        },
+        "300": {
+          "count": 122,
+          "pct": 24.4
+        },
+        "600": {
+          "count": 71,
+          "pct": 14.2
+        },
+        "72": {
+          "count": 184,
+          "pct": 36.8
+        }
+      },
+      "compression_profiles": {
+        "STANDARD_HARDWARE_CAMERA": {
+          "count": 150,
+          "pct": 30.0
+        },
+        "SYNTHETIC_GENERATOR_DEFAULT": {
+          "count": 265,
+          "pct": 53.0
+        },
+        "WEB_RECOMPRESSED": {
+          "count": 85,
+          "pct": 17.0
+        }
+      },
+      "temporal_issuance_delta_days": {
+        "mean": -699.73,
+        "median": -737.5,
+        "min": -1796,
+        "max": 14,
+        "backdated_delta_over_30_days_pct": 70.0
+      }
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "hardware_camera_exif_rate_pct": 100.0,
+      "synthetic_tool_exif_rate_pct": 0.0,
+      "layer_flattening_detected_rate_pct": 0.0,
+      "file_formats": {
+        "JPEG": {
+          "count": 55,
+          "pct": 36.67
+        },
+        "PDF": {
+          "count": 44,
+          "pct": 29.33
+        },
+        "PNG": {
+          "count": 51,
+          "pct": 34.0
+        }
+      },
+      "color_spaces": {
+        "Display-P3": {
+          "count": 69,
+          "pct": 46.0
+        },
+        "sRGB": {
+          "count": 81,
+          "pct": 54.0
+        }
+      },
+      "dpi_resolutions": {
+        "300": {
+          "count": 79,
+          "pct": 52.67
+        },
+        "600": {
+          "count": 71,
+          "pct": 47.33
+        }
+      },
+      "compression_profiles": {
+        "STANDARD_HARDWARE_CAMERA": {
+          "count": 150,
+          "pct": 100.0
+        }
+      },
+      "temporal_issuance_delta_days": {
+        "mean": 3.57,
+        "median": 3.0,
+        "min": -5,
+        "max": 14,
+        "backdated_delta_over_30_days_pct": 0.0
+      }
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "hardware_camera_exif_rate_pct": 8.36,
+      "synthetic_tool_exif_rate_pct": 91.64,
+      "layer_flattening_detected_rate_pct": 100.0,
+      "file_formats": {
+        "JPEG": {
+          "count": 84,
+          "pct": 30.55
+        },
+        "PDF": {
+          "count": 100,
+          "pct": 36.36
+        },
+        "PNG": {
+          "count": 91,
+          "pct": 33.09
+        }
+      },
+      "color_spaces": {
+        "DeviceRGB": {
+          "count": 136,
+          "pct": 49.45
+        },
+        "sRGB": {
+          "count": 139,
+          "pct": 50.55
+        }
+      },
+      "dpi_resolutions": {
+        "150": {
+          "count": 123,
+          "pct": 44.73
+        },
+        "300": {
+          "count": 43,
+          "pct": 15.64
+        },
+        "72": {
+          "count": 109,
+          "pct": 39.64
+        }
+      },
+      "compression_profiles": {
+        "SYNTHETIC_GENERATOR_DEFAULT": {
+          "count": 190,
+          "pct": 69.09
+        },
+        "WEB_RECOMPRESSED": {
+          "count": 85,
+          "pct": 30.91
+        }
+      },
+      "temporal_issuance_delta_days": {
+        "mean": -946.92,
+        "median": -911,
+        "min": -1796,
+        "max": -35,
+        "backdated_delta_over_30_days_pct": 100.0
+      }
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "hardware_camera_exif_rate_pct": 0.0,
+      "synthetic_tool_exif_rate_pct": 100.0,
+      "layer_flattening_detected_rate_pct": 100.0,
+      "file_formats": {
+        "PDF": {
+          "count": 75,
+          "pct": 100.0
+        }
+      },
+      "color_spaces": {
+        "DeviceRGB": {
+          "count": 75,
+          "pct": 100.0
+        }
+      },
+      "dpi_resolutions": {
+        "72": {
+          "count": 75,
+          "pct": 100.0
+        }
+      },
+      "compression_profiles": {
+        "SYNTHETIC_GENERATOR_DEFAULT": {
+          "count": 75,
+          "pct": 100.0
+        }
+      },
+      "temporal_issuance_delta_days": {
+        "mean": -1200,
+        "median": -1200,
+        "min": -1200,
+        "max": -1200,
+        "backdated_delta_over_30_days_pct": 100.0
+      }
+    }
+  },
+  "cross_field_demographic_coherence": {
+    "overall": {
+      "total_records": 500,
+      "exact_anchor_dob_match_count": 150,
+      "exact_anchor_dob_match_rate_pct": 30.0,
+      "issuance_year_inversion_count": 175,
+      "issuance_year_inversion_rate_pct": 35.0,
+      "anchor_entity_type_breakdown": {
+        "ACTIVE_ADULT": {
+          "count": 150,
+          "pct": 30.0
+        },
+        "CHILD_MINOR_SSN": {
+          "count": 80,
+          "pct": 16.0
+        },
+        "DECEASED_INDIVIDUAL": {
+          "count": 97,
+          "pct": 19.4
+        },
+        "DORMANT_FILE": {
+          "count": 98,
+          "pct": 19.6
+        },
+        "UNASSIGNED_AREA_BLOCK": {
+          "count": 75,
+          "pct": 15.0
+        }
+      }
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "exact_anchor_dob_match_count": 150,
+      "exact_anchor_dob_match_rate_pct": 100.0,
+      "issuance_year_inversion_count": 0,
+      "issuance_year_inversion_rate_pct": 0.0,
+      "anchor_entity_type_breakdown": {
+        "ACTIVE_ADULT": {
+          "count": 150,
+          "pct": 100.0
+        },
+        "CHILD_MINOR_SSN": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "DECEASED_INDIVIDUAL": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "DORMANT_FILE": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "UNASSIGNED_AREA_BLOCK": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "exact_anchor_dob_match_count": 0,
+      "exact_anchor_dob_match_rate_pct": 0.0,
+      "issuance_year_inversion_count": 175,
+      "issuance_year_inversion_rate_pct": 63.64,
+      "anchor_entity_type_breakdown": {
+        "ACTIVE_ADULT": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "CHILD_MINOR_SSN": {
+          "count": 80,
+          "pct": 29.09
+        },
+        "DECEASED_INDIVIDUAL": {
+          "count": 97,
+          "pct": 35.27
+        },
+        "DORMANT_FILE": {
+          "count": 98,
+          "pct": 35.64
+        },
+        "UNASSIGNED_AREA_BLOCK": {
+          "count": 0,
+          "pct": 0.0
+        }
+      }
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "exact_anchor_dob_match_count": 0,
+      "exact_anchor_dob_match_rate_pct": 0.0,
+      "issuance_year_inversion_count": 0,
+      "issuance_year_inversion_rate_pct": 0.0,
+      "anchor_entity_type_breakdown": {
+        "ACTIVE_ADULT": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "CHILD_MINOR_SSN": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "DECEASED_INDIVIDUAL": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "DORMANT_FILE": {
+          "count": 0,
+          "pct": 0.0
+        },
+        "UNASSIGNED_AREA_BLOCK": {
+          "count": 75,
+          "pct": 100.0
+        }
+      }
+    }
+  },
+  "geographic_and_address_coherence": {
+    "overall": {
+      "total_records": 500,
+      "anchor_vs_residential_state_match_count": 77,
+      "anchor_vs_residential_state_match_rate_pct": 15.4,
+      "anchor_vs_residential_state_mismatch_rate_pct": 84.6,
+      "employer_vs_residential_state_match_rate_pct": 44.8,
+      "cmra_address_count": 252,
+      "cmra_address_rate_pct": 50.4,
+      "address_type_breakdown": {
+        "COMMERCIAL_MAIL_RECEIVING_AGENCY": {
+          "count": 105,
+          "pct": 21.0
+        },
+        "FREIGHT_FORWARDER": {
+          "count": 73,
+          "pct": 14.6
+        },
+        "MULTI_FAMILY_APARTMENT": {
+          "count": 172,
+          "pct": 34.4
+        },
+        "SINGLE_FAMILY_RESIDENCE": {
+          "count": 76,
+          "pct": 15.2
+        },
+        "VIRTUAL_OFFICE_DROP": {
+          "count": 74,
+          "pct": 14.8
+        }
+      },
+      "address_tenure_months": {
+        "mean": 34.08,
+        "median": 10.0,
+        "std": 48.85,
+        "min": 0,
+        "max": 180
+      }
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "anchor_vs_residential_state_match_count": 71,
+      "anchor_vs_residential_state_match_rate_pct": 47.33,
+      "anchor_vs_residential_state_mismatch_rate_pct": 52.67,
+      "employer_vs_residential_state_match_rate_pct": 100.0,
+      "cmra_address_count": 0,
+      "cmra_address_rate_pct": 0.0,
+      "address_type_breakdown": {
+        "MULTI_FAMILY_APARTMENT": {
+          "count": 74,
+          "pct": 49.33
+        },
+        "SINGLE_FAMILY_RESIDENCE": {
+          "count": 76,
+          "pct": 50.67
+        }
+      },
+      "address_tenure_months": {
+        "mean": 97.93,
+        "median": 102.0,
+        "std": 45.69,
+        "min": 25,
+        "max": 180
+      }
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "anchor_vs_residential_state_match_count": 0,
+      "anchor_vs_residential_state_match_rate_pct": 0.0,
+      "anchor_vs_residential_state_mismatch_rate_pct": 100.0,
+      "employer_vs_residential_state_match_rate_pct": 26.91,
+      "cmra_address_count": 210,
+      "cmra_address_rate_pct": 76.36,
+      "address_type_breakdown": {
+        "COMMERCIAL_MAIL_RECEIVING_AGENCY": {
+          "count": 63,
+          "pct": 22.91
+        },
+        "FREIGHT_FORWARDER": {
+          "count": 73,
+          "pct": 26.55
+        },
+        "MULTI_FAMILY_APARTMENT": {
+          "count": 65,
+          "pct": 23.64
+        },
+        "VIRTUAL_OFFICE_DROP": {
+          "count": 74,
+          "pct": 26.91
+        }
+      },
+      "address_tenure_months": {
+        "mean": 7.79,
+        "median": 8,
+        "std": 4.11,
+        "min": 1,
+        "max": 14
+      }
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "anchor_vs_residential_state_match_count": 6,
+      "anchor_vs_residential_state_match_rate_pct": 8.0,
+      "anchor_vs_residential_state_mismatch_rate_pct": 92.0,
+      "employer_vs_residential_state_match_rate_pct": 0.0,
+      "cmra_address_count": 42,
+      "cmra_address_rate_pct": 56.0,
+      "address_type_breakdown": {
+        "COMMERCIAL_MAIL_RECEIVING_AGENCY": {
+          "count": 42,
+          "pct": 56.0
+        },
+        "MULTI_FAMILY_APARTMENT": {
+          "count": 33,
+          "pct": 44.0
+        }
+      },
+      "address_tenure_months": {
+        "mean": 2.79,
+        "median": 2,
+        "std": 2.1,
+        "min": 0,
+        "max": 6
+      }
+    }
+  },
+  "contact_endpoint_plausibility": {
+    "overall": {
+      "total_records": 500,
+      "phone_line_type_breakdown": {
+        "PREPAID_MOBILE": {
+          "count": 125,
+          "pct": 25.0
+        },
+        "TIER_1_POSTPAID_WIRELESS": {
+          "count": 150,
+          "pct": 30.0
+        },
+        "VOIP_VIRTUAL_BURNER": {
+          "count": 225,
+          "pct": 45.0
+        }
+      },
+      "phone_tenure_days": {
+        "mean": 696.15,
+        "median": 30.0,
+        "std": 1125.18,
+        "min": 1,
+        "max": 3587,
+        "pct_under_30_days": 49.2
+      },
+      "email_is_disposable_count": 75,
+      "email_is_disposable_rate_pct": 15.0,
+      "email_domain_age_days": {
+        "mean": 1527.85,
+        "median": 476.0,
+        "min": 2,
+        "max": 6998
+      },
+      "email_entropy_score": {
+        "mean": 0.8935,
+        "median": 0.8982,
+        "std": 0.074,
+        "min": 0.5833,
+        "max": 1.0
+      },
+      "high_income_burner_anomaly_count": 304,
+      "high_income_burner_anomaly_rate_pct": 60.8
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "phone_line_type_breakdown": {
+        "TIER_1_POSTPAID_WIRELESS": {
+          "count": 150,
+          "pct": 100.0
+        }
+      },
+      "phone_tenure_days": {
+        "mean": 2272.57,
+        "median": 2248.0,
+        "std": 815.83,
+        "min": 732,
+        "max": 3587,
+        "pct_under_30_days": 0.0
+      },
+      "email_is_disposable_count": 0,
+      "email_is_disposable_rate_pct": 0.0,
+      "email_domain_age_days": {
+        "mean": 4230.45,
+        "median": 4292.0,
+        "min": 1509,
+        "max": 6998
+      },
+      "email_entropy_score": {
+        "mean": 0.887,
+        "median": 0.8949,
+        "std": 0.0644,
+        "min": 0.6947,
+        "max": 1.0
+      },
+      "high_income_burner_anomaly_count": 0,
+      "high_income_burner_anomaly_rate_pct": 0.0
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "phone_line_type_breakdown": {
+        "PREPAID_MOBILE": {
+          "count": 125,
+          "pct": 45.45
+        },
+        "VOIP_VIRTUAL_BURNER": {
+          "count": 150,
+          "pct": 54.55
+        }
+      },
+      "phone_tenure_days": {
+        "mean": 23.84,
+        "median": 23,
+        "std": 11.99,
+        "min": 3,
+        "max": 45,
+        "pct_under_30_days": 62.18
+      },
+      "email_is_disposable_count": 0,
+      "email_is_disposable_rate_pct": 0.0,
+      "email_domain_age_days": {
+        "mean": 465.46,
+        "median": 74,
+        "min": 10,
+        "max": 1966
+      },
+      "email_entropy_score": {
+        "mean": 0.9059,
+        "median": 0.907,
+        "std": 0.078,
+        "min": 0.5833,
+        "max": 1.0
+      },
+      "high_income_burner_anomaly_count": 233,
+      "high_income_burner_anomaly_rate_pct": 84.73
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "phone_line_type_breakdown": {
+        "VOIP_VIRTUAL_BURNER": {
+          "count": 75,
+          "pct": 100.0
+        }
+      },
+      "phone_tenure_days": {
+        "mean": 8.45,
+        "median": 9,
+        "std": 4.18,
+        "min": 1,
+        "max": 15,
+        "pct_under_30_days": 100.0
+      },
+      "email_is_disposable_count": 75,
+      "email_is_disposable_rate_pct": 100.0,
+      "email_domain_age_days": {
+        "mean": 18.05,
+        "median": 19,
+        "min": 2,
+        "max": 30
+      },
+      "email_entropy_score": {
+        "mean": 0.8609,
+        "median": 0.8796,
+        "std": 0.066,
+        "min": 0.6762,
+        "max": 0.9398
+      },
+      "high_income_burner_anomaly_count": 71,
+      "high_income_burner_anomaly_rate_pct": 94.67
+    }
+  },
+  "employment_and_financial_plausibility": {
+    "overall": {
+      "total_records": 500,
+      "employer_corporate_registry_verified_count": 253,
+      "employer_corporate_registry_verified_rate_pct": 50.6,
+      "unverified_shell_employer_rate_pct": 49.4,
+      "employment_status_breakdown": {
+        "FULL_TIME": {
+          "count": 286,
+          "pct": 57.2
+        },
+        "SELF_EMPLOYED": {
+          "count": 214,
+          "pct": 42.8
+        }
+      },
+      "annual_income_usd": {
+        "mean": 188739.2,
+        "median": 165800.0,
+        "std": 107786.13,
+        "min": 35000.0,
+        "max": 500000.0
+      }
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "employer_corporate_registry_verified_count": 150,
+      "employer_corporate_registry_verified_rate_pct": 100.0,
+      "unverified_shell_employer_rate_pct": 0.0,
+      "employment_status_breakdown": {
+        "FULL_TIME": {
+          "count": 150,
+          "pct": 100.0
+        }
+      },
+      "annual_income_usd": {
+        "mean": 124505.33,
+        "median": 111300.0,
+        "std": 66672.71,
+        "min": 35000.0,
+        "max": 350000.0
+      }
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "employer_corporate_registry_verified_count": 103,
+      "employer_corporate_registry_verified_rate_pct": 37.45,
+      "unverified_shell_employer_rate_pct": 62.55,
+      "employment_status_breakdown": {
+        "FULL_TIME": {
+          "count": 136,
+          "pct": 49.45
+        },
+        "SELF_EMPLOYED": {
+          "count": 139,
+          "pct": 50.55
+        }
+      },
+      "annual_income_usd": {
+        "mean": 229633.45,
+        "median": 208200.0,
+        "std": 118688.64,
+        "min": 45000.0,
+        "max": 500000.0
+      }
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "employer_corporate_registry_verified_count": 0,
+      "employer_corporate_registry_verified_rate_pct": 0.0,
+      "unverified_shell_employer_rate_pct": 100.0,
+      "employment_status_breakdown": {
+        "SELF_EMPLOYED": {
+          "count": 75,
+          "pct": 100.0
+        }
+      },
+      "annual_income_usd": {
+        "mean": 167261.33,
+        "median": 173200.0,
+        "std": 46751.04,
+        "min": 91000.0,
+        "max": 249800.0
+      }
+    }
+  },
+  "bureau_file_depth_coherence": {
+    "overall": {
+      "total_records": 500,
+      "bureau_vintage_months": {
+        "mean": 117.36,
+        "median": 10.0,
+        "std": 148.93,
+        "min": 0,
+        "max": 495
+      },
+      "zero_vintage_count": 197,
+      "zero_vintage_rate_pct": 39.4,
+      "zero_vintage_adult_anomaly_count": 196,
+      "zero_vintage_adult_anomaly_rate_pct": 39.2
+    },
+    "benchmark_legitimate": {
+      "total_records": 150,
+      "bureau_vintage_months": {
+        "mean": 255.67,
+        "median": 251.5,
+        "std": 106.91,
+        "min": 67,
+        "max": 495
+      },
+      "zero_vintage_count": 0,
+      "zero_vintage_rate_pct": 0.0,
+      "zero_vintage_adult_anomaly_count": 0,
+      "zero_vintage_adult_anomaly_rate_pct": 0.0
+    },
+    "frankenstein_stolen_anchor": {
+      "total_records": 275,
+      "bureau_vintage_months": {
+        "mean": 73.93,
+        "median": 4,
+        "std": 134.33,
+        "min": 0,
+        "max": 414
+      },
+      "zero_vintage_count": 122,
+      "zero_vintage_rate_pct": 44.36,
+      "zero_vintage_adult_anomaly_count": 122,
+      "zero_vintage_adult_anomaly_rate_pct": 44.36
+    },
+    "fully_synthetic": {
+      "total_records": 75,
+      "bureau_vintage_months": {
+        "mean": 0,
+        "median": 0,
+        "std": 0.0,
+        "min": 0,
+        "max": 0
+      },
+      "zero_vintage_count": 75,
+      "zero_vintage_rate_pct": 100.0,
+      "zero_vintage_adult_anomaly_count": 74,
+      "zero_vintage_adult_anomaly_rate_pct": 98.67
+    }
+  },
+  "composite_plausibility_scores": {
+    "overall": {
+      "tier_1_deterministic_plausibility": {
+        "mean": 0.6977,
+        "median": 0.6667,
+        "std": 0.261,
+        "min": 0.1667,
+        "max": 1.0
+      },
+      "tier_2_statistical_plausibility": {
+        "mean": 0.4177,
+        "median": 0.2661,
+        "std": 0.3385,
+        "min": 0.1016,
+        "max": 1.0
+      },
+      "tier_3_forensic_plausibility": {
+        "mean": 0.607,
+        "median": 0.463,
+        "std": 0.2559,
+        "min": 0.2814,
+        "max": 0.9843
+      },
+      "macro_plausibility_index": {
+        "mean": 0.5585,
+        "median": 0.4425,
+        "std": 0.2736,
+        "min": 0.2075,
+        "max": 0.9953
+      }
+    },
+    "benchmark_legitimate": {
+      "tier_1_deterministic_plausibility": {
+        "mean": 1.0,
+        "median": 1.0,
+        "std": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "tier_2_statistical_plausibility": {
+        "mean": 0.9209,
+        "median": 0.86,
+        "std": 0.0713,
+        "min": 0.79,
+        "max": 1.0
+      },
+      "tier_3_forensic_plausibility": {
+        "mean": 0.9715,
+        "median": 0.9713,
+        "std": 0.0061,
+        "min": 0.9544,
+        "max": 0.9843
+      },
+      "macro_plausibility_index": {
+        "mean": 0.9598,
+        "median": 0.9377,
+        "std": 0.0289,
+        "min": 0.9057,
+        "max": 0.9953
+      }
+    },
+    "frankenstein_stolen_anchor": {
+      "tier_1_deterministic_plausibility": {
+        "mean": 0.6576,
+        "median": 0.6667,
+        "std": 0.1149,
+        "min": 0.3333,
+        "max": 0.8333
+      },
+      "tier_2_statistical_plausibility": {
+        "mean": 0.2038,
+        "median": 0.1921,
+        "std": 0.087,
+        "min": 0.1016,
+        "max": 0.3641
+      },
+      "tier_3_forensic_plausibility": {
+        "mean": 0.4818,
+        "median": 0.4386,
+        "std": 0.1033,
+        "min": 0.3453,
+        "max": 0.7496
+      },
+      "macro_plausibility_index": {
+        "mean": 0.4233,
+        "median": 0.4231,
+        "std": 0.0579,
+        "min": 0.2649,
+        "max": 0.5716
+      }
+    },
+    "fully_synthetic": {
+      "tier_1_deterministic_plausibility": {
+        "mean": 0.24,
+        "median": 0.1667,
+        "std": 0.0833,
+        "min": 0.1667,
+        "max": 0.3333
+      },
+      "tier_2_statistical_plausibility": {
+        "mean": 0.1958,
+        "median": 0.1855,
+        "std": 0.0383,
+        "min": 0.1805,
+        "max": 0.3282
+      },
+      "tier_3_forensic_plausibility": {
+        "mean": 0.3369,
+        "median": 0.3421,
+        "std": 0.0242,
+        "min": 0.2814,
+        "max": 0.3877
+      },
+      "macro_plausibility_index": {
+        "mean": 0.2514,
+        "median": 0.2361,
+        "std": 0.0308,
+        "min": 0.2075,
+        "max": 0.3365
+      }
+    }
+  }
+}
