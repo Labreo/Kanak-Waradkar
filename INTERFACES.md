@@ -7,6 +7,32 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
 
 ---
 
+## 0. Data Foundations & Baseline Profiling
+- **Location**:
+  - Comprehensive Markdown Report: `data/PROFILING_REPORT.md`
+  - Machine-Readable Summary: `data/profiling_summary.json`
+  - Profiling Tool / Generator: `scripts/profile_datasets.py`
+- **Purpose**: Establishes immutable empirical ground-truth distribution parameters, class balances, and missingness metrics across IEEE-CIS and PaySim datasets. All downstream synthetic generation (especially Vector B) must consume this interface to validate fidelity rather than re-reading raw datasets into context.
+- **Guaranteed Structure in `data/profiling_summary.json`**:
+  - `metadata`: `{ session, timestamp, profiler_script }`
+  - `ieee_cis`:
+    - `total_rows` (`590540`), `total_columns` (`394`)
+    - `class_balance`: `{ legitimate_count: 569877, legitimate_rate_pct: 96.501, fraud_count: 20663, fraud_rate_pct: 3.499, imbalance_ratio: 27.58 }`
+    - `time_span`: `{ min_dt_seconds, max_dt_seconds, span_seconds, span_days: 182.0 }`
+    - `transaction_amount`: `{ overall, legitimate, fraud }` (distribution metrics: count, mean, std, min, p25, median, p75, p90, p95, p99, max, skewness)
+    - `product_cd`: Per-product breakdown (`W`, `C`, `R`, `H`, `S`) with `fraud_rate`, `volume_share`, and `median_amount`.
+    - `missingness_by_family`: Missing percentages and cell counts for all 13 column families.
+    - `identity_table_profile`: Join coverage (`24.42%`), fraud trigger elevation (`54.77%` vs `23.32%`), and device type distributions.
+  - `paysim`:
+    - `total_rows` (`6362620`), `total_columns` (`11`)
+    - `class_balance`: `{ legitimate_count: 6354407, legitimate_rate_pct: 99.8709, fraud_count: 8213, fraud_rate_pct: 0.1291, imbalance_ratio: 773.7, flagged_fraud_count: 16 }`
+    - `time_span`: `{ min_step_hours: 1, max_step_hours: 744, span_days: 31.0 }`
+    - `operation_types`: Per-type statistics (`CASH_OUT`, `PAYMENT`, `CASH_IN`, `TRANSFER`, `DEBIT`) with verified fraud localization (`TRANSFER` = `0.769%`, `CASH_OUT` = `0.184%`, others = `0.0%`).
+    - `transaction_amount`: Overall, legitimate, and fraud distribution parameters.
+    - `balance_dynamics`: Account drain rates (`97.82%` exact drain), zero-balance signatures, and entity prefix distributions (`M...` vs `C...`).
+
+---
+
 ## 1. Identify Module
 - **Inputs**: Threat intelligence sources, fraud typologies, and domain research.
 - **Outputs**:
