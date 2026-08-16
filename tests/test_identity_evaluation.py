@@ -229,3 +229,11 @@ def test_evaluation_determinism():
     assert s1.operational_detection["confusion_matrix"] == s2.operational_detection["confusion_matrix"]
     assert s1.strict_block["confusion_matrix"] == s2.strict_block["confusion_matrix"]
     assert s1.tier_distribution == s2.tier_distribution
+
+
+def test_vector_a_full_verification_suite():
+    """Verify that the end-to-end Part D verification suite runs with 0 failures."""
+    from scripts.verify_vector_a import VectorAVerificationSuite
+    suite = VectorAVerificationSuite(Path("."))
+    exit_code = suite.run_all()
+    assert exit_code == 0, f"Verification suite failed with issues: {suite.failures}"
