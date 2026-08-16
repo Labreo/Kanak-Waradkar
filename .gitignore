@@ -1,13 +1,34 @@
-# OS files
-.DS_Store
-Thumbs.db
+# =============================================================================
+# Project TRIAD .gitignore
+# =============================================================================
 
-# Python
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Python Bytecode & Cache
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyo
+*.pyd
 *.so
 .Python
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# Python Packaging & Builds
 build/
 develop-eggs/
 dist/
@@ -23,36 +44,53 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-.pytest_cache/
-.coverage
-htmlcov/
-.mypy_cache/
-.ruff_cache/
+MANIFEST
 
 # Virtual Environments
 .venv/
 venv/
 ENV/
 env/
+env.bak/
+venv.bak/
 
 # Environment Variables & Secrets
 .env
 .env.*
 !.env.example
 kaggle.json
+*.pem
+*.key
+*.secret
 
-# Datasets & Large Data Files (Kaggle raw files)
+# Datasets & Large Data Files (Raw Kaggle files strictly ignored)
 data/raw/
 *.zip
+*.tar
 *.tar.gz
+*.tgz
+*.gz
+*.7z
+*.rar
 *.csv
 *.parquet
-# Allow committed sample / dictionary files
-!data/samples/
-!data/dictionaries/
+*.sqlite
+*.db
 
-# Frontend / Node (for later web phase)
+# Frontend / Node / Web (for Prototype Phase)
 node_modules/
 .npm/
 .next/
-dist/
+out/
+.turbo/
+.parcel-cache/
+.cache/
+
+# Editor & IDE Directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
