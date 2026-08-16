@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SyntheticIdentityBatch",
+  "description": "Batch of synthetic identity profiles and accompanying document metadata bundles for Vector A (Frankenstein Identity & Document Fraud)",
+  "type": "object",
+  "required": ["batch_id", "generated_at", "generator_version", "total_records", "profiles"],
+  "properties": {
+    "batch_id": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generator_version": { "type": "string" },
+    "total_records": { "type": "integer", "minimum": 1 },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SyntheticIdentityProfile"
+      }
+    }
+  },
+  "$defs": {
+    "SyntheticIdentityProfile": {
+      "type": "object",
+      "required": [
+        "profile_id",
+        "synthesis_metadata",
+        "real_fragment",
+        "fabricated_overlay",
+        "document_metadata"
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "string",
+          "pattern": "^ID-[A-Z0-9]{8,16}$"
+        },
+        "synthesis_metadata": {
+          "type": "object",
+          "required": [
+            "is_synthetic",
+            "synthesis_type",
+            "attack_technique_id",
+            "frankenstein_ratio",
+            "generation_seed",
+            "evasion_target_tier"
+          ],
+          "properties": {
+            "is_synthetic": { "type": "boolean" },
+            "synthesis_type": {
+              "type": "string",
+              "enum": ["FRANKENSTEIN_STOLEN_ANCHOR", "FULLY_SYNTHETIC", "BENCHMARK_LEGITIMATE"]
+            },
+            "attack_technique_id": {
+              "type": "string",
+              "enum": ["TECH_A_01", "TECH_A_02", "TECH_A_04", "CLEAN"]
+            },
+            "frankenstein_ratio": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "generation_seed": { "type": "integer", "minimum": 0 },
+            "evasion_target_tier": {
+              "type": "string",
+              "enum": ["TIER_1_EVASION", "TIER_2_EVASION", "TIER_3_EVASION"]
+            }
+          }
+        },
+        "real_fragment": {
+          "type": "object",
+          "required": [
+            "anchor_national_id_type",
+            "anchor_national_id",
+            "anchor_issuing_state",
+            "anchor_issuance_year_range",
+            "anchor_birth_year",
+            "anchor_bureau_vintage_months",
+            "anchor_entity_type"
+          ],
+          "properties": {
+            "anchor_national_id_type": {
+              "type": "string",
+              "enum": ["US_SSN", "IN_PAN", "UK_NINO"]
+            },
+            "anchor_national_id": { "type": "string" },
+            "anchor_issuing_state": { "type": "string" },
+            "anchor_issuance_year_range": { "type": "string" },
+            "anchor_birth_year": { "type": "integer", "minimum": 1900, "maximum": 2026 },
+            "anchor_bureau_vintage_months": { "type": "integer", "minimum": 0 },
+            "anchor_entity_type": {
+              "type": "string",
+              "enum": ["DECEASED_INDIVIDUAL", "CHILD_MINOR_SSN", "DORMANT_FILE", "UNASSIGNED_AREA_BLOCK", "ACTIVE_ADULT"]
+            }
+          }
+        },
+        "fabricated_overlay": {
+          "type": "object",
+          "required": [
+            "biographical",
+            "residential_address",
+            "contact_endpoints",
+            "employment_profile"
+          ],
+          "properties": {
+            "biographical": {
+              "type": "object",
+              "required": ["first_name", "last_name", "claimed_date_of_birth", "claimed_gender"],
+              "properties": {
+                "first_name": { "type": "string" },
+                "middle_name": { "type": "string" },
+                "last_name": { "type": "string" },
+                "claimed_date_of_birth": { "type": "string", "format": "date" },
+                "claimed_gender": { "type": "string", "enum": ["M", "F", "NON_BINARY", "UNSPECIFIED"] }
+              }
+            },
+            "residential_address": {
+              "type": "object",
+              "required": [
+                "street_line1",
+                "city",
+                "state",
+                "postal_code",
+                "address_type",
+                "is_cmra",
+                "address_tenure_months"
+              ],
+              "properties": {
+                "street_line1": { "type": "string" },
+                "street_line2": { "type": "string" },
+                "city": { "type": "string" },
+                "state": { "type": "string" },
+                "postal_code": { "type": "string" },
+                "address_type": {
+                  "type": "string",
+                  "enum": [
+                    "SINGLE_FAMILY_RESIDENCE",
+                    "MULTI_FAMILY_APARTMENT",
+                    "COMMERCIAL_MAIL_RECEIVING_AGENCY",
+                    "VIRTUAL_OFFICE_DROP",
+                    "FREIGHT_FORWARDER"
+                  ]
+                },
+                "is_cmra": { "type": "boolean" },
+                "address_tenure_months": { "type": "integer", "minimum": 0 }
+              }
+            },
+            "contact_endpoints": {
+              "type": "object",
+              "required": [
+                "phone_number",
+                "phone_line_type",
+                "phone_carrier_name",
+                "phone_tenure_days",
+                "email_address",
+                "email_domain_age_days",
+                "email_is_disposable",
+                "email_entropy_score"
+              ],
+              "properties": {
+                "phone_number": { "type": "string" },
+                "phone_line_type": {
+                  "type": "string",
+                  "enum": ["TIER_1_POSTPAID_WIRELESS", "PREPAID_MOBILE", "VOIP_VIRTUAL_BURNER", "LANDLINE_FIXED"]
+                },
+                "phone_carrier_name": { "type": "string" },
+                "phone_tenure_days": { "type": "integer", "minimum": 0 },
+                "email_address": { "type": "string" },
+                "email_domain_age_days": { "type": "integer", "minimum": 0 },
+                "email_is_disposable": { "type": "boolean" },
+                "email_entropy_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+              }
+            },
+            "employment_profile": {
+              "type": "object",
+              "required": [
+                "employer_name",
+                "job_title",
+                "annual_income",
+                "employment_status",
+                "employer_state",
+                "employer_corporate_registry_verified"
+              ],
+              "properties": {
+                "employer_name": { "type": "string" },
+                "job_title": { "type": "string" },
+                "annual_income": { "type": "number", "minimum": 0.0 },
+                "employment_status": {
+                  "type": "string",
+                  "enum": ["FULL_TIME", "PART_TIME", "SELF_EMPLOYED", "UNEMPLOYED", "RETIRED"]
+                },
+                "employer_state": { "type": "string" },
+                "employer_corporate_registry_verified": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "document_metadata": {
+          "type": "object",
+          "required": [
+            "document_id",
+            "document_type",
+            "issuing_authority",
+            "document_issue_date",
+            "document_expiry_date",
+            "field_layout_plausibility",
+            "checksum_validity",
+            "creation_tool_fingerprint"
+          ],
+          "properties": {
+            "document_id": { "type": "string" },
+            "document_type": {
+              "type": "string",
+              "enum": ["DRIVERS_LICENSE", "NATIONAL_PASSPORT", "TAX_IDENTITY_CARD", "UTILITY_BILL"]
+            },
+            "issuing_authority": { "type": "string" },
+            "document_issue_date": { "type": "string", "format": "date" },
+            "document_expiry_date": { "type": "string", "format": "date" },
+            "field_layout_plausibility": {
+              "type": "object",
+              "required": [
+                "template_alignment_score",
+                "font_kerning_anomaly_score",
+                "bounding_box_jitter_score",
+                "photo_tamper_artifact_score",
+                "ocr_confidence_score",
+                "mrz_format_validity"
+              ],
+              "properties": {
+                "template_alignment_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                "font_kerning_anomaly_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                "bounding_box_jitter_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                "photo_tamper_artifact_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                "ocr_confidence_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+                "mrz_format_validity": { "type": "boolean" }
+              }
+            },
+            "checksum_validity": {
+              "type": "object",
+              "required": [
+                "national_id_format_valid",
+                "algorithmic_checksum_valid",
+                "checksum_spoofing_method",
+                "mrz_check_digits_match",
+                "barcode_pdf417_payload_match"
+              ],
+              "properties": {
+                "national_id_format_valid": { "type": "boolean" },
+                "algorithmic_checksum_valid": { "type": "boolean" },
+                "checksum_spoofing_method": {
+                  "type": "string",
+                  "enum": ["CALCULATED_VALID", "NAIVE_RANDOM_DIGIT", "ALGORITHMIC_BYPASS", "NOT_APPLICABLE"]
+                },
+                "mrz_check_digits_match": { "type": "boolean" },
+                "barcode_pdf417_payload_match": { "type": "boolean" }
+              }
+            },
+            "creation_tool_fingerprint": {
+              "type": "object",
+              "required": [
+                "file_format",
+                "exif_software_header",
+                "color_space",
+                "dpi_resolution",
+                "compression_quantization_profile",
+                "layer_flattening_detected",
+                "metadata_creation_date",
+                "temporal_issuance_delta_days"
+              ],
+              "properties": {
+                "file_format": { "type": "string", "enum": ["PDF", "JPEG", "PNG"] },
+                "exif_software_header": { "type": "string" },
+                "color_space": { "type": "string" },
+                "dpi_resolution": { "type": "integer" },
+                "compression_quantization_profile": {
+                  "type": "string",
+                  "enum": ["STANDARD_HARDWARE_CAMERA", "WEB_RECOMPRESSED", "SYNTHETIC_GENERATOR_DEFAULT"]
+                },
+                "layer_flattening_detected": { "type": "boolean" },
+                "metadata_creation_date": { "type": "string" },
+                "temporal_issuance_delta_days": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

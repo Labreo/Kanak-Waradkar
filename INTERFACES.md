@@ -43,14 +43,31 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
 ---
 
 ## 2. Vector A — Synthetic Identity & Document Fraud
-- **Generate (`generate/identity/`)**:
-  - *Inputs*: Generation seed, target volume, Frankenstein blend parameters (ratio of real vs fabricated fragments).
-  - *Outputs*: Batch of synthetic identity profiles + document metadata (`data/generated/identity_batch.json`).
-  - *Guaranteed Fields*: `profile_id`, `is_synthetic` (boolean), `real_fragment_fields`, `fabricated_fields`, `document_metadata` (layout_coherence, checksum_valid, tool_fingerprint).
-- **Defend (`defend/identity/`)**:
-  - *Inputs*: Identity profile records / document metadata batches.
-  - *Outputs*: Scored records with risk ratings (`defend/identity/results.json`).
-  - *Guaranteed Fields*: `profile_id`, `risk_score` (0.0–1.0), `verdict` (`ALLOW` | `REVIEW` | `BLOCK`), `primary_risk_driver` (string explanation of rule/anomaly triggered).
+- **Schema Specification**:
+  - Full Written Specification: [generate/identity/schema_spec.md](file:///Users/sanjaywaradkar/TRIAD/generate/identity/schema_spec.md)
+  - Programmatic JSON Schema: [generate/identity/identity_schema.json](file:///Users/sanjaywaradkar/TRIAD/generate/identity/identity_schema.json)
+- **Generate (`generate/identity/generator.py`)**:
+  - *Inputs*: `--n <count>` (batch size), `--seed <int>` (reproducibility seed), `--frankenstein-ratio <float>` (ratio of fabricated to real anchor attributes, default 0.75).
+  - *Outputs*: Batch file of labeled synthetic profiles and accompanying document metadata (`data/generated/identity_batch.json`).
+  - *Guaranteed Top-Level Batch Fields*: `batch_id`, `generated_at`, `generator_version`, `total_records`, `profiles`.
+  - *Guaranteed Profile Object Fields*:
+    - `profile_id`: Unique identifier string matching `^ID-[A-Z0-9]{8,16}$`.
+    - `synthesis_metadata`: `{ is_synthetic, synthesis_type, attack_technique_id, frankenstein_ratio, generation_seed, evasion_target_tier }`.
+    - `real_fragment` (Stolen Anchor PII): `{ anchor_national_id_type, anchor_national_id, anchor_issuing_state, anchor_issuance_year_range, anchor_birth_year, anchor_bureau_vintage_months, anchor_entity_type }`.
+    - `fabricated_overlay` (Synthesized Biographical Overlay):
+      - `biographical`: `{ first_name, middle_name, last_name, claimed_date_of_birth, claimed_gender }`.
+      - `residential_address`: `{ street_line1, street_line2, city, state, postal_code, address_type, is_cmra, address_tenure_months }`.
+      - `contact_endpoints`: `{ phone_number, phone_line_type, phone_carrier_name, phone_tenure_days, email_address, email_domain_age_days, email_is_disposable, email_entropy_score }`.
+      - `employment_profile`: `{ employer_name, job_title, annual_income, employment_status, employer_state, employer_corporate_registry_verified }`.
+    - `document_metadata` (Forensic Verification Bundle):
+      - `document_id`, `document_type`, `issuing_authority`, `document_issue_date`, `document_expiry_date`.
+      - `field_layout_plausibility`: `{ template_alignment_score, font_kerning_anomaly_score, bounding_box_jitter_score, photo_tamper_artifact_score, ocr_confidence_score, mrz_format_validity }`.
+      - `checksum_validity`: `{ national_id_format_valid, algorithmic_checksum_valid, checksum_spoofing_method, mrz_check_digits_match, barcode_pdf417_payload_match }`.
+      - `creation_tool_fingerprint`: `{ file_format, exif_software_header, color_space, dpi_resolution, compression_quantization_profile, layer_flattening_detected, metadata_creation_date, temporal_issuance_delta_days }`.
+- **Defend (`defend/identity/risk_scorer.py`)**:
+  - *Inputs*: Profile objects or batch files conforming to the Vector A schema.
+  - *Outputs*: Evaluated risk scoring decisions (`defend/identity/results.json`).
+  - *Guaranteed Record Output Fields*: `profile_id`, `risk_score` (0.0–1.0), `verdict` (`ALLOW` | `REVIEW` | `BLOCK`), `tier_triggered` (`TIER_1_DETERMINISTIC` | `TIER_2_STATISTICAL` | `TIER_3_FORENSICS`), `primary_risk_driver` (plain-language string explaining decision rationale for fraud analyst UI), `sub_scores` (breakdown across checksum, demographic coherence, contact endpoints, and forensic document checks), `evaluated_at`.
 
 ---
 
