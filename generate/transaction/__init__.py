@@ -4,6 +4,7 @@ Defines schemas and generators for simulated card-testing and transaction sequen
 """
 
 from pathlib import Path
+from generate.transaction.generator import VectorBTransactionGenerator
 
 SCHEMA_SPEC_PATH = Path(__file__).parent / "schema_spec.md"
 TRANSACTION_SCHEMA_PATH = Path(__file__).parent / "transaction_schema.json"
@@ -11,4 +12,5 @@ TRANSACTION_SCHEMA_PATH = Path(__file__).parent / "transaction_schema.json"
 __all__ = [
     "SCHEMA_SPEC_PATH",
     "TRANSACTION_SCHEMA_PATH",
+    "VectorBTransactionGenerator",
 ]
