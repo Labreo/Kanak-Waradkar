@@ -1,3 +1,3 @@
 # Project Status
 
-**Current State (S01 Complete):** Attack taxonomy and threat matrix formally imported into repo (`identify/taxonomy.md`, `identify/attack_matrix.json`, `identify/threat_matrix.md`). Context Management Protocol verified. In progress: Data Foundations Phase. Next: Acquire and document IEEE-CIS and PaySim datasets (S02).
+**Current State (S02 Complete):** Datasets documented, not yet profiled. IEEE-CIS Fraud Detection and PaySim datasets documented in `data/DATA_DICTIONARY.md` (all column families explained in plain language) and `data/DOWNLOAD.md` (reproducible download steps). Raw data paths gitignored under `data/raw/`. Next: Data quality / profiling pass (S03).
