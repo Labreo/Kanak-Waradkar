@@ -1,0 +1,58 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+kaggle.json
+
+# Datasets & Large Data Files (Kaggle raw files)
+data/raw/
+*.zip
+*.tar.gz
+*.csv
+*.parquet
+# Allow committed sample / dictionary files
+!data/samples/
+!data/dictionaries/
+
+# Frontend / Node (for later web phase)
+node_modules/
+.npm/
+.next/
+dist/
