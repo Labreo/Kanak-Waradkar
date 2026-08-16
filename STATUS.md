@@ -1,3 +1,3 @@
 # Project Status
 
-**Current State (S00 Complete):** Repository scaffolded, Git initialized on `main`, unified Python 3.12 virtual environment configured (`requirements.txt`), and Context Management Protocol operational (`STATUS.md`, `DECISIONS.md`, `INTERFACES.md`). In progress: Preparing Foundations Phase S01. Next: Import Identify taxonomy and attack matrix into repository (S01).
+**Current State (S01 Complete):** Attack taxonomy and threat matrix formally imported into repo (`identify/taxonomy.md`, `identify/attack_matrix.json`, `identify/threat_matrix.md`). Context Management Protocol verified. In progress: Data Foundations Phase. Next: Acquire and document IEEE-CIS and PaySim datasets (S02).

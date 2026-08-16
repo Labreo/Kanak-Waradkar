@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-08-16",
+  "taxonomy_summary": {
+    "total_vectors": 3,
+    "total_sub_techniques": 10,
+    "target_domains": ["Identity & KYC", "Merchant & Transaction Processing", "Autonomous Agents & Social Engineering"]
+  },
+  "vectors": [
+    {
+      "vector_id": "VECTOR_A",
+      "vector_name": "Synthetic Identity & Deepfake KYC Fraud",
+      "primary_target": "Digital Onboarding & Biometric KYC Gateways",
+      "techniques": [
+        {
+          "id": "TECH_A_01",
+          "name": "Fully Synthetic Identity",
+          "generation_method": "Diffusion face generation + LLM credit history synthesis",
+          "evasion_mechanism": "Statistically plausible demographic cross-correlation",
+          "detection_indicators": ["Bureau credit history depth < threshold", "Synthetic face boundary artifacts", "Unregistered utility history"],
+          "implemented_in_generate": "generate/identity/generator.py",
+          "implemented_in_defend": "defend/identity/risk_scorer.py"
+        },
+        {
+          "id": "TECH_A_02",
+          "name": "Frankenstein Identity",
+          "generation_method": "Valid PII token splicing + fabricated biographical overlay",
+          "evasion_mechanism": "Passes valid tax ID format/checksum checks",
+          "detection_indicators": ["Tax ID to legal name multi-tenancy", "Mismatch in regional issuing authority timeline"],
+          "implemented_in_generate": "generate/identity/generator.py",
+          "implemented_in_defend": "defend/identity/risk_scorer.py"
+        },
+        {
+          "id": "TECH_A_03",
+          "name": "Deepfake Video KYC Presentation Attack",
+          "generation_method": "Neural face-swap / 3D facial mesh avatar rendering",
+          "evasion_mechanism": "Emulates dynamic blink, head turn, and lighting response",
+          "detection_indicators": ["Temporal facial boundary jitter", "Audio-visual lip-sync delay", "Spectral reflection anomalies"],
+          "implemented_in_generate": "generate/identity/generator.py",
+          "implemented_in_defend": "defend/identity/risk_scorer.py"
+        },
+        {
+          "id": "TECH_A_04",
+          "name": "Synthetic Document Checksum Spoofing",
+          "generation_method": "High-DPI vector template rendering with calculated check digits",
+          "evasion_mechanism": "Pixel-level anti-forensic dithering masks manipulation artifacts",
+          "detection_indicators": ["Sub-pixel font kerning deviations", "Exif metadata anomalies", "OCR bounding box displacement"],
+          "implemented_in_generate": "generate/identity/generator.py",
+          "implemented_in_defend": "defend/identity/risk_scorer.py"
+        }
+      ]
+    },
+    {
+      "vector_id": "VECTOR_B",
+      "vector_name": "Behavioral & Transaction / Fake Merchant Fraud",
+      "primary_target": "Acquiring Payment Gateways & Transaction Switches",
+      "techniques": [
+        {
+          "id": "TECH_B_01",
+          "name": "LLM-Generated Card-Testing Storefronts",
+          "generation_method": "Automated e-commerce site & product catalog generation",
+          "evasion_mechanism": "Unique lexical phrasing and plausible merchant category distribution",
+          "detection_indicators": ["Domain age < 14 days", "High micro-transaction volume with high failure rate", "Catalog semantic template collision"],
+          "implemented_in_generate": "generate/transaction/generator.py",
+          "implemented_in_defend": "defend/transaction/classifier.py"
+        },
+        {
+          "id": "TECH_B_02",
+          "name": "Bust-Out Merchant Drain Patterns",
+          "generation_method": "Low-velocity warm-up transactions transitioning into surge drains",
+          "evasion_mechanism": "Mimics organic purchasing history before terminal withdrawal",
+          "detection_indicators": ["Exponential ticket size acceleration", "Sudden shift to high-risk cross-border card bins"],
+          "implemented_in_generate": "generate/transaction/generator.py",
+          "implemented_in_defend": "defend/transaction/classifier.py"
+        },
+        {
+          "id": "TECH_B_03",
+          "name": "Triangulation & Stolen Card Laundering",
+          "generation_method": "Automated order intercept and stolen credential arbitrage",
+          "evasion_mechanism": "Legitimate buyer shipping info conceals unauthorized card usage",
+          "detection_indicators": ["1-to-many card instrument mappings per delivery address", "Billing vs shipping postal code variance"],
+          "implemented_in_generate": "generate/transaction/generator.py",
+          "implemented_in_defend": "defend/transaction/classifier.py"
+        }
+      ]
+    },
+    {
+      "vector_id": "VECTOR_C",
+      "vector_name": "Agentic Payment Hijacking & Social Engineering",
+      "primary_target": "Autonomous Purchasing Agents, Push Payment Networks, & End Users",
+      "techniques": [
+        {
+          "id": "TECH_C_01",
+          "name": "Indirect Prompt Injection in Invoice/Memo Fields",
+          "generation_method": "Adversarial system prompt overrides embedded in payment memos",
+          "evasion_mechanism": "Markdown and natural language pretexting bypasses naive regex filters",
+          "detection_indicators": ["Delimiters and privilege escalation phrases in transaction metadata", "Tool parameter divergence from user intent"],
+          "implemented_in_generate": "generate/agentic/generator.py",
+          "implemented_in_defend": "defend/agentic/detector.py"
+        },
+        {
+          "id": "TECH_C_02",
+          "name": "Real-Time Conversational Support Impersonation",
+          "generation_method": "Cloned voice and dynamic dialogue branch execution",
+          "evasion_mechanism": "Adaptive persuasion counter-measures for OTP extraction",
+          "detection_indicators": ["Concurrent untrusted device login during customer support call", "VOIP routing originating from known proxy blocks"],
+          "implemented_in_generate": "generate/agentic/generator.py",
+          "implemented_in_defend": "defend/agentic/detector.py"
+        },
+        {
+          "id": "TECH_C_03",
+          "name": "Autonomous Agent Tool-Call Destination Redirection",
+          "generation_method": "Context window manipulation forcing modified `transfer_funds` destination parameter",
+          "evasion_mechanism": "Obfuscated beneficiary aliases hiding malicious destination account",
+          "detection_indicators": ["Semantic mismatch between approved invoice vendor and tool execution payload", "High-entropy beneficiary account metadata"],
+          "implemented_in_generate": "generate/agentic/generator.py",
+          "implemented_in_defend": "defend/agentic/detector.py"
+        }
+      ]
+    }
+  ]
+}
