@@ -1,0 +1,471 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SyntheticTransactionBatch",
+  "description": "Standardized schema for Project TRIAD Vector B simulated card-testing and transaction fraud sequences, grounded in IEEE-CIS and PaySim real data profiles.",
+  "type": "object",
+  "required": [
+    "batch_id",
+    "generated_at",
+    "generator_version",
+    "total_records",
+    "total_sequences",
+    "records"
+  ],
+  "properties": {
+    "batch_id": {
+      "type": "string",
+      "pattern": "^batch_txn_v[0-9]+.*$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generator_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "total_records": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "total_sequences": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "target_fraud_rate": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/TransactionRecord"
+      }
+    }
+  },
+  "$defs": {
+    "TransactionRecord": {
+      "type": "object",
+      "required": [
+        "transaction_id",
+        "sequence_id",
+        "sequence_step",
+        "total_sequence_steps",
+        "ground_truth",
+        "temporal_features",
+        "financial_features",
+        "ledger_state",
+        "payment_instrument",
+        "merchant_channel",
+        "geolocation_network",
+        "velocity_counters",
+        "authorization_outcome",
+        "device_telemetry"
+      ],
+      "properties": {
+        "transaction_id": {
+          "type": "string",
+          "pattern": "^TXN-[A-Z0-9_-]+$"
+        },
+        "sequence_id": {
+          "type": "string",
+          "pattern": "^SEQ-[A-Z0-9_-]+$"
+        },
+        "sequence_step": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "total_sequence_steps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ground_truth": {
+          "type": "object",
+          "required": [
+            "is_fraud",
+            "attack_technique_id",
+            "attack_archetype",
+            "evasion_tier"
+          ],
+          "properties": {
+            "is_fraud": {
+              "type": "boolean"
+            },
+            "attack_technique_id": {
+              "type": "string",
+              "enum": ["TECH_B_01", "TECH_B_02", "TECH_B_03", "CLEAN"]
+            },
+            "attack_archetype": {
+              "type": "string",
+              "enum": [
+                "CARD_TESTING_BURST",
+                "BIN_ENUMERATION",
+                "BUST_OUT_DRAIN",
+                "ORGANIC_BENCHMARK"
+              ]
+            },
+            "evasion_tier": {
+              "type": "string",
+              "enum": [
+                "TIER_1_BASIC_VELOCITY",
+                "TIER_2_DISTRIBUTED_IP_BIN",
+                "TIER_3_STEALTH_MIMICRY"
+              ]
+            }
+          }
+        },
+        "temporal_features": {
+          "type": "object",
+          "required": [
+            "transaction_dt_seconds",
+            "inter_arrival_seconds",
+            "hour_of_day",
+            "day_of_week"
+          ],
+          "properties": {
+            "transaction_dt_seconds": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "inter_arrival_seconds": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "hour_of_day": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 23
+            },
+            "day_of_week": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 6
+            }
+          }
+        },
+        "financial_features": {
+          "type": "object",
+          "required": [
+            "amount",
+            "currency",
+            "is_integer_amount",
+            "is_micro_authorization",
+            "amount_ratio_to_bin_mean"
+          ],
+          "properties": {
+            "amount": {
+              "type": "number",
+              "minimum": 0.01
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "is_integer_amount": {
+              "type": "boolean"
+            },
+            "is_micro_authorization": {
+              "type": "boolean"
+            },
+            "amount_ratio_to_bin_mean": {
+              "type": "number",
+              "minimum": 0.0
+            }
+          }
+        },
+        "ledger_state": {
+          "type": "object",
+          "required": [
+            "name_orig",
+            "old_balance_orig",
+            "new_balance_orig",
+            "name_dest",
+            "old_balance_dest",
+            "new_balance_dest",
+            "is_exact_balance_drain"
+          ],
+          "properties": {
+            "name_orig": {
+              "type": "string",
+              "pattern": "^C[0-9]{10}$"
+            },
+            "old_balance_orig": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "new_balance_orig": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "name_dest": {
+              "type": "string",
+              "pattern": "^[CM][0-9]{10}$"
+            },
+            "old_balance_dest": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "new_balance_dest": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "is_exact_balance_drain": {
+              "type": "boolean"
+            }
+          }
+        },
+        "payment_instrument": {
+          "type": "object",
+          "required": [
+            "card1_bin",
+            "card2_bank_code",
+            "card3_country_code",
+            "card4_network",
+            "card5_tier_category",
+            "card6_funding_type",
+            "card_id_token",
+            "card_sequence_index"
+          ],
+          "properties": {
+            "card1_bin": {
+              "type": "string",
+              "pattern": "^[0-9]{6}$"
+            },
+            "card2_bank_code": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 999
+            },
+            "card3_country_code": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "card4_network": {
+              "type": "string",
+              "enum": ["visa", "mastercard", "discover", "american express"]
+            },
+            "card5_tier_category": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 999
+            },
+            "card6_funding_type": {
+              "type": "string",
+              "enum": ["credit", "debit", "prepaid", "charge card"]
+            },
+            "card_id_token": {
+              "type": "string"
+            },
+            "card_sequence_index": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "merchant_channel": {
+          "type": "object",
+          "required": [
+            "product_cd",
+            "merchant_id",
+            "merchant_category_code",
+            "merchant_domain_age_days",
+            "is_hosted_checkout"
+          ],
+          "properties": {
+            "product_cd": {
+              "type": "string",
+              "enum": ["W", "C", "R", "H", "S"]
+            },
+            "merchant_id": {
+              "type": "string",
+              "pattern": "^M-[A-Z0-9_-]+$"
+            },
+            "merchant_category_code": {
+              "type": "string",
+              "pattern": "^[0-9]{4}$"
+            },
+            "merchant_domain_age_days": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "is_hosted_checkout": {
+              "type": "boolean"
+            }
+          }
+        },
+        "geolocation_network": {
+          "type": "object",
+          "required": [
+            "addr1_billing_region",
+            "addr2_billing_country",
+            "dist1_ip_billing_distance",
+            "dist2_billing_issuer_distance",
+            "p_email_domain",
+            "r_email_domain",
+            "is_disposable_email"
+          ],
+          "properties": {
+            "addr1_billing_region": {
+              "type": ["integer", "null"]
+            },
+            "addr2_billing_country": {
+              "type": ["integer", "null"]
+            },
+            "dist1_ip_billing_distance": {
+              "type": ["number", "null"],
+              "minimum": 0.0
+            },
+            "dist2_billing_issuer_distance": {
+              "type": ["number", "null"],
+              "minimum": 0.0
+            },
+            "p_email_domain": {
+              "type": "string"
+            },
+            "r_email_domain": {
+              "type": "string"
+            },
+            "is_disposable_email": {
+              "type": "boolean"
+            }
+          }
+        },
+        "velocity_counters": {
+          "type": "object",
+          "required": [
+            "c1_card_count_24h",
+            "c2_card_count_1h",
+            "c5_merchant_count_1h",
+            "c13_ip_count_24h",
+            "c14_ip_count_1h",
+            "d1_card_vintage_days",
+            "d2_card_recency_days",
+            "d3_device_recency_days",
+            "d11_merchant_recency_days"
+          ],
+          "properties": {
+            "c1_card_count_24h": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "c2_card_count_1h": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "c5_merchant_count_1h": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "c13_ip_count_24h": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "c14_ip_count_1h": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "d1_card_vintage_days": {
+              "type": ["number", "null"],
+              "minimum": 0.0
+            },
+            "d2_card_recency_days": {
+              "type": ["number", "null"],
+              "minimum": 0.0
+            },
+            "d3_device_recency_days": {
+              "type": ["number", "null"],
+              "minimum": 0.0
+            },
+            "d11_merchant_recency_days": {
+              "type": ["number", "null"],
+              "minimum": 0.0
+            }
+          }
+        },
+        "authorization_outcome": {
+          "type": "object",
+          "required": [
+            "auth_response_code",
+            "is_declined",
+            "m1_card_holder_match",
+            "m2_billing_address_match",
+            "m3_shipping_match",
+            "m4_3ds_challenge_status"
+          ],
+          "properties": {
+            "auth_response_code": {
+              "type": "string",
+              "enum": [
+                "00_APPROVED",
+                "05_DO_NOT_HONOR",
+                "14_INVALID_CARD_NUMBER",
+                "51_INSUFFICIENT_FUNDS",
+                "54_EXPIRED_CARD",
+                "82_CVV_MISMATCH"
+              ]
+            },
+            "is_declined": {
+              "type": "boolean"
+            },
+            "m1_card_holder_match": {
+              "type": "string",
+              "enum": ["T", "F", "M"]
+            },
+            "m2_billing_address_match": {
+              "type": "string",
+              "enum": ["T", "F", "M"]
+            },
+            "m3_shipping_match": {
+              "type": "string",
+              "enum": ["T", "F", "M"]
+            },
+            "m4_3ds_challenge_status": {
+              "type": "string",
+              "enum": ["M0_BYPASS", "M1_CHALLENGE_PASSED", "M2_CHALLENGE_FAILED"]
+            }
+          }
+        },
+        "device_telemetry": {
+          "type": "object",
+          "required": [
+            "device_type",
+            "device_info",
+            "browser_name",
+            "os_name",
+            "is_proxy_or_vpn",
+            "is_headless_browser",
+            "network_ip_risk_score"
+          ],
+          "properties": {
+            "device_type": {
+              "type": "string",
+              "enum": ["desktop", "mobile", "headless_bot"]
+            },
+            "device_info": {
+              "type": "string"
+            },
+            "browser_name": {
+              "type": "string"
+            },
+            "os_name": {
+              "type": "string"
+            },
+            "is_proxy_or_vpn": {
+              "type": "boolean"
+            },
+            "is_headless_browser": {
+              "type": "boolean"
+            },
+            "network_ip_risk_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          }
+        }
+      }
+    }
+  }
+}

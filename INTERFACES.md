@@ -116,14 +116,35 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
 
 
 ## 3. Vector B — Behavioral & Transaction Fraud
-- **Generate (`generate/transaction/`)**:
-  - *Inputs*: Generation seed, baseline real distribution parameters, evasion strategy.
-  - *Outputs*: Batch of synthetic transaction records (`data/generated/transaction_batch.json`).
-  - *Guaranteed Fields*: `transaction_id`, `timestamp`, `amount`, `source_account`, `dest_account`, `channel`, `is_fraud` (boolean), `evasion_tag`.
-- **Defend (`defend/transaction/`)**:
-  - *Inputs*: Transaction stream / batch.
-  - *Outputs*: Scored transaction results (`defend/transaction/results.json`).
-  - *Guaranteed Fields*: `transaction_id`, `fraud_probability` (0.0–1.0), `action` (`ALLOW` | `FLAG` | `DECLINE`), `top_features` (list of top contributing anomaly features).
+- **Schema Specification**:
+  - Full Written Specification: [generate/transaction/schema_spec.md](file:///Users/sanjaywaradkar/TRIAD/generate/transaction/schema_spec.md)
+  - Programmatic JSON Schema: [generate/transaction/transaction_schema.json](file:///Users/sanjaywaradkar/TRIAD/generate/transaction/transaction_schema.json)
+  - Real Data Grounding: Grounded directly in IEEE-CIS column families (`TransactionAmt`, `TransactionDT`, `ProductCD`, `card1`–`card6`, `addr1`/`addr2`, `dist1`/`dist2`, `P`/`R_emaildomain`, `C1`–`C14`, `D1`–`D15`, `M1`–`M9`, `V1`–`V339`, `train_identity.csv`) and PaySim dual-ledger accounting dynamics (`nameOrig`, `old/newbalanceOrig`, `nameDest`, `old/newbalanceDest`, `97.82%` exact drain signature) established in `data/PROFILING_REPORT.md` (S03).
+- **Generate (`generate/transaction/generator.py`)**:
+  - *Inputs*: `--n <count>` (batch size, default `1000`), `--seed <int>` (reproducibility seed, default `42`), `--fraud-rate <float>` (default `0.035`), `--output <path>` (default `data/generated/transaction_batch.json`).
+  - *Outputs*: Batch file of simulated transaction records and card-testing sequences adhering to `generate/transaction/transaction_schema.json`.
+  - *Guaranteed Top-Level Batch Fields*: `batch_id` (`batch_txn_v1_seed<seed>_n<count>`), `generated_at` (ISO 8601), `generator_version` (`1.0.0`), `total_records`, `total_sequences`, `target_fraud_rate`, `records`.
+  - *Guaranteed Record Structure*:
+    - `transaction_id`: Unique identifier string matching `^TXN-[A-Z0-9_-]+$`.
+    - `sequence_id`: Sequence group identifier matching `^SEQ-[A-Z0-9_-]+$`.
+    - `sequence_step`, `total_sequence_steps`: Intra-sequence ordinal and total burst length.
+    - `ground_truth`: `{ is_fraud, attack_technique_id, attack_archetype, evasion_tier }`.
+    - `temporal_features`: `{ transaction_dt_seconds, inter_arrival_seconds, hour_of_day, day_of_week }`.
+    - `financial_features`: `{ amount, currency, is_integer_amount, is_micro_authorization, amount_ratio_to_bin_mean }`.
+    - `ledger_state`: `{ name_orig, old_balance_orig, new_balance_orig, name_dest, old_balance_dest, new_balance_dest, is_exact_balance_drain }`.
+    - `payment_instrument`: `{ card1_bin, card2_bank_code, card3_country_code, card4_network, card5_tier_category, card6_funding_type, card_id_token, card_sequence_index }`.
+    - `merchant_channel`: `{ product_cd, merchant_id, merchant_category_code, merchant_domain_age_days, is_hosted_checkout }`.
+    - `geolocation_network`: `{ addr1_billing_region, addr2_billing_country, dist1_ip_billing_distance, dist2_billing_issuer_distance, p_email_domain, r_email_domain, is_disposable_email }`.
+    - `velocity_counters`: `{ c1_card_count_24h, c2_card_count_1h, c5_merchant_count_1h, c13_ip_count_24h, c14_ip_count_1h, d1_card_vintage_days, d2_card_recency_days, d3_device_recency_days, d11_merchant_recency_days }`.
+    - `authorization_outcome`: `{ auth_response_code, is_declined, m1_card_holder_match, m2_billing_address_match, m3_shipping_match, m4_3ds_challenge_status }`.
+    - `device_telemetry`: `{ device_type, device_info, browser_name, os_name, is_proxy_or_vpn, is_headless_browser, network_ip_risk_score }`.
+- **Fidelity Comparison vs Real Data (`generate/transaction/score_fidelity.py`)**:
+  - *Inputs*: Generated batch (`data/generated/transaction_batch.json`), baseline summary (`data/profiling_summary.json`).
+  - *Outputs*: Markdown fidelity report (`generate/transaction/fidelity_report.md`) and JSON metrics (`generate/transaction/fidelity_summary.json`) with side-by-side distribution comparisons (KS-test, Wasserstein distance, category proportions).
+- **Defend Classifier (`defend/transaction/classifier.py`)**:
+  - *Inputs*: Time-respecting train/eval splits of real IEEE-CIS/PaySim and generated card-testing data.
+  - *Outputs*: Scored transaction decisions (`defend/transaction/results.json`) and trained gradient-boosted tree model.
+  - *Guaranteed Decision Fields*: `transaction_id`, `fraud_probability` (0.0000–1.0000), `action` (`ALLOW` | `REVIEW` | `BLOCK`), `primary_risk_driver`, `top_features`.
 
 ---
 
