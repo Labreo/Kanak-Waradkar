@@ -10,6 +10,7 @@ kaggle>=1.6.0
 # API / Backend Server
 fastapi>=0.110.0
 uvicorn>=0.28.0
+httpx>=0.28.0
 
 # Testing & Utilities
 pytest>=8.0.0

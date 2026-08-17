@@ -1,0 +1,127 @@
+/* ==========================================================================
+   PROJECT TRIAD — DESIGN TOKENS
+   Grounded in Part I Frontend Design Brief:
+   - 5-Hex Color System: Deep Indigo base, Warm Amber alerts, Cool Cyan loop learning, Off-white text, Muted Slate structure
+   - Typography Pairing: Plus Jakarta Sans (humanist sans) + JetBrains Mono (technical data monospace)
+   ========================================================================== */
+
+:root {
+  /* -------------------------------------------------------------------------
+     1. COLOR PALETTE (5-HEX SYSTEM + DERIVED TINTS)
+     ------------------------------------------------------------------------- */
+  
+  /* Base Surfaces: Deep Indigo / Ink (deliberately NOT generic pitch black #000) */
+  --bg-canvas: #0C0E1E;              /* Deep ink canvas background */
+  --bg-surface: #12142B;             /* Primary container & card surface */
+  --bg-surface-raised: #181B38;      /* Elevated cards & interactive panels */
+  --bg-surface-overlay: #1F2347;     /* Hover states, modal overlays, active wells */
+  --bg-surface-glass: rgba(18, 20, 43, 0.85); /* Frosted glassmorphism background */
+
+  /* Primary Accent: Warm Amber (#F2A93B) — Alert States & Fraud Value / Capital */
+  --accent-amber: #F2A93B;
+  --accent-amber-hover: #FFB94F;
+  --accent-amber-dim: rgba(242, 169, 59, 0.15);
+  --accent-amber-glow: rgba(242, 169, 59, 0.35);
+  --accent-amber-border: rgba(242, 169, 59, 0.5);
+
+  /* Signature Accent: Cool Cyan (#5FD8D0) — Closed-Loop Adaptation & Defense Learning */
+  --accent-cyan: #5FD8D0;
+  --accent-cyan-hover: #7EEDE6;
+  --accent-cyan-dim: rgba(95, 216, 208, 0.14);
+  --accent-cyan-glow: rgba(95, 216, 208, 0.35);
+  --accent-cyan-border: rgba(95, 216, 208, 0.5);
+
+  /* High-Legibility Typography Colors */
+  --text-primary: #F4F3F0;          /* Off-white for SOC long-session reading */
+  --text-secondary: #A0A5C2;        /* Soft lilac-slate for subheaders and descriptions */
+  --text-muted: #656A8A;            /* Low-contrast technical labels and timestamps */
+  --text-inverse: #0C0E1E;          /* For high-contrast dark text on bright pills */
+
+  /* Structural & Border Elements: Muted Slate (#565A78) */
+  --border-muted: rgba(86, 90, 120, 0.25);
+  --border-default: rgba(86, 90, 120, 0.45);
+  --border-strong: rgba(86, 90, 120, 0.75);
+  --border-highlight: rgba(95, 216, 208, 0.35);
+  --border-alert: rgba(242, 169, 59, 0.4);
+
+  /* Semantic Status Palette */
+  --status-allow: #48BB78;          /* Clean / Legitimate Baseline */
+  --status-allow-dim: rgba(72, 187, 120, 0.15);
+  --status-review: #F2A93B;         /* Flagged for Human / Tier 2 Inspection */
+  --status-review-dim: rgba(242, 169, 59, 0.15);
+  --status-block: #F56565;          /* Autonomous Hard Interception */
+  --status-block-dim: rgba(245, 101, 101, 0.15);
+  --status-evaded: #E53E3E;         /* Evasive Attack Breakthrough */
+
+  /* -------------------------------------------------------------------------
+     2. TYPOGRAPHY TOKENS
+     ------------------------------------------------------------------------- */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', Menlo, monospace;
+
+  /* Font Scales */
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.84375rem; /* 13.5px */
+  --text-base: 0.9375rem;/* 15px */
+  --text-md: 1.0625rem;  /* 17px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 1.875rem;  /* 30px */
+  --text-3xl: 2.25rem;   /* 36px */
+
+  /* Line Heights */
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.16em;
+
+  /* -------------------------------------------------------------------------
+     3. SPACING & ELEVATION TOKENS
+     ------------------------------------------------------------------------- */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Shadow & Glow Elevations */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --shadow-cyan-glow: 0 0 24px rgba(95, 216, 208, 0.25);
+  --shadow-amber-glow: 0 0 24px rgba(242, 169, 59, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Backdrop Blur */
+  --glass-blur: blur(14px);
+}

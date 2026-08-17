@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PROJECT TRIAD — Autonomous Red-Team / Blue-Team Payment Fraud Engine</title>
+  <meta name="description" content="Closed-loop generative AI adversarial simulation and defense system across synthetic identity, card testing, and agentic payment hijacking." />
+  
+  <!-- Preconnect and Load Google Fonts: Plus Jakarta Sans (Humanist Sans) + JetBrains Mono (Technical Data Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/styles/tokens.css" />
+  <link rel="stylesheet" href="/src/styles/layout.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+  <link rel="stylesheet" href="/src/styles/loop-gauge.css" />
+  <link rel="stylesheet" href="/src/styles/dashboards.css" />
+  <link rel="stylesheet" href="/src/styles/agent-centerpiece.css" />
+  <link rel="stylesheet" href="/src/styles/loop-charts.css" />
+</head>
+<body class="triad-body">
+  <div id="app" class="app-container">
+    <!-- Top System Telemetry Bar / App Header -->
+    <header class="app-header" role="banner">
+      <div class="header-brand">
+        <div class="brand-logo-symbol">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="TRIAD Logo">
+            <polygon points="14,2 26,24 2,24" stroke="var(--accent-cyan)" stroke-width="2" fill="none" opacity="0.9" />
+            <polygon points="14,8 22,22 6,22" stroke="var(--accent-amber)" stroke-width="1.5" fill="none" opacity="0.7" />
+            <circle cx="14" cy="17" r="2.5" fill="var(--text-primary)" />
+          </svg>
+        </div>
+        <div class="brand-title-group">
+          <div class="brand-name">
+            <span class="brand-title">PROJECT TRIAD</span>
+            <span class="brand-badge-pill">CLOSED LOOP</span>
+          </div>
+          <div class="brand-subtitle">Red-Team Simulation &amp; Blue-Team Adaptive Defense</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="app-nav" aria-label="Vector Views Navigation">
+        <button type="button" class="nav-tab active" data-view="overview" id="nav-overview" aria-selected="true" role="tab">
+          <span class="nav-index">01</span>
+          <span class="nav-label">Command Hub</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="vector-a" id="nav-vector-a" aria-selected="false" role="tab">
+          <span class="nav-index">02</span>
+          <span class="nav-label">Vector A: Identity</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="vector-b" id="nav-vector-b" aria-selected="false" role="tab">
+          <span class="nav-index">03</span>
+          <span class="nav-label">Vector B: Transaction</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="vector-c" id="nav-vector-c" aria-selected="false" role="tab">
+          <span class="nav-index">04</span>
+          <span class="nav-label">Vector C: Agentic</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="loop" id="nav-loop" aria-selected="false" role="tab">
+          <span class="nav-index">05</span>
+          <span class="nav-label">Closed Loop</span>
+        </button>
+      </nav>
+
+      <!-- System Health Telemetry Widget -->
+      <div class="header-status">
+        <div class="status-indicator">
+          <span class="status-pulse" aria-hidden="true"></span>
+          <span class="status-text">DEFENSE ACTIVE</span>
+        </div>
+        <div class="telemetry-pill">
+          <span class="telemetry-label">LATENCY</span>
+          <span class="telemetry-val mono-data">0.14ms</span>
+        </div>
+        <div class="telemetry-pill">
+          <span class="telemetry-label">CYCLE</span>
+          <span class="telemetry-val mono-data" id="header-cycle-val">C2 // ADAPTED</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main View Stage -->
+    <main id="main-content" class="main-content" role="main" tabindex="-1">
+      <!-- Dynamic View Container (rendered by JavaScript router) -->
+      <div id="view-root" class="view-root"></div>
+    </main>
+
+    <!-- Persistent Bottom System Bar -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <span class="footer-tag">TRIAD ARCHITECTURE</span>
+        <span class="footer-sep">/</span>
+        <span class="footer-meta">Taxonomy §2.1–§2.3 Grounded</span>
+        <span class="footer-sep">/</span>
+        <span class="footer-meta">IEEE-CIS &amp; PaySim Baseline</span>
+      </div>
+      <div class="footer-center">
+        <div class="keyboard-hints">
+          <span class="kbd-pill"><kbd>1</kbd>–<kbd>5</kbd> Switch View</span>
+          <span class="kbd-pill"><kbd>Space</kbd> Closed-Loop Scrub</span>
+        </div>
+      </div>
+      <div class="footer-right">
+        <span class="defense-sync mono-data">STATELESS FILE-BACKED PROTOCOL // S23 SHELL</span>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

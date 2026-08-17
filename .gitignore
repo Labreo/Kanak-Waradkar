@@ -79,6 +79,7 @@ data/raw/
 
 # Frontend / Node / Web (for Prototype Phase)
 node_modules/
+frontend/dist/
 .npm/
 .next/
 out/

@@ -326,3 +326,66 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
   - Backend API (S22) serves history at `/api/loop/history?vector={A|B|C}` and `/api/loop/trigger`.
   - Frontend charts (S26) visualize cumulative multi-cycle evasion curves directly from `cycles[].evasion_rate`.
 
+---
+
+## 6. Backend API Layer (`backend/`)
+
+- **Module Location**:
+  - Package: `backend/__init__.py`
+  - Application Factory: `backend/app.py`
+  - Data Service: `backend/data_service.py`
+  - Models: `backend/models.py`
+  - Routes: `backend/routes/health.py`, `backend/routes/vectors.py`, `backend/routes/loop.py`, `backend/routes/instances.py`
+  - Server Entry: `backend/server.py`
+  - Test Suite: `tests/test_backend_api.py`
+- **Framework & Deployment**: FastAPI + Uvicorn. Fully stateless and file-backed reading directly from `data/` and `defend/`.
+- **Exposed Endpoints**:
+  1. `GET /api/health`
+     - *Response*: `{ "status": "healthy", "version": "1.0.0", "timestamp": str, "active_vectors": ["A", "B", "C"], "dataset_grounding": dict }`
+  2. `GET /api/vectors`
+     - *Response*: Array of vector summary cards (`vector_id`, `name`, `attack_surface`, `description`, `current_defense_recall`, `current_defense_auc`, `latest_loop_evasion_rate`, `loop_adversarial_gain`, `total_batch_samples`).
+  3. `GET /api/vectors/{vector_id}/overview`
+     - *Response*: Comprehensive overview dashboard header payload (`vector_id`, `vector_name`, `attack_surface`, `total_evaluated`, `malicious_count`, `legitimate_count`, `baseline_metrics`, `loop_summary`, `verdict_breakdown`).
+  4. `GET /api/metrics[?vector={A|B|C}]`
+     - *Response*: Machine-readable metrics from `defend/{identity,transaction,agentic}/metrics.json` (ROC-AUC, PR-AUC, confusion matrices, operational vs strict detection policies).
+  5. `GET /api/loop/history?vector={A|B|C}`
+     - *Response*: Multi-cycle evasion rate telemetry adhering to `loop/schema.json` (`vector_id`, `total_cycles_completed`, `summary_trend`, `cycles[]`).
+  6. `GET /api/loop/cycle/{vector_id}/{cycle_index}`
+     - *Response*: Granular cycle telemetry including mutations applied, evading instance IDs, raw batch counts, and decisions.
+  7. `POST /api/loop/trigger`
+     - *Request*: `{ "vector": "A"|"B"|"C", "cycles": int (1-10), "batch_size": int (10-1000), "seed": int }`
+     - *Action*: Dynamically executes $N$-cycle live loop via `VectorALoopEngine`, `VectorBLoopEngine`, or `VectorCLoopEngine`.
+     - *Response*: Updated `LoopHistoryResponse` with real-time evasion curve and mutation audit log.
+  8. `GET /api/instances?vector={A|B|C}&limit=50&offset=0[&verdict=...][&search=...][&cycle=...]`
+     - *Response*: Paginated instance listing (`total_records`, `limit`, `offset`, `has_more`, `items[]` with `instance_id`, `is_malicious`, `archetype_or_technique`, `risk_score`, `verdict`, `primary_risk_driver`).
+  9. `GET /api/instances/{vector_id}/{instance_id}[?cycle=...]`
+     - *Response*: High-resolution unified drill-down payload (`instance_id`, `vector_id`, `vector_name`, `is_malicious`, `attack_technique`, `evasion_tier`, `risk_score`, `verdict`, `primary_risk_driver`, `sub_scores`, `contributing_factors`, `artifact`, `defense_decision`, `explainability`).
+- **Downstream Consumption Contract for S23–S26 (Frontend Shell & Dashboards)**:
+  - S23 (Shell) uses `/api/health` and `/api/vectors` for global status indicators and navigation cards.
+  - S24 (Vector A & B Dashboards) uses `/api/vectors/{id}/overview`, `/api/instances`, and `/api/instances/{id}/{instance_id}` for drill-down views.
+  - S25 (Vector C Agent View) uses `/api/instances?vector=C` and `/api/instances/C/{id}` to highlight concealed payloads and defense interception points.
+  - S26 (Live Charts) uses `/api/loop/history` and triggers live waves via `POST /api/loop/trigger`.
+
+---
+
+## 7. Frontend Design System & Shell Architecture (`frontend/`)
+
+- **Module Location**:
+  - Configuration & Entry: `frontend/package.json`, `frontend/vite.config.js`, `frontend/index.html`
+  - Design Tokens & Styles: `frontend/src/styles/tokens.css`, `frontend/src/styles/layout.css`, `frontend/src/styles/components.css`, `frontend/src/styles/loop-gauge.css`, `frontend/src/styles/dashboards.css`, `frontend/src/styles/agent-centerpiece.css`, `frontend/src/styles/loop-charts.css`
+  - API Client: `frontend/src/services/api.js`
+  - Components & Views: `frontend/src/components/ClosingLoopGauge.js`, `frontend/src/components/VectorCards.js`, `frontend/src/components/VectorADashboard.js`, `frontend/src/components/VectorBDashboard.js`, `frontend/src/components/VectorCDashboard.js`, `frontend/src/components/ClosedLoopDashboard.js`, `frontend/src/components/Views.js`, `frontend/src/components/Navigation.js`, `frontend/src/main.js`
+- **Design Tokens (Part I Brief Grounding)**:
+  - Base Surfaces: Deep indigo `#0C0E1E` (canvas), `#12142B` (surface), `#181B38` (raised), `#1F2347` (overlay).
+  - Alert Accent: Warm amber `#F2A93B` (alerts, fraud values, and active bypass indicators).
+  - Loop Adaptation Accent: Cool cyan `#5FD8D0` (defensive tightening, system learning, and baseline metrics).
+  - High-Legibility Typography: Off-white `#F4F3F0` with `Plus Jakarta Sans` (humanist headers/body) and `JetBrains Mono` (technical keys, scores, and telemetry).
+- **Core Components & Contracts**:
+  - `ClosingLoopGauge`: Dynamic SVG geometric tightening spiral and concentric multi-cycle ring gauge ($C_0 \to C_1 \to C_2$) with interactive cycle scrubbing and delta readouts; supports dynamic `updateData(cycles)` live re-rendering.
+  - `VectorCards`: 3 equal-weight vector cards on the Command Hub (`vector-a`, `vector-b`, `vector-c`) with grounded dataset references and drill-down navigation hooks.
+  - `VectorADashboard`: Live synthetic identity explorer with search/verdict filters, pagination, and deep inspector drawer rendering Frankenstein anchor vs overlay comparisons, PDF417/EXIF forensics, and explainability narratives.
+  - `VectorBDashboard`: Live transaction stream explorer with search/verdict filters, pagination, IEEE-CIS/PaySim empirical grounding callouts, and deep inspector drawer rendering velocity metrics, decline codes, GBDT feature rankings, and explainability narratives.
+  - `VectorCDashboard`: Primary novelty centerpiece featuring a 3-column Red-Team/Blue-Team theater (Mock Agent Terminal & FakeWallet Ledger, Mock Web Viewport with Concealed Payload Reveal, Pre-Execution Scanner & Parameter Divergence HUD) with timed 2.5s execution beat and 200-sample batch explorer.
+  - `ClosedLoopDashboard`: Live attack wave trigger and telemetry dashboard connected to `POST /api/loop/trigger`, multi-cycle cumulative evasion & detection area chart, phase transition stepper, and cycle-by-cycle adversarial mutation registry.
+  - `Router`: Client-side hash routing (`#overview`, `#vector-a`, `#vector-b`, `#vector-c`, `#loop`) with full keyboard navigation shortcuts (`1`–`5`).
+
