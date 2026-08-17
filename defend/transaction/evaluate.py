@@ -190,10 +190,23 @@ class VectorBEvaluator:
                 json.dump(batch.to_dict(), f, indent=2)
 
         # 1. Load data with chronological time split
+        has_real_ieee = bool(ieee_path and os.path.exists(ieee_path))
+        has_real_paysim = bool(paysim_path and os.path.exists(paysim_path))
+        synthetic_source = None
+        if not (has_real_ieee or has_real_paysim):
+            synth_batch_path = "data/generated/transaction_batch.json"
+            if not os.path.exists(synth_batch_path):
+                gen = VectorBTransactionGenerator(seed=42, target_fraud_rate=0.035)
+                batch = gen.generate_batch(n_total=1000)
+                os.makedirs(os.path.dirname(os.path.abspath(synth_batch_path)), exist_ok=True)
+                with open(synth_batch_path, "w", encoding="utf-8") as f:
+                    json.dump(batch.to_dict(), f, indent=2)
+            synthetic_source = synth_batch_path
+
         df_train, df_eval, audit = VectorBClassifier.load_and_split_data(
-            ieee_path=ieee_path,
-            paysim_path=paysim_path,
-            synthetic_path=None,  # We evaluate on separate heldout batch
+            ieee_path=ieee_path if has_real_ieee else None,
+            paysim_path=paysim_path if has_real_paysim else None,
+            synthetic_path=synthetic_source,
             max_rows_per_dataset=max_rows,
             split_ratio=0.8,
         )

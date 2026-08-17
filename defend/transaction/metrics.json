@@ -1,7 +1,7 @@
 {
   "vector_id": "B",
   "vector_name": "Behavioral & Transaction Fraud",
-  "evaluated_at": "2026-08-17T11:20:15.831432+00:00",
+  "evaluated_at": "2026-08-17T12:56:43.979471+00:00",
   "model_metadata": {
     "name": "VectorBClassifier",
     "version": "1.0.0",

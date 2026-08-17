@@ -1,7 +1,7 @@
 # Vector A Evaluation & Metrics Report: Synthetic Identity & Document Fraud
 
 **Evaluation Session:** S08 — Vector A Defend Evaluation  
-**Timestamp:** `2026-08-16T23:08:45.041076+00:00`  
+**Timestamp:** `2026-08-17T12:56:40.744920+00:00`  
 **Model Name:** `VectorARiskScorer` (v`1.0.0`)  
 **Dataset Split:** `held_out_test` (`data/generated/identity_heldout_batch.json`, Seed `2026`)  
 **Total Evaluated:** **`500` profiles** (`150` Legitimate [30.0%], `350` Synthetic Fraud [70.0%])  

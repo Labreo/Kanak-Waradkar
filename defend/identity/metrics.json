@@ -1,7 +1,7 @@
 {
   "vector_id": "A",
   "vector_name": "Synthetic Identity & Document Fraud",
-  "evaluated_at": "2026-08-16T23:08:45.041076+00:00",
+  "evaluated_at": "2026-08-17T12:56:40.744920+00:00",
   "model_metadata": {
     "name": "VectorARiskScorer",
     "version": "1.0.0",
