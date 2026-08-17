@@ -1,0 +1,18 @@
+services:
+  triad:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: triad-adversarial-engine
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+      - ENVIRONMENT=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

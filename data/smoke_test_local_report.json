@@ -1,0 +1,283 @@
+{
+  "base_url": "http://127.0.0.1:8000",
+  "timestamp": 1786971062.468124,
+  "total_checks": 25,
+  "passed_count": 25,
+  "results": [
+    {
+      "name": "SPA Root HTML",
+      "method": "GET",
+      "path": "/",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 24.71,
+      "payload_bytes": 5110,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "SPA Main JS Bundle",
+      "method": "GET",
+      "path": "/assets/index-DWvl22VW.js",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 2.94,
+      "payload_bytes": 107239,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "SPA Global CSS Bundle",
+      "method": "GET",
+      "path": "/assets/index-DQkHgAxs.css",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 2.22,
+      "payload_bytes": 48542,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "API Health Check",
+      "method": "GET",
+      "path": "/api/health",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 5.39,
+      "payload_bytes": 222,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector Catalog Listing",
+      "method": "GET",
+      "path": "/api/vectors",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 45.78,
+      "payload_bytes": 1328,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector A Overview (Identity)",
+      "method": "GET",
+      "path": "/api/vectors/A/overview",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 24.19,
+      "payload_bytes": 5836,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector A Metrics (Identity)",
+      "method": "GET",
+      "path": "/api/metrics?vector=A",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 2.11,
+      "payload_bytes": 5192,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector B Overview (Transaction)",
+      "method": "GET",
+      "path": "/api/vectors/B/overview",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 32.87,
+      "payload_bytes": 6820,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector B Metrics (Transaction)",
+      "method": "GET",
+      "path": "/api/metrics?vector=B",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 3.27,
+      "payload_bytes": 6176,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector C Overview (Agentic)",
+      "method": "GET",
+      "path": "/api/vectors/C/overview",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 6.86,
+      "payload_bytes": 7094,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector C Metrics (Agentic)",
+      "method": "GET",
+      "path": "/api/metrics?vector=C",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 1.55,
+      "payload_bytes": 6465,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector A Instances Listing (paged)",
+      "method": "GET",
+      "path": "/api/instances?vector=A&limit=10&offset=0",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 23.51,
+      "payload_bytes": 5639,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector B Instances Listing (paged)",
+      "method": "GET",
+      "path": "/api/instances?vector=B&limit=10&offset=0",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 26.38,
+      "payload_bytes": 3793,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector C Instances Listing (paged)",
+      "method": "GET",
+      "path": "/api/instances?vector=C&limit=10&offset=0",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 5.54,
+      "payload_bytes": 6392,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector A Loop History",
+      "method": "GET",
+      "path": "/api/loop/history?vector=A",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 1.84,
+      "payload_bytes": 3425,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector B Loop History",
+      "method": "GET",
+      "path": "/api/loop/history?vector=B",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 1.52,
+      "payload_bytes": 3235,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector C Loop History",
+      "method": "GET",
+      "path": "/api/loop/history?vector=C",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 1.6,
+      "payload_bytes": 3383,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector A Cycle 0 Detail",
+      "method": "GET",
+      "path": "/api/loop/cycle/A/0",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 4.87,
+      "payload_bytes": 264653,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector B Cycle 1 Detail",
+      "method": "GET",
+      "path": "/api/loop/cycle/B/1",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 3.4,
+      "payload_bytes": 128257,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Vector C Cycle 2 Detail",
+      "method": "GET",
+      "path": "/api/loop/cycle/C/2",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 3.03,
+      "payload_bytes": 137632,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Live Attack Wave Trigger (Vector A)",
+      "method": "POST",
+      "path": "/api/loop/trigger",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 39.56,
+      "payload_bytes": 3425,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Live Attack Wave Trigger (Vector B)",
+      "method": "POST",
+      "path": "/api/loop/trigger",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 92.51,
+      "payload_bytes": 3235,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Live Attack Wave Trigger (Vector C)",
+      "method": "POST",
+      "path": "/api/loop/trigger",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 45.89,
+      "payload_bytes": 3383,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Swagger OpenAPI Documentation",
+      "method": "GET",
+      "path": "/docs",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 1.53,
+      "payload_bytes": 1053,
+      "passed": true,
+      "notes": ""
+    },
+    {
+      "name": "Security Secret Leak Audit",
+      "method": "AUDIT",
+      "path": "[Multiple Endpoints]",
+      "status_code": 200,
+      "expected_status": 200,
+      "latency_ms": 1.2,
+      "payload_bytes": 0,
+      "passed": true,
+      "notes": "No secrets detected in any payload."
+    }
+  ]
+}

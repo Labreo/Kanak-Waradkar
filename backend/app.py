@@ -84,7 +84,36 @@ def create_app() -> FastAPI:
     app.include_router(loop_router)
     app.include_router(instances_router)
 
+    # Static Assets and SPA Frontend Serving (if frontend/dist exists)
+    from pathlib import Path
+    from fastapi.staticfiles import StaticFiles
+    from fastapi.responses import FileResponse
+
+    dist_path = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+    if dist_path.is_dir() and (dist_path / "index.html").exists():
+        assets_dir = dist_path / "assets"
+        if assets_dir.is_dir():
+            app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="static_assets")
+
+        @app.get("/{full_path:path}", include_in_schema=False)
+        async def serve_spa_frontend(request: Request, full_path: str):
+            # Pass through missing API or OpenAPI documentation routes as 404
+            if full_path.startswith("api/") or full_path.startswith("docs") or full_path.startswith("redoc") or full_path == "openapi.json":
+                return JSONResponse(
+                    status_code=404,
+                    content={
+                        "error": "NOT_FOUND",
+                        "detail": f"Route /{full_path} not found",
+                        "status_code": 404,
+                    },
+                )
+            target_file = dist_path / full_path
+            if full_path and target_file.is_file():
+                return FileResponse(target_file)
+            return FileResponse(dist_path / "index.html")
+
     return app
 
 
 app = create_app()
+
