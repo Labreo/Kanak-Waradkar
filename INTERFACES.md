@@ -276,6 +276,53 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
 ---
 
 ## 5. Closed-Loop Feedback Engine
-- **Inputs**: Defend evaluation outputs and missed detections across Vectors A, B, and C.
-- **Outputs**: Perturbation & mutation parameters for next Generation cycle (`loop/cycle_config.json`).
-- **Guaranteed Fields*: `cycle_id`, `vector_id`, `mutation_rate`, `evasion_focus_areas`, `generation_seed`.
+- **Specification**: [loop/orchestration_spec.md](file:///Users/sanjaywaradkar/TRIAD/loop/orchestration_spec.md)
+- **JSON Schema**: [loop/schema.json](file:///Users/sanjaywaradkar/TRIAD/loop/schema.json)
+- **Shared Architecture**: Independent per-vector execution across $N$ iterative cycles (default $N=3$) following a uniform 5-phase state machine (`GENERATE` -> `DEFEND` -> `EVALUATE` -> `MUTATE` -> `LOG`).
+- **Python Abstract Contract**: `BaseLoopOrchestrator` in `loop/base.py` (implemented in `VectorALoopEngine` for S19, `VectorBLoopEngine` for S20, `VectorCLoopEngine` for S21).
+- **CLI Runner**: `.venv/bin/python loop/run_loop.py --vector [A|B|C] --cycles 3 --batch-size 200 --seed 42 --output-dir data/loop/`
+- **Standard Storage Paths**:
+  - History telemetry: `data/loop/vector_{a,b,c}_history.json`
+  - Per-cycle detail: `data/loop/vector_{a,b,c}_cycle_{k}.json`
+  - Generated batch cache: `data/loop/vector_{a,b,c}_batch_cycle_{k}.json`
+- **Guaranteed Cumulative Telemetry Fields (`data/loop/vector_{a,b,c}_history.json`)**:
+  - `vector_id`: `"A"` | `"B"` | `"C"`
+  - `vector_name`: Human-readable vector title.
+  - `total_cycles_completed`: Integer count of completed cycles ($\ge 1$).
+  - `base_seed`: Reproducibility seed integer.
+  - `batch_size`: Per-cycle sample count.
+  - `orchestration_started_at`, `orchestration_completed_at`: ISO 8601 UTC timestamps.
+  - `summary_trend`: `{ initial_evasion_rate, final_evasion_rate, evasion_delta, initial_detection_rate, final_detection_rate, is_adversarial_gain_verified }`
+  - `cycles`: Array of cycle objects, each containing:
+    - `cycle_index`: Integer $0 \dots N-1$.
+    - `cycle_id`: String identifier (e.g. `"cycle_a_0"`).
+    - `generation_seed`: Unique PRNG seed per cycle ($S_k = S_{\text{base}} + k \times 1000$).
+    - `mutation_tier`: Current attack evasion tier name.
+    - `batch_size`, `total_malicious`, `total_legitimate`: Sample counts.
+    - `evading_count`, `caught_count`, `false_positive_count`: Confusion counts.
+    - `evasion_rate`: $\frac{FN}{M_{\text{mal}}}$ ($0.0 \dots 1.0$).
+    - `detection_rate`: $\frac{TP}{M_{\text{mal}}} = 1.0 - \text{evasion\_rate}$.
+    - `precision`: $\frac{TP}{TP + FP}$.
+    - `false_positive_rate`: $\frac{FP}{M_{\text{leg}}}$.
+    - `mean_fraud_score`: Mean risk score across malicious instances.
+    - `mutations_applied`: Array of `{ parameter, previous_value, mutated_value, rationale }`.
+    - `evading_sample_ids`: Array of instance ID strings that bypassed defense.
+    - `cycle_summary`: Natural-language summary of cycle results and attack evolution.
+    - `executed_at`: ISO 8601 UTC timestamp.
+- **Concrete Mutation Dynamics per Vector**:
+  - **Vector A (Identity Fraud)**:
+    - *Cycle 0 (Tier 1 Baseline)*: Mismatched barcodes, invalid SSA checksums, disposable email domains, VOIP phone numbers, Photoshop EXIF headers $\implies$ ~5% evasion (95% recall).
+    - *Cycle 1 Mutation (Tier 2 Structural Parity)*: Valid PDF417 barcode generation, repaired SSA checksums, residential ZIP matching anchor issuing state $\implies$ ~35% evasion.
+    - *Cycle 2 Mutation (Tier 3 Forensic Camouflage)*: Native iPhone 15 Pro EXIF metadata, aged custom domains (>3yr), MNO phone numbers (>2yr tenure), single-family addresses $\implies$ ~78% evasion.
+  - **Vector B (Transaction Fraud)**:
+    - *Cycle 0 (Tier 1 Velocity Burst)*: Sub-second inter-arrival ($\Delta t < 1.5s$), micro-auth integer amounts, headless browser headers, single IP cluster $\implies$ ~8% evasion (92% recall).
+    - *Cycle 1 Mutation (Tier 2 Session Dilation)*: Log-normal inter-arrival timing ($\Delta t \sim 8s–40s$), spoofed mobile browser user-agents, distributed residential proxies $\implies$ ~45% evasion.
+    - *Cycle 2 Mutation (Tier 3 Basket Morphing)*: Organic non-integer amounts ($24.89, $49.50) matching IEEE-CIS `ProductCD='W'`, multi-merchant routing, local IP-billing geolocation $\implies$ ~80% evasion.
+  - **Vector C (Agentic Payment Hijacking)**:
+    - *Cycle 0 (Tier 1 Direct Override)*: Raw HTML comments, overt imperative override keywords ("SYSTEM OVERRIDE", "IGNORE PREVIOUS"), $450 wallet drain $\implies$ 0% evasion (100% recall, $0.00 loss).
+    - *Cycle 1 Mutation (Tier 2 CSS Concealment)*: Hidden CSS elements (`opacity:0; position:absolute; left:-9999px; font-size:0px;`), vanity merchant alias recipient, soft imperative phrasing $\implies$ ~40% evasion.
+    - *Cycle 2 Mutation (Tier 3 Semantic Pretext)*: Invoice memo accounting pretexts ("Vendor Remittance Protocol AP-882"), zero imperative verbs, exact cart total match ($79.99) $\implies$ ~82% evasion.
+- **Downstream Consumption Contract for S22 (API), S24/S25 (Views), S26 (Live Charts), S29 (Deck)**:
+  - Backend API (S22) serves history at `/api/loop/history?vector={A|B|C}` and `/api/loop/trigger`.
+  - Frontend charts (S26) visualize cumulative multi-cycle evasion curves directly from `cycles[].evasion_rate`.
+

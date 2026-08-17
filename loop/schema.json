@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TRIADClosedLoopHistorySchema",
+  "description": "JSON schema for TRIAD multi-cycle closed-loop adversarial feedback telemetry.",
+  "type": "object",
+  "required": [
+    "vector_id",
+    "vector_name",
+    "total_cycles_completed",
+    "base_seed",
+    "batch_size",
+    "orchestration_started_at",
+    "orchestration_completed_at",
+    "cycles",
+    "summary_trend"
+  ],
+  "properties": {
+    "vector_id": {
+      "type": "string",
+      "enum": ["A", "B", "C"]
+    },
+    "vector_name": {
+      "type": "string"
+    },
+    "total_cycles_completed": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "base_seed": {
+      "type": "integer"
+    },
+    "batch_size": {
+      "type": "integer",
+      "minimum": 10
+    },
+    "orchestration_started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "orchestration_completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "summary_trend": {
+      "type": "object",
+      "required": [
+        "initial_evasion_rate",
+        "final_evasion_rate",
+        "evasion_delta",
+        "initial_detection_rate",
+        "final_detection_rate",
+        "is_adversarial_gain_verified"
+      ],
+      "properties": {
+        "initial_evasion_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "final_evasion_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "evasion_delta": { "type": "number" },
+        "initial_detection_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "final_detection_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "is_adversarial_gain_verified": { "type": "boolean" }
+      }
+    },
+    "cycles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "cycle_index",
+          "cycle_id",
+          "generation_seed",
+          "mutation_tier",
+          "batch_size",
+          "total_malicious",
+          "total_legitimate",
+          "evading_count",
+          "caught_count",
+          "false_positive_count",
+          "evasion_rate",
+          "detection_rate",
+          "precision",
+          "false_positive_rate",
+          "mean_fraud_score",
+          "mutations_applied",
+          "evading_sample_ids",
+          "cycle_summary",
+          "executed_at"
+        ],
+        "properties": {
+          "cycle_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cycle_id": {
+            "type": "string"
+          },
+          "generation_seed": {
+            "type": "integer"
+          },
+          "mutation_tier": {
+            "type": "string"
+          },
+          "batch_size": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "total_malicious": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "total_legitimate": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "evading_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "caught_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "false_positive_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "evasion_rate": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "detection_rate": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "precision": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "false_positive_rate": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "mean_fraud_score": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "mutations_applied": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["parameter", "previous_value", "mutated_value", "rationale"],
+              "properties": {
+                "parameter": { "type": "string" },
+                "previous_value": {},
+                "mutated_value": {},
+                "rationale": { "type": "string" }
+              }
+            }
+          },
+          "evading_sample_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "cycle_summary": {
+            "type": "string"
+          },
+          "executed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

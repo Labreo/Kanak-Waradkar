@@ -1,0 +1,130 @@
+{
+  "vector_id": "B",
+  "vector_name": "Behavioral & Transaction Fraud",
+  "total_cycles_completed": 3,
+  "base_seed": 42,
+  "batch_size": 200,
+  "orchestration_started_at": "2026-08-17T12:03:09.105128+00:00",
+  "orchestration_completed_at": "2026-08-17T12:03:09.259376+00:00",
+  "summary_trend": {
+    "initial_evasion_rate": 0.0,
+    "final_evasion_rate": 0.8732,
+    "evasion_delta": 0.8732,
+    "initial_detection_rate": 1.0,
+    "final_detection_rate": 0.1268,
+    "is_adversarial_gain_verified": true
+  },
+  "cycles": [
+    {
+      "cycle_index": 0,
+      "cycle_id": "cycle_b_0",
+      "generation_seed": 42,
+      "mutation_tier": "TIER_1_BASIC_VELOCITY",
+      "batch_size": 200,
+      "total_malicious": 76,
+      "total_legitimate": 124,
+      "evading_count": 0,
+      "caught_count": 76,
+      "false_positive_count": 1,
+      "evasion_rate": 0.0,
+      "detection_rate": 1.0,
+      "precision": 0.987,
+      "false_positive_rate": 0.0081,
+      "mean_fraud_score": 0.9463,
+      "mutations_applied": [],
+      "evading_sample_ids": [],
+      "cycle_summary": "High-velocity micro-auth bursts intercepted by velocity counters (C14) and headless device telemetry.",
+      "executed_at": "2026-08-17T12:03:09.156538+00:00"
+    },
+    {
+      "cycle_index": 1,
+      "cycle_id": "cycle_b_1",
+      "generation_seed": 1042,
+      "mutation_tier": "TIER_2_DISTRIBUTED_IP_BIN",
+      "batch_size": 200,
+      "total_malicious": 80,
+      "total_legitimate": 120,
+      "evading_count": 23,
+      "caught_count": 57,
+      "false_positive_count": 3,
+      "evasion_rate": 0.2875,
+      "detection_rate": 0.7125,
+      "precision": 0.95,
+      "false_positive_rate": 0.025,
+      "mean_fraud_score": 0.6399,
+      "mutations_applied": [
+        {
+          "parameter": "inter_arrival_seconds",
+          "previous_value": "0.1s - 1.5s (burst)",
+          "mutated_value": "10.0s - 60.0s (lognormal human pacing)",
+          "rationale": "Dilate authorization pacing to suppress velocity counters C2 and C14 below threshold."
+        },
+        {
+          "parameter": "is_headless_browser",
+          "previous_value": true,
+          "mutated_value": false,
+          "rationale": "Spoof authentic iOS / Mobile Safari telemetry to neutralize headless bot classifier features."
+        }
+      ],
+      "evading_sample_ids": [
+        "TXN-01000003",
+        "TXN-01000005",
+        "TXN-01000008",
+        "TXN-01000011",
+        "TXN-01000028",
+        "TXN-01000035",
+        "TXN-01000037",
+        "TXN-01000038",
+        "TXN-01000041",
+        "TXN-01000047"
+      ],
+      "cycle_summary": "Timing dilation and mobile browser spoofing suppressed velocity counters, increasing evasion.",
+      "executed_at": "2026-08-17T12:03:09.200628+00:00"
+    },
+    {
+      "cycle_index": 2,
+      "cycle_id": "cycle_b_2",
+      "generation_seed": 2042,
+      "mutation_tier": "TIER_3_STEALTH_MIMICRY",
+      "batch_size": 200,
+      "total_malicious": 71,
+      "total_legitimate": 129,
+      "evading_count": 62,
+      "caught_count": 9,
+      "false_positive_count": 4,
+      "evasion_rate": 0.8732,
+      "detection_rate": 0.1268,
+      "precision": 0.6923,
+      "false_positive_rate": 0.031,
+      "mean_fraud_score": 0.1649,
+      "mutations_applied": [
+        {
+          "parameter": "financial_features.amount",
+          "previous_value": "$0.50 - $2.00 micro-auths",
+          "mutated_value": "$24.89 - $114.50 organic e-commerce baskets",
+          "rationale": "Morph transaction amounts into typical IEEE-CIS ProductCD='W' non-integer spend distributions."
+        },
+        {
+          "parameter": "geolocation_network.dist1_ip_billing_distance",
+          "previous_value": "> 1000 miles / proxy IP",
+          "mutated_value": "< 15 miles (local residential ISP)",
+          "rationale": "Route authorizations through local ISP subnets matching cardholder billing region."
+        }
+      ],
+      "evading_sample_ids": [
+        "TXN-01000004",
+        "TXN-01000005",
+        "TXN-01000006",
+        "TXN-01000007",
+        "TXN-01000008",
+        "TXN-01000009",
+        "TXN-01000010",
+        "TXN-01000011",
+        "TXN-01000012",
+        "TXN-01000013"
+      ],
+      "cycle_summary": "Organic basket sizing and local IP routing blended attacks into empirical e-commerce patterns.",
+      "executed_at": "2026-08-17T12:03:09.241238+00:00"
+    }
+  ]
+}
