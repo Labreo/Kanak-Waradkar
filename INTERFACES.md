@@ -184,14 +184,94 @@ The TRIAD system operates across three pillars: **Identify** (taxonomy/matrix), 
 ---
 
 ## 4. Vector C — Agentic Payment Hijacking
-- **Generate (`generate/agentic/`)**:
-  - *Inputs*: Attack intent, evasion mutation level, prompt injection templates.
-  - *Outputs*: Generated injection payloads and perturbed transaction request instructions (`data/generated/agentic_batch.json`).
-  - *Guaranteed Fields*: `payload_id`, `injection_type`, `raw_payload`, `target_tool`, `expected_hijack_outcome`.
-- **Defend (`defend/agentic/`)**:
-  - *Inputs*: Raw agent prompt/tool call payloads.
-  - *Outputs*: Threat inspection result (`defend/agentic/results.json`).
-  - *Guaranteed Fields*: `payload_id`, `is_injection` (boolean), `confidence_score` (0.0–1.0), `sanitized_payload`, `matched_signature_or_heuristic`.
+
+### 4.1 Sandboxed Mock Agent & Fake Wallet Harness (`generate/agentic/`)
+- **Module Location**:
+  - Package: `generate/agentic/__init__.py`
+  - Sandbox & Wallet: `generate/agentic/sandbox.py`
+  - Mock Agent: `generate/agentic/agent.py`
+  - Documentation: `generate/agentic/README.md`
+  - Test Suite: `tests/test_agentic_harness.py`
+- **Purpose**: A strictly sandboxed, local-only simulation environment built specifically for demonstrating and evaluating Vector C (Agentic Payment Hijacking) attacks and defenses.
+- **Hard Security Invariants**:
+  1. *Zero External Network Calls*: All mock pages are served from in-memory data structures using `mock://` or `local://` URI schemes. Real network protocols (`http://`, `https://`, `ws://`, `ftp://`) are rejected with `SandboxSecurityViolation`.
+  2. *Never Touches Real Payment Rails*: Zero bindings to Stripe, PayPal, Plaid, ACH, SWIFT, SEPA, Visa/Mastercard, or blockchain networks.
+  3. *Local-Only Audit Trail*: The `execute_payment` tool call writes strictly to an in-memory/JSON audit log and debits a simulated fake balance in `FakeWallet`.
+  4. *Pre-Execution Interception Hook*: The harness exposes a first-class `pre_tool_call_hook` allowing S16 content-scanning defense detectors to inspect and intercept tool calls *before* execution fires.
+
+### 4.2 Mock Agent Tool-Call Contract (Target for S15 Generate & S16 Defend)
+- **`MockShoppingAgent` Tool Signatures**:
+  1. `browse_page(url: str) -> Dict[str, Any]`
+     - *Input*: `url` string matching `^(mock|local|internal|sandbox)://`
+     - *Output*: `{ "status": "SUCCESS", "url": str, "title": str, "text_content": str, "metadata": dict }`
+  2. `get_wallet_balance() -> Dict[str, Any]`
+     - *Output*: `{ "wallet_id": str, "balance": float, "currency": "USD", "is_sandboxed": True }`
+  3. `add_to_cart(item_id: str, title: str, price: float, quantity: int = 1) -> Dict[str, Any]`
+     - *Output*: `{ "status": "ADDED_TO_CART", "cart_count": int, "item": { "item_id": str, "title": str, "price": float, "quantity": int, "total": float } }`
+  4. `inspect_cart() -> Dict[str, Any]`
+     - *Output*: `{ "items": list, "item_count": int, "cart_total": float, "currency": "USD" }`
+  5. `execute_payment(recipient: str, amount: float, currency: Optional[str] = "USD", memo: str = "", auth_token: Optional[str] = None) -> PaymentResult`
+     - *Inputs*:
+       - `recipient`: String identifier of recipient (must be local mock identifier, e.g. `"merchant_aerosound_991"` or attacker alias `"attacker_wallet_0x99"`). External URLs/gateways raise `SandboxSecurityViolation`.
+       - `amount`: Strictly positive float <= current balance.
+       - `currency`: String (default `"USD"`).
+       - `memo`: Optional audit memo string.
+       - `auth_token`: Optional simulated token. Live API keys raise `SandboxSecurityViolation`.
+     - *Output*: `PaymentResult` object (`payment_id`, `recipient`, `amount`, `currency`, `memo`, `status`, `initial_balance`, `new_balance`, `timestamp`, `is_sandboxed_simulation`, `rejection_reason`).
+  6. `complete_task(status: str, summary: str) -> Dict[str, Any]`
+     - *Output*: `{ "status": str, "summary": str, "timestamp": str }`
+
+### 4.3 Pre-Execution Defense Hook Contract (Target for S16 Defend)
+- **Hook Type Signature**: `Callable[[ToolCall, Optional[PageContent], Dict[str, Any]], Tuple[bool, Optional[str], Optional[str]]]`
+- **Parameters Passed to Hook**:
+  - `tool_call`: `ToolCall(call_id, tool_name, arguments, timestamp)`
+  - `page`: `Optional[PageContent]` representing the current page the agent is acting upon.
+  - `context`: `Dict[str, Any]` containing the user's initial task prompt and intent.
+- **Hook Return Tuple**: `(is_blocked: bool, verdict: Optional[str], reason: Optional[str])`
+  - If `is_blocked == True`: Agent halts tool execution before reaching `FakeWallet`, sets `defense_intercepted = True`, and marks session status as `DEFENDED`. Fake balance remains completely untouched.
+  - If `is_blocked == False`: Tool call proceeds to `FakeWallet.execute_payment`.
+
+### 4.4 Data Model Schemas
+- **`PageContent`**: `{ url: str, title: str, text_content: str, html_body: str, metadata: dict, hidden_text_elements: list[str], injected_directives: list[str] }`
+- **`PaymentResult`**: `{ payment_id: str, recipient: str, amount: float, currency: str, memo: str, status: "SUCCESS" | "INSUFFICIENT_FUNDS" | "BLOCKED_BY_DEFENSE" | "REJECTED_BY_SANDBOX", initial_balance: float, new_balance: float, timestamp: str, is_sandboxed_simulation: bool, rejection_reason: Optional[str] }`
+- **`ExecutionTrace`**: `{ session_id: str, task_prompt: str, start_url: Optional[str], created_at: str, steps: list[AgentStep], initial_wallet_balance: float, final_wallet_balance: float, total_amount_debited: float, final_status: "COMPLETED" | "HIJACKED" | "DEFENDED" | "FAILED", audit_log: list[dict] }`
+
+### 4.5 Generate & Defend Module Specifications (S15–S17)
+- **Generate (`generate/agentic/generator.py` - S15)**:
+  - *CLI Invocation*: `.venv/bin/python generate/agentic/generator.py [--n 200] [--seed 42] [--injection-rate 0.60] [--output data/generated/agentic_batch.json] [--summary]`
+  - *Python API*: `from generate.agentic import VectorCGenerator; gen = VectorCGenerator(seed=42); batch = gen.generate_batch(n=200, injection_rate=0.60)`
+  - *Inputs*: Attack intent, evasion mutation level, prompt injection templates from Taxonomy §2.3/§3.3 (hidden markdown, visually-concealed CSS, HTML comments, Unicode zero-width sequences, invoice memos).
+  - *Outputs*: Generated injection payloads and test cases (`data/generated/agentic_batch.json` for standard batch seed 42, `data/generated/agentic_heldout_batch.json` for held-out test seed 2026) targeting `MockShoppingAgent`.
+  - *Guaranteed Batch Fields*: `batch_id`, `generated_at`, `generator_version`, `total_records`, `injection_count`, `legitimate_count`, `injection_rate`, `generation_seed`, `scenarios`.
+  - *Guaranteed Scenario Fields*: `payload_id`, `technique_id`, `injection_type`, `evasion_tier`, `ground_truth` (`is_injection`, `expected_hijack_outcome`), `target_tool`, `target_recipient`, `target_amount`, `target_memo`, `raw_payload`, `task_prompt`, `page_spec` (`url`, `title`, `text_content`, `html_body`, `metadata`, `hidden_text_elements`, `injected_directives`).
+- **Defend (`defend/agentic/detector.py` - S16)**:
+  - *CLI Invocation*: `.venv/bin/python defend/agentic/detector.py [--input <path>] [--output <path>] [--threshold 0.50] [--summary]`
+  - *Python API*: `from defend.agentic import VectorCDetector; detector = VectorCDetector(block_threshold=0.50); decisions, summary = detector.scan_batch(scenarios)`
+  - *Pre-Execution Hook API*: `hook = detector.get_pre_tool_call_hook(); agent = MockShoppingAgent(pre_tool_call_hook=hook)`
+  - *Inputs*: Page content, user prompt intent, and candidate `ToolCall` arguments.
+  - *Outputs*: Threat inspection result (`defend/agentic/results.json`) and registered pre-execution hook.
+  - *Guaranteed Result Fields*: `payload_id`, `is_injection` (boolean), `confidence_score` (0.0–1.0), `verdict` (`ALLOW` | `BLOCK`), `matched_signature_or_heuristic`, `sanitized_content`, `sub_scores` (`concealment_risk`, `imperative_override_risk`, `parameter_divergence_risk`, `invoice_poisoning_risk`), `signals_detected`, `evaluated_at`.
+- **Evaluation & Metrics Engine (`defend/agentic/evaluate.py` - S17)**:
+  - *CLI Invocation*: `.venv/bin/python defend/agentic/evaluate.py [--input <path>] [--output-json defend/agentic/metrics.json] [--output-report defend/agentic/eval_report.md] [--threshold 0.50]`
+  - *Python API*: `from defend.agentic import VectorCEvaluator; evaluator = VectorCEvaluator(); metrics = evaluator.evaluate_file("data/generated/agentic_heldout_batch.json")`
+  - *Inputs*: Held-out synthetic test batch (`data/generated/agentic_heldout_batch.json`, seed 2026).
+  - *Outputs*: Machine-readable metrics JSON ([defend/agentic/metrics.json](file:///Users/sanjaywaradkar/TRIAD/defend/agentic/metrics.json)) and human-readable Markdown evaluation report ([defend/agentic/eval_report.md](file:///Users/sanjaywaradkar/TRIAD/defend/agentic/eval_report.md)).
+  - *Guaranteed JSON Fields in `defend/agentic/metrics.json`*:
+    - `vector_id`: `"C"`
+    - `vector_name`: `"Agentic Payment Hijacking & Indirect Prompt Injection"`
+    - `evaluated_at`: ISO 8601 UTC timestamp.
+    - `model_metadata`: `{ name, version, block_threshold, rules_and_heuristics }`
+    - `dataset_metadata`: `{ split_name, dataset_path, generation_seed, total_samples, class_balance, archetype_distribution }`
+    - `summary_metrics`: `{ precision, recall, f1_score, false_positive_rate, specificity, accuracy, roc_auc, pr_auc, missed_detection_rate }`
+    - `operational_detection`: `{ threshold: 0.50, policy_description, confusion_matrix: { true_positives, false_positives, true_negatives, false_negatives, total_samples }, metrics }`
+    - `strict_block`: Confusion matrix & metrics for autonomous interception.
+    - `confusion_matrix_3x3`: Ground truth (`BENCHMARK_LEGITIMATE`, `TIER_1_DIRECT_OVERRIDE`, `TIER_2_CONCEALED_STRUCTURAL`, `TIER_3_SEMANTIC_PRETEXT`) vs Verdict (`ALLOW`, `BLOCK`).
+    - `tier_distribution`: Per-tier counts, recall, missed-detection rate.
+    - `archetype_breakdown`: Per-archetype statistics across all 5 injection types and clean baselines.
+    - `sub_score_distributions`: Statistical distributions for each risk sub-score.
+    - `adversarial_stress_test`: Stress test results across `scenario_a_obfuscated_css_and_comments`, `scenario_b_evasive_zero_width_and_delimiters`, and `scenario_c_legitimate_procurement_stress`.
+    - `investigation_notes`: Explicit notes emphasizing recall-focused security standard and zero balance loss.
+  - *Downstream Consumption Contract for S22 (API), S24/S25 (Dashboard/Agent View), S29 (Deck)*: The walkthrough deck draft (S29) and frontend API endpoints (S22) will consume `defend/agentic/metrics.json` directly.
 
 ---
 
