@@ -100,17 +100,26 @@ def main():
     assert_claim("Vector A Loop Initial Evasion", "0.00%", "Vector A Cycle 0 evasion rate (0.00%)")
     assert_claim("Vector A Loop Cycle 1 Evasion", "29.29%", "Vector A Cycle 1 evasion rate (29.29%)")
     assert_claim("Vector A Loop Cycle 2 Evasion", "67.86%", "Vector A Cycle 2 evasion rate (67.86%)")
+    assert_claim("Vector A Loop Cycle 3 Evasion", "7.14%", "Vector A Cycle 3 retrained evasion rate (7.14%)")
+    assert_claim("Vector A Loop Cycle 3 Recall", "92.86%", "Vector A Cycle 3 retrained recall rate (92.86%)")
     assert_claim("Vector A Loop Evasion Surge", "+67.86%", "Vector A net evasion surge (+67.86%)")
+    assert_claim("Vector A Loop Recovery Delta", "-60.71%", "Vector A recovery delta (-60.71%)")
 
     assert_claim("Vector B Loop Initial Evasion", "0.00%", "Vector B Cycle 0 evasion rate (0.00%)")
     assert_claim("Vector B Loop Cycle 1 Evasion", "28.75%", "Vector B Cycle 1 evasion rate (28.75%)")
     assert_claim("Vector B Loop Cycle 2 Evasion", "87.32%", "Vector B Cycle 2 evasion rate (87.32%)")
+    assert_claim("Vector B Loop Cycle 3 Evasion", "0.00%", "Vector B Cycle 3 retrained evasion rate (0.00%)")
+    assert_claim("Vector B Loop Cycle 3 Recall", "100.00%", "Vector B Cycle 3 retrained recall rate (100.00%)")
     assert_claim("Vector B Loop Evasion Surge", "+87.32%", "Vector B net evasion surge (+87.32%)")
+    assert_claim("Vector B Loop Recovery Delta", "-87.32%", "Vector B recovery delta (-87.32%)")
 
     assert_claim("Vector C Loop Initial Evasion", "0.00%", "Vector C Cycle 0 evasion rate (0.00%)")
     assert_claim("Vector C Loop Cycle 1 Evasion", "14.17%", "Vector C Cycle 1 evasion rate (14.17%)")
     assert_claim("Vector C Loop Cycle 2 Evasion", "83.33%", "Vector C Cycle 2 evasion rate (83.33%)")
+    assert_claim("Vector C Loop Cycle 3 Evasion", "4.17%", "Vector C Cycle 3 retrained evasion rate (4.17%)")
+    assert_claim("Vector C Loop Cycle 3 Recall", "95.83%", "Vector C Cycle 3 retrained recall rate (95.83%)")
     assert_claim("Vector C Loop Evasion Surge", "+83.33%", "Vector C net evasion surge (+83.33%)")
+    assert_claim("Vector C Loop Recovery Delta", "-79.17%", "Vector C recovery delta (-79.17%)")
 
     # 5. Feasibility & Latency Distributions
     assert_claim("REST API Median Latency", "5.23 ms", "REST API aggregate median response time (5.23 ms)")

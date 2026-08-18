@@ -13,7 +13,7 @@
   "detection_rate": 1.0,
   "precision": 1.0,
   "false_positive_rate": 0.0,
-  "mean_fraud_score": 0.9726,
+  "mean_fraud_score": 0.983,
   "mutations_applied": [
     {
       "parameter": "defend.transaction.classifier.gbdt_retraining",
@@ -30,7 +30,7 @@
   ],
   "evading_sample_ids": [],
   "cycle_summary": "Cycle 3 Adaptive Recovery: GBDT classifier retrained on Cycle 2 evading samples; detection recall recovered to 100.00% (evasion reduced to 0.00%).",
-  "executed_at": "2026-08-18T09:36:47.953249+00:00",
+  "executed_at": "2026-08-18T13:54:35.227127+00:00",
   "raw_batch_count": 200,
   "decisions_count": 200,
   "raw_batch": [
@@ -17638,163 +17638,163 @@
   "decisions": [
     {
       "transaction_id": "TXN-01000001",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($361.13), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000002",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($22.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000003",
-      "fraud_probability": 0.034,
+      "fraud_probability": 0.0215,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($906.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000004",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000005",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000006",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000007",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000008",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000009",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000010",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000011",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000012",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000013",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000014",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000015",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000016",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000017",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (R), standard ticket ($362.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000018",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $1.15 (Calibrated Fraud Risk: 97.3%).",
+      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $1.15 (Calibrated Fraud Risk: 98.3%).",
       "top_features": [
         {
           "feature_name": "is_declined",
@@ -17818,68 +17818,68 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000019",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000020",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000021",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000022",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000023",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000024",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000025",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $4.88 (Calibrated Fraud Risk: 97.3%).",
+      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $4.88 (Calibrated Fraud Risk: 98.3%).",
       "top_features": [
         {
           "feature_name": "is_declined",
@@ -17903,185 +17903,185 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000026",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000027",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000028",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000029",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($64.80), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000030",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($10.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000031",
-      "fraud_probability": 0.0347,
+      "fraud_probability": 0.0219,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($469.53), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000032",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($62.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000033",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($72.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000034",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($216.99), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000035",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($7.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000036",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($65.04), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000037",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($80.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000038",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($22.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000039",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($272.40), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000040",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000041",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000042",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000043",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000044",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000045",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $0.81 (Calibrated Fraud Risk: 97.3%).",
+      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $0.81 (Calibrated Fraud Risk: 98.3%).",
       "top_features": [
         {
           "feature_name": "is_declined",
@@ -18105,113 +18105,113 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000046",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000047",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000048",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000049",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000050",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000051",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000052",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000053",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000054",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($468.20), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000055",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000056",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000057",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $3.82 (Calibrated Fraud Risk: 97.3%).",
+      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $3.82 (Calibrated Fraud Risk: 98.3%).",
       "top_features": [
         {
           "feature_name": "is_declined",
@@ -18235,194 +18235,194 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000058",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000059",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000060",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000061",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000062",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000063",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000064",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000065",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000066",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000067",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000068",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000069",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000070",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000071",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000072",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000073",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000074",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000075",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000076",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000077",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000078",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $4.83 (Calibrated Fraud Risk: 97.3%).",
+      "primary_risk_driver": "High-risk anomaly: Gateway authorization failure (ISO 8583 rejection code); Low-ticket micro-authorization probing amount: $4.83 (Calibrated Fraud Risk: 98.3%).",
       "top_features": [
         {
           "feature_name": "is_declined",
@@ -18446,86 +18446,86 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000079",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000080",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000081",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000082",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000083",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000084",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000085",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000086",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 97.3%).",
+      "primary_risk_driver": "Statistical behavioral anomaly in tabular velocity and channel distribution (Calibrated Risk: 98.3%).",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000087",
-      "fraud_probability": 0.9726,
+      "fraud_probability": 0.983,
       "action": "BLOCK",
       "risk_tier": "HIGH_RISK",
-      "primary_risk_driver": "High-risk anomaly: Deterministic balance liquidation: 100% account balance drained ($2.89 -> $0.00) (Calibrated Fraud Risk: 97.3%).",
+      "primary_risk_driver": "High-risk anomaly: Deterministic balance liquidation: 100% account balance drained ($2.89 -> $0.00) (Calibrated Fraud Risk: 98.3%).",
       "top_features": [
         {
           "feature_name": "is_exact_balance_drain",
@@ -18535,605 +18535,605 @@
           "impact_score": 0.95
         }
       ],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000088",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0164,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($43.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000089",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($32.52), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000090",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($44.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000091",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($255.86), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000092",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($26.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000093",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($629.67), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000094",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($40.11), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000095",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($67.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000096",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($149.87), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000097",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($32.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000098",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($174.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000099",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($147.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000100",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($94.58), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000101",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0176,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($110.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000102",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($42.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000103",
-      "fraud_probability": 0.034,
+      "fraud_probability": 0.0215,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($643.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000104",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($70.90), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000105",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($76.99), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000106",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($47.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000107",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($168.36), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000108",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($5.49), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000109",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($182.75), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000110",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($131.15), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000111",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($318.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000112",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($264.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000113",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($25.13), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000114",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($43.68), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000115",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($54.27), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000116",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (R), standard ticket ($367.33), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000117",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($49.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000118",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($99.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000119",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($146.07), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000120",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($465.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000121",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($70.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000122",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (R), standard ticket ($230.81), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000123",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0167,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($8.69), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000124",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($24.31), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000125",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($122.27), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000126",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($53.35), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000127",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($88.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000128",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($69.10), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000129",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0205,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($760.34), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000130",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($7.14), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000131",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($26.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000132",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($225.31), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000133",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($161.50), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000134",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($795.08), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000135",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($6.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000136",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($23.70), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000137",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($74.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000138",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($97.91), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000139",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0176,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($146.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000140",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0205,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($197.82), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000141",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0176,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($7.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000142",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($9.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000143",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0176,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($111.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000144",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($44.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000145",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($84.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000146",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0167,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($39.27), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000147",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($356.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000148",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($17.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000149",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0165,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($197.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000150",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($145.53), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000151",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($85.47), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000152",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0176,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($60.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000153",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($160.10), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000154",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($3.53), nominal velocity counters.",
@@ -19146,421 +19146,421 @@
           "impact_score": 0.7
         }
       ],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000155",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($92.12), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000156",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($79.88), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000157",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($252.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000158",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($104.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000159",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($35.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000160",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($49.46), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000161",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($35.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000162",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($9.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000163",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($28.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000164",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0176,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($27.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000165",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($399.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000166",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($120.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000167",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($11.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000168",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($339.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000169",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($98.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000170",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($207.52), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000171",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($307.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000172",
-      "fraud_probability": 0.0445,
+      "fraud_probability": 0.0311,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($300.23), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000173",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($133.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000174",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($54.17), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000175",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($49.52), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000176",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0167,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($10.26), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000177",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($28.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000178",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($68.13), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000179",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (R), standard ticket ($30.86), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000180",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($26.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000181",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($72.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000182",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($28.42), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000183",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($583.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000184",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($107.33), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000185",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($39.80), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000186",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($71.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000187",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($265.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000188",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($161.16), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000189",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($25.78), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000190",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($25.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000191",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0172,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($38.93), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000192",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($107.49), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000193",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($16.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000194",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($250.88), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000195",
-      "fraud_probability": 0.0275,
+      "fraud_probability": 0.0168,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($102.25), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000196",
-      "fraud_probability": 0.027,
+      "fraud_probability": 0.0169,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($15.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000197",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($24.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000198",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($20.76), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000199",
-      "fraud_probability": 0.0294,
+      "fraud_probability": 0.018,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($24.42), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     },
     {
       "transaction_id": "TXN-01000200",
-      "fraud_probability": 0.0289,
+      "fraud_probability": 0.0177,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($100.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-18T09:36:47.934724+00:00"
+      "evaluated_at": "2026-08-18T13:54:35.210274+00:00"
     }
   ]
 }

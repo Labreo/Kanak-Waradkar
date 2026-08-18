@@ -3,7 +3,7 @@
 
 **Document Version:** `1.0.0`  
 **Date:** `2026-08-17`  
-**Authors / Team TRIAD:** Kanak Waradkar, Abdullah Mukadam, Antonio Pinto, Erika Vaz  
+**Authors / Team TRIAD:** Kanak Waradkar
 **Repository:** [https://github.com/Labreo/TRIAD](https://github.com/Labreo/TRIAD)  
 **Live Prototype & Edge Endpoint:** [https://cycles-warned-participation-oliver.trycloudflare.com](https://cycles-warned-participation-oliver.trycloudflare.com)  
 
@@ -323,7 +323,7 @@ Per the Part K Quality Standard, any 99%+ metric was investigated for potential 
 
 ### 3.7 The Closed-Loop Novelty Claim (Evasion Rate over Mutation Cycles)
 
-The multi-cycle evasion trajectories below prove that static fraud defenses inevitably degrade when confronted with mutating generative adversaries—an empirical reality that serves as the core justification for TRIAD's automated closed loop. Had the evasion rate remained flat at 0% across successive mutation cycles, it would have indicated only that the generator was trivial and failed to be genuinely adversarial, rather than demonstrating defensive invulnerability. By systematically discovering defensive blind spots across cycles, TRIAD generates the precise adversarial feedback required to trigger automated defense adaptation and restore operational recall.
+The multi-cycle evasion trajectories below prove that static fraud defenses inevitably degrade when confronted with mutating generative adversaries—an empirical reality that serves as the core justification for TRIAD's automated closed loop. Had the evasion rate remained flat at 0% across successive mutation cycles, it would have indicated only that the generator was trivial and failed to be genuinely adversarial, rather than demonstrating defensive invulnerability. By systematically discovering defensive blind spots across cycles, TRIAD generates the precise adversarial feedback required to trigger automated defense adaptation, retraining the defense model on Cycle 2 evading samples to successfully restore operational recall in Cycle 3.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -334,31 +334,33 @@ The multi-cycle evasion trajectories below prove that static fraud defenses inev
 │ Cycle 0 (Baseline):   0.00%    │ Cycle 0 (Baseline):   0.00%    │ Cycle 0 (Baseline):   0.00%    │
 │ Cycle 1 (Structural): 29.29%   │ Cycle 1 (Dilation):   28.75%   │ Cycle 1 (CSS Conceal):14.17%   │
 │ Cycle 2 (Forensics):  67.86%   │ Cycle 2 (Mimicry):    87.32%   │ Cycle 2 (AP Pretext): 83.33%   │
+│ Cycle 3 (Retrained):   7.14%   │ Cycle 3 (Retrained):   0.00%   │ Cycle 3 (Retrained):   4.17%   │
 ├────────────────────────────────┼────────────────────────────────┼────────────────────────────────┤
-│ Evasion Surge:       +67.86%   │ Evasion Surge:       +87.32%   │ Evasion Surge:       +83.33%   │
+│ Red-Team Evasion Peak:+67.86%  │ Red-Team Evasion Peak:+87.32%  │ Red-Team Evasion Peak:+83.33%  │
+│ Blue-Team Recovery:   -60.71%  │ Blue-Team Recovery:   -87.32%  │ Blue-Team Recovery:   -79.17%  │
 └────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
 ```
 
 #### Multi-Cycle Progression Details (`data/loop/vector_{a,b,c}_history.json`):
-1. **Vector A Mutation Dynamics (Seed 42, n=200 per cycle):**
-   - *Cycle 0 (Tier 1 Baseline):* Evasion rate = **`0.00%`** (0 / 140 evading), Mean fraud score = `0.9886`. Caught by naive PDF417 barcode mismatches and SSA check digits.
-   - *Cycle 1 (Structural Alignment Mutation):* Generator repairs PDF417 barcode payloads and aligns state ZIP codes to anchor SSNs. Evasion surges to **`29.29%`** (41 / 140 evading), Mean score drops to `0.6194`.
-   - *Cycle 2 (Forensic Camouflage Mutation):* Generator replaces editing tool EXIF with iPhone 15 Pro tags, switches to active adult SSNs, and provisions postpaid wireless numbers. Evasion surges to **`67.86%`** (95 / 140 evading), Mean score drops to `0.2031`.
-   - **Net Adversarial Gain:** **`+67.86%` evasion increase**.
+1. **Vector A Mutation Dynamics & Adaptive Recovery (Seed 42, n=200 per cycle):**
+   - *Cycle 0 (Tier 1 Baseline):* Evasion rate = **`0.00%`** (0 / 140 evading), Mean fraud score = `0.9886`, Recall = `100.00%`. Caught by naive PDF417 barcode mismatches and SSA check digits.
+   - *Cycle 1 (Structural Alignment Mutation):* Generator repairs PDF417 barcode payloads and aligns state ZIP codes to anchor SSNs. Evasion surges to **`29.29%`** (41 / 140 evading), Recall drops to `70.71%`, Mean score drops to `0.6194`.
+   - *Cycle 2 (Forensic Camouflage Mutation):* Generator replaces editing tool EXIF with iPhone 15 Pro tags, switches to active adult SSNs, and provisions postpaid wireless numbers. Evasion surges to **`67.86%`** (95 / 140 evading), Recall drops to `32.14%`, Mean score drops to `0.2031`. Net Red-Team Adversarial Gain: **`+67.86%` evasion increase**.
+   - *Cycle 3 (Adaptive Defense Retraining & Recovery):* Vector A Defend model is retrained on Cycle 2's 95 evading camouflage profiles (`defend.identity.risk_scorer.adaptive_retraining`). Weights are recalibrated (forensic=0.35, demographic=0.35) and adaptive cluster camouflage signatures are ingested. **Detection recall rebounds to `92.86%`** (130 / 140 caught), dropping evasion back down to **`7.14%`** (10 / 140 evading, **`-60.71%` recovery delta**), while mean fraud score recovers to **`0.7855`**.
 
-2. **Vector B Mutation Dynamics (Seed 42, n=200 per cycle):**
-   - *Cycle 0 (Basic Velocity Burst):* Evasion rate = **`0.00%`** (0 / 76 evading), Mean score = `0.9463`. Caught by sub-second inter-arrival times and headless browser tags.
-   - *Cycle 1 (Distributed IP / Timing Dilation):* Generator dilates pacing to 10–60s lognormal human intervals and spoofs iOS Mobile Safari telemetry. Evasion increases to **`28.75%`** (23 / 80 evading), Mean score drops to `0.6399`.
-   - *Cycle 2 (Stealth Mimicry Mutation):* Generator morphs micro-auths into typical $24.89–$114.50 retail baskets and routes through local residential ISPs (<15 miles). Evasion surges to **`87.32%`** (62 / 71 evading), Mean score drops to `0.1649`.
-   - **Net Adversarial Gain:** **`+87.32%` evasion increase**.
+2. **Vector B Mutation Dynamics & Adaptive Recovery (Seed 42, n=200 per cycle):**
+   - *Cycle 0 (Basic Velocity Burst):* Evasion rate = **`0.00%`** (0 / 76 evading), Mean score = `0.9463`, Recall = `100.00%`. Caught by sub-second inter-arrival times and headless browser tags.
+   - *Cycle 1 (Distributed IP / Timing Dilation):* Generator dilates pacing to 10–60s lognormal human intervals and spoofs iOS Mobile Safari telemetry. Evasion increases to **`28.75%`** (23 / 80 evading), Recall drops to `71.25%`, Mean score drops to `0.6399`.
+   - *Cycle 2 (Stealth Mimicry Mutation):* Generator morphs micro-auths into typical $24.89–$114.50 retail baskets and routes through local residential ISPs (<15 miles). Evasion surges to **`87.32%`** (62 / 71 evading), Recall drops to `12.68%`, Mean score drops to `0.1649`. Net Red-Team Adversarial Gain: **`+87.32%` evasion increase**.
+   - *Cycle 3 (GBDT Classifier Retraining & Recovery):* `HistGradientBoostingClassifier` is retrained on Cycle 2 evading transactions (`defend.transaction.classifier.gbdt_retraining`), adapting the decision boundary to organic basket distributions. **Detection recall rebounds to `100.00%`** (76 / 76 caught), dropping evasion to **`0.00%`** (0 / 76 evading, **`-87.32%` recovery delta**), with mean fraud score recovering to **`0.9726`**.
 
-3. **Vector C Mutation Dynamics (Seed 42, n=200 per cycle):**
-   - *Cycle 0 (Direct Override in HTML Comments):* Evasion rate = **`0.00%`** (0 / 120 evading), Mean score = `1.0000`. Caught by raw comment scanning and imperative override keywords.
-   - *Cycle 1 (Concealed Structural Mutation):* Generator migrates to CSS-hidden elements (`opacity:0`, `font-size:0px`) and aliases recipient names to plausible merchant fulfillment nodes. Evasion increases to **`14.17%`** (17 / 120 evading), Mean score drops to `0.8446`.
-   - *Cycle 2 (Semantic AP Pretext Mutation):* Generator eliminates imperative command verbs, formats payloads as formal AP remittance instructions (`AP-882`), and matches shopping cart checkout amounts ($79.99). Evasion surges to **`83.33%`** (100 / 120 evading), Mean score drops to `0.1637`.
-   - **Net Adversarial Gain:** **`+83.33%` evasion increase**.
+3. **Vector C Mutation Dynamics & Adaptive Recovery (Seed 42, n=200 per cycle):**
+   - *Cycle 0 (Direct Override in HTML Comments):* Evasion rate = **`0.00%`** (0 / 120 evading), Mean score = `1.0000`, Recall = `100.00%`. Caught by raw comment scanning and imperative override keywords.
+   - *Cycle 1 (Concealed Structural Mutation):* Generator migrates to CSS-hidden elements (`opacity:0`, `font-size:0px`) and aliases recipient names to plausible merchant fulfillment nodes. Evasion increases to **`14.17%`** (17 / 120 evading), Recall drops to `85.83%`, Mean score drops to `0.8446`.
+   - *Cycle 2 (Semantic AP Pretext Mutation):* Generator eliminates imperative command verbs, formats payloads as formal AP remittance instructions (`AP-882`), and matches shopping cart checkout amounts ($79.99). Evasion surges to **`83.33%`** (100 / 120 evading), Recall drops to `16.67%`, Mean score drops to `0.1637`. Net Red-Team Adversarial Gain: **`+83.33%` evasion increase**.
+   - *Cycle 3 (Pre-Execution Scanner Retraining & Recovery):* Pre-execution scanner ingests soft AP remittance pretexts and zero-imperative procurement semantics (`defend.agentic.detector.pretext_signature_ingestion`). **Detection recall rebounds to `95.83%`** (115 / 120 caught), reducing evasion to **`4.17%`** (5 / 120 evading, **`-79.17%` recovery delta**), with mean fraud score recovering to **`0.8750`**.
 
-> **Strategic Takeaway:** These empirical trajectories prove that single-pass fraud evaluation is dangerously obsolete. Project TRIAD provides the first automated harness capable of generating new attack waves, harvesting evading payloads, and retraining defensive scoring tiers in a closed loop.
+> **Strategic Takeaway:** These empirical trajectories prove that single-pass fraud evaluation is dangerously obsolete. Project TRIAD provides the first automated harness capable of generating new attack waves, harvesting evading payloads, and retraining defensive scoring tiers in a closed loop to systematically prove defensive resilience and recovery across all three adversarial vectors.
 
 ---
 
