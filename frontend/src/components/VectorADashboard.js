@@ -62,7 +62,7 @@ export class VectorADashboard {
             <div class="dashboard-hero-stats" id="v-a-stats-ribbon">
               <div class="stat-tile">
                 <span class="stat-tile-label">DEFENSE RECALL</span>
-                <span class="stat-tile-val mono-data accent-cyan">100.0%</span>
+                <span class="stat-tile-val mono-data">100.0%</span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">FALSE POSITIVES</span>
@@ -223,7 +223,7 @@ export class VectorADashboard {
     ribbon.innerHTML = `
       <div class="stat-tile">
         <span class="stat-tile-label">DEFENSE RECALL</span>
-        <span class="stat-tile-val mono-data accent-cyan">${recall}%</span>
+        <span class="stat-tile-val mono-data">${recall}%</span>
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">FALSE POSITIVES</span>
@@ -231,7 +231,7 @@ export class VectorADashboard {
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">MALICIOUS CAUGHT</span>
-        <span class="stat-tile-val mono-data accent-amber">${mal} / ${total}</span>
+        <span class="stat-tile-val mono-data accent-cyan">${mal} / ${total}</span>
       </div>
     `;
   }
@@ -446,65 +446,82 @@ export class VectorADashboard {
         </div>
       </div>
 
-      <!-- Document Forensics Inspection -->
-      <div class="inspector-section">
-        <div class="section-head-mini">
-          <span>Digital Document Forensics</span>
-          <span class="section-badge">AAMVA PDF417 / EXIF</span>
-        </div>
-        <div class="forensics-grid">
-          <div class="forensics-item">
-            <span class="forensics-label">PDF417 Barcode Match</span>
-            <span class="forensics-val ${checksums.barcode_pdf417_payload_match ? 'pass' : 'fail'}">${checksums.barcode_pdf417_payload_match ? 'PARITY MATCH' : 'MISMATCH'}</span>
-          </div>
-          <div class="forensics-item">
-            <span class="forensics-label">MRZ Check Digits</span>
-            <span class="forensics-val ${checksums.mrz_check_digits_match ? 'pass' : 'fail'}">${checksums.mrz_check_digits_match ? 'VALID' : 'INVALID'}</span>
-          </div>
-          <div class="forensics-item">
-            <span class="forensics-label">Algorithmic Checksum</span>
-            <span class="forensics-val ${checksums.algorithmic_checksum_valid ? 'pass' : 'fail'}">${checksums.algorithmic_checksum_valid ? 'PASS' : 'FAIL'}</span>
-          </div>
-          <div class="forensics-item">
-            <span class="forensics-label">EXIF Software Header</span>
-            <span class="forensics-val mono-data ${exif.exif_software_header && exif.exif_software_header.includes('wkhtmltopdf') ? 'fail' : 'pass'}" style="font-size:10px;">${exif.exif_software_header || 'Canon Twain'}</span>
-          </div>
-          <div class="forensics-item">
-            <span class="forensics-label">Font Kerning Anomaly</span>
-            <span class="forensics-val mono-data ${(layout.font_kerning_anomaly_score || 0) > 0.4 ? 'warn' : 'pass'}">${(layout.font_kerning_anomaly_score || 0).toFixed(3)}</span>
-          </div>
-          <div class="forensics-item">
-            <span class="forensics-label">Photo Tamper Score</span>
-            <span class="forensics-val mono-data ${(layout.photo_tamper_artifact_score || 0) > 0.4 ? 'warn' : 'pass'}">${(layout.photo_tamper_artifact_score || 0).toFixed(3)}</span>
-          </div>
-        </div>
-      </div>
+      <!-- Secondary Deep Forensics (Collapsible behind Single Expand Action) -->
+      <button type="button" class="drawer-expand-btn" id="v-a-toggle-forensics">
+        <span>Deep Document Forensics &amp; Risk Signals (${factors.length})</span>
+        <span class="expand-icon" aria-hidden="true">▾</span>
+      </button>
 
-      <!-- Contributing Factors Breakdown -->
-      <div class="inspector-section">
-        <div class="section-head-mini">
-          <span>Contributing Risk Signals</span>
-          <span class="section-badge">${factors.length} DETECTED</span>
+      <div class="drawer-collapsible-content collapsed" id="v-a-forensics-collapsible">
+        <!-- Document Forensics Inspection -->
+        <div class="inspector-section">
+          <div class="section-head-mini">
+            <span>Digital Document Forensics</span>
+            <span class="section-badge">AAMVA PDF417 / EXIF</span>
+          </div>
+          <div class="forensics-grid">
+            <div class="forensics-item">
+              <span class="forensics-label">PDF417 Barcode Match</span>
+              <span class="forensics-val ${checksums.barcode_pdf417_payload_match ? 'pass' : 'fail'}">${checksums.barcode_pdf417_payload_match ? 'PARITY MATCH' : 'MISMATCH'}</span>
+            </div>
+            <div class="forensics-item">
+              <span class="forensics-label">MRZ Check Digits</span>
+              <span class="forensics-val ${checksums.mrz_check_digits_match ? 'pass' : 'fail'}">${checksums.mrz_check_digits_match ? 'VALID' : 'INVALID'}</span>
+            </div>
+            <div class="forensics-item">
+              <span class="forensics-label">Algorithmic Checksum</span>
+              <span class="forensics-val ${checksums.algorithmic_checksum_valid ? 'pass' : 'fail'}">${checksums.algorithmic_checksum_valid ? 'PASS' : 'FAIL'}</span>
+            </div>
+            <div class="forensics-item">
+              <span class="forensics-label">EXIF Software Header</span>
+              <span class="forensics-val mono-data ${exif.exif_software_header && exif.exif_software_header.includes('wkhtmltopdf') ? 'fail' : 'pass'}" style="font-size:10px;">${exif.exif_software_header || 'Canon Twain'}</span>
+            </div>
+            <div class="forensics-item">
+              <span class="forensics-label">Font Kerning Anomaly</span>
+              <span class="forensics-val mono-data ${(layout.font_kerning_anomaly_score || 0) > 0.4 ? 'warn' : 'pass'}">${(layout.font_kerning_anomaly_score || 0).toFixed(3)}</span>
+            </div>
+            <div class="forensics-item">
+              <span class="forensics-label">Photo Tamper Score</span>
+              <span class="forensics-val mono-data ${(layout.photo_tamper_artifact_score || 0) > 0.4 ? 'warn' : 'pass'}">${(layout.photo_tamper_artifact_score || 0).toFixed(3)}</span>
+            </div>
+          </div>
         </div>
-        <div class="factors-list">
-          ${factors.length === 0 ? '<span style="color:var(--status-allow); font-size:12px;">No risk signals detected. Profile passed all verification gates.</span>' : ''}
-          ${factors.map(f => {
-            const sevClass = f.severity === 'CRITICAL' ? 'severity-critical' : f.severity === 'HIGH' ? 'severity-high' : f.severity === 'MEDIUM' ? 'severity-medium' : 'severity-low';
-            return `
-              <div class="factor-row">
-                <div class="factor-desc">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                    <span class="severity-tag ${sevClass}">${f.severity}</span>
-                    <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">${f.tier}</span>
+
+        <!-- Contributing Factors Breakdown -->
+        <div class="inspector-section">
+          <div class="section-head-mini">
+            <span>Contributing Risk Signals</span>
+            <span class="section-badge">${factors.length} DETECTED</span>
+          </div>
+          <div class="factors-list">
+            ${factors.length === 0 ? '<span style="color:var(--status-allow); font-size:12px;">No risk signals detected. Profile passed all verification gates.</span>' : ''}
+            ${factors.map(f => {
+              const sevClass = f.severity === 'CRITICAL' ? 'severity-critical' : f.severity === 'HIGH' ? 'severity-high' : f.severity === 'MEDIUM' ? 'severity-medium' : 'severity-low';
+              return `
+                <div class="factor-row">
+                  <div class="factor-desc">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                      <span class="severity-tag ${sevClass}">${f.severity}</span>
+                      <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">${f.tier}</span>
+                    </div>
+                    <span>${f.description}</span>
                   </div>
-                  <span>${f.description}</span>
+                  <span class="factor-impact mono-data">+${f.impact.toFixed(2)}</span>
                 </div>
-                <span class="factor-impact mono-data">+${f.impact.toFixed(2)}</span>
-              </div>
-            `;
-          }).join('')}
+              `;
+            }).join('')}
+          </div>
         </div>
       </div>
     `;
+
+    // Bind collapsible toggle
+    const toggleBtn = inspector.querySelector('#v-a-toggle-forensics');
+    const collapsible = inspector.querySelector('#v-a-forensics-collapsible');
+    toggleBtn?.addEventListener('click', () => {
+      const isCollapsed = collapsible.classList.contains('collapsed');
+      collapsible.classList.toggle('collapsed', !isCollapsed);
+      toggleBtn.classList.toggle('active', isCollapsed);
+    });
   }
 }

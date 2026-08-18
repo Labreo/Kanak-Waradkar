@@ -15,7 +15,7 @@ import {
 export class Router {
   constructor(viewRootElement) {
     this.viewRoot = viewRootElement;
-    this.currentView = 'overview';
+    this.currentView = null;
     this.routes = {
       'overview': renderOverviewView,
       'vector-a': renderVectorAShell,
@@ -28,12 +28,11 @@ export class Router {
   }
 
   init() {
-    // Listen to hash changes in browser URL
+    // Single source of truth: listen to hash changes in browser URL
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.replace('#', '').trim();
-      if (this.routes[hash]) {
-        this.navigate(hash, false);
-      }
+      const target = this.routes[hash] ? hash : 'overview';
+      this.navigate(target, false);
     });
 
     // Listen to navigation tab button clicks
@@ -41,7 +40,7 @@ export class Router {
     navTabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const viewId = tab.getAttribute('data-view');
-        this.navigate(viewId);
+        this.navigate(viewId, true);
       });
     });
 
@@ -52,20 +51,17 @@ export class Router {
         return;
       }
 
-      if (e.key === '1') this.navigate('overview');
-      else if (e.key === '2') this.navigate('vector-a');
-      else if (e.key === '3') this.navigate('vector-b');
-      else if (e.key === '4') this.navigate('vector-c');
-      else if (e.key === '5') this.navigate('loop');
+      if (e.key === '1') this.navigate('overview', true);
+      else if (e.key === '2') this.navigate('vector-a', true);
+      else if (e.key === '3') this.navigate('vector-b', true);
+      else if (e.key === '4') this.navigate('vector-c', true);
+      else if (e.key === '5') this.navigate('loop', true);
     });
 
     // Initial load from URL hash or default to overview
     const initialHash = window.location.hash.replace('#', '').trim();
-    if (this.routes[initialHash]) {
-      this.navigate(initialHash, false);
-    } else {
-      this.navigate('overview', true);
-    }
+    const initialTarget = this.routes[initialHash] ? initialHash : 'overview';
+    this.navigate(initialTarget, false);
   }
 
   navigate(viewId, updateHash = true) {
@@ -73,11 +69,18 @@ export class Router {
       viewId = 'overview';
     }
 
-    this.currentView = viewId;
-
-    if (updateHash) {
-      window.location.hash = viewId;
+    // Prevent redundant execution if view is already rendered and target matches
+    if (this.currentView === viewId && this.viewRoot.hasChildNodes() && !updateHash) {
+      return;
     }
+
+    if (updateHash && window.location.hash !== `#${viewId}`) {
+      window.location.hash = viewId;
+      // hashchange event listener will trigger navigate(viewId, false) cleanly
+      return;
+    }
+
+    this.currentView = viewId;
 
     // Update active tab styling in header
     document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -87,7 +90,19 @@ export class Router {
       tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
 
-    // Clear and render new view
+    // Synchronize global header cycle status based on active view context
+    if (typeof document !== 'undefined') {
+      const headerCycle = document.querySelector('#header-cycle-val');
+      if (headerCycle) {
+        if (viewId === 'vector-a') headerCycle.textContent = 'C2 // MUTATED (VECT A)';
+        else if (viewId === 'vector-b') headerCycle.textContent = 'C2 // ORGANIC (VECT B)';
+        else if (viewId === 'vector-c') headerCycle.textContent = 'C2 // PRETEXT (VECT C)';
+        else if (viewId === 'loop') headerCycle.textContent = 'C2 // ADAPTED';
+        else if (viewId === 'overview') headerCycle.textContent = 'C2 // ADAPTED';
+      }
+    }
+
+    // Clear and render new view exactly once
     this.viewRoot.innerHTML = '';
     const renderFn = this.routes[viewId];
     if (renderFn) {

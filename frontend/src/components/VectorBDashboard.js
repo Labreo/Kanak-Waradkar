@@ -52,7 +52,7 @@ export class VectorBDashboard {
                 <span class="footer-sep">/</span>
                 <span>VECTOR B</span>
                 <span class="footer-sep">/</span>
-                <span class="accent-amber">TRANSACTION &amp; CARD-TESTING FRAUD</span>
+                <span class="accent-cyan">TRANSACTION &amp; CARD-TESTING FRAUD</span>
               </div>
               <h1 class="view-hero-title">Vector B: Card-Testing &amp; Velocity Burst Stream</h1>
               <p class="hub-description">
@@ -62,11 +62,11 @@ export class VectorBDashboard {
             <div class="dashboard-hero-stats" id="v-b-stats-ribbon">
               <div class="stat-tile">
                 <span class="stat-tile-label">OPERATIONAL AUC</span>
-                <span class="stat-tile-val mono-data accent-cyan">0.9336</span>
+                <span class="stat-tile-val mono-data">0.9336</span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">BURST RECALL</span>
-                <span class="stat-tile-val mono-data accent-amber">89.86%</span>
+                <span class="stat-tile-val mono-data accent-cyan">89.86%</span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">EVAL BENCHMARK</span>
@@ -225,11 +225,11 @@ export class VectorBDashboard {
     ribbon.innerHTML = `
       <div class="stat-tile">
         <span class="stat-tile-label">OPERATIONAL AUC</span>
-        <span class="stat-tile-val mono-data accent-cyan">${auc}</span>
+        <span class="stat-tile-val mono-data">${auc}</span>
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">BURST RECALL</span>
-        <span class="stat-tile-val mono-data accent-amber">${recall}%</span>
+        <span class="stat-tile-val mono-data accent-cyan">${recall}%</span>
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">SYNTHETIC BATCH</span>
@@ -434,73 +434,90 @@ export class VectorBDashboard {
         </div>
       </div>
 
-      <!-- Feature Importance Attribution -->
-      <div class="inspector-section">
-        <div class="section-head-mini">
-          <span>Top GBDT Feature Attribution</span>
-          <span class="section-badge">HIST_GRADIENT_BOOST</span>
-        </div>
-        <div class="factors-list">
-          <div class="factor-row">
-            <div class="factor-desc">
-              <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                <span class="severity-tag severity-critical">RANK 1</span>
-                <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">product_cd (Channel Weight)</span>
-              </div>
-              <span>Product checkout channel weighting for online web micro-authorizations</span>
-            </div>
-            <span class="factor-impact mono-data">41.16% Imp.</span>
-          </div>
+      <!-- Secondary Deep Diagnostics (Collapsible behind Single Expand Action) -->
+      <button type="button" class="drawer-expand-btn" id="v-b-toggle-forensics">
+        <span>GBDT Feature Attribution &amp; Risk Signals (${factors.length})</span>
+        <span class="expand-icon" aria-hidden="true">▾</span>
+      </button>
 
-          <div class="factor-row">
-            <div class="factor-desc">
-              <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                <span class="severity-tag severity-high">RANK 2</span>
-                <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">c1_card_count_24h (Velocity)</span>
-              </div>
-              <span>24-hour aggregate authorization frequency on BIN cohort</span>
-            </div>
-            <span class="factor-impact mono-data">17.01% Imp.</span>
+      <div class="drawer-collapsible-content collapsed" id="v-b-forensics-collapsible">
+        <!-- Feature Importance Attribution -->
+        <div class="inspector-section">
+          <div class="section-head-mini">
+            <span>Top GBDT Feature Attribution</span>
+            <span class="section-badge">HIST_GRADIENT_BOOST</span>
           </div>
-
-          <div class="factor-row">
-            <div class="factor-desc">
-              <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                <span class="severity-tag severity-medium">RANK 3</span>
-                <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">c2_card_count_1h (Burst Spike)</span>
-              </div>
-              <span>Sub-hour burst acceleration spike across payment gateway endpoints</span>
-            </div>
-            <span class="factor-impact mono-data">13.83% Imp.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contributing Factors Breakdown -->
-      <div class="inspector-section">
-        <div class="section-head-mini">
-          <span>Contributing Risk Signals</span>
-          <span class="section-badge">${factors.length} DETECTED</span>
-        </div>
-        <div class="factors-list">
-          ${factors.length === 0 ? '<span style="color:var(--status-allow); font-size:12px;">Standard organic transaction profile. No abnormal velocity flags.</span>' : ''}
-          ${factors.map(f => {
-            const sevClass = f.severity === 'CRITICAL' ? 'severity-critical' : f.severity === 'HIGH' ? 'severity-high' : f.severity === 'MEDIUM' ? 'severity-medium' : 'severity-low';
-            return `
-              <div class="factor-row">
-                <div class="factor-desc">
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                    <span class="severity-tag ${sevClass}">${f.severity}</span>
-                    <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">${f.tier || 'BEHAVIORAL'}</span>
-                  </div>
-                  <span>${f.description}</span>
+          <div class="factors-list">
+            <div class="factor-row">
+              <div class="factor-desc">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <span class="severity-tag severity-critical">RANK 1</span>
+                  <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">product_cd (Channel Weight)</span>
                 </div>
-                <span class="factor-impact mono-data">+${f.impact ? f.impact.toFixed(2) : '0.25'}</span>
+                <span>Product checkout channel weighting for online web micro-authorizations</span>
               </div>
-            `;
-          }).join('')}
+              <span class="factor-impact mono-data">41.16% Imp.</span>
+            </div>
+
+            <div class="factor-row">
+              <div class="factor-desc">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <span class="severity-tag severity-high">RANK 2</span>
+                  <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">c1_card_count_24h (Velocity)</span>
+                </div>
+                <span>24-hour aggregate authorization frequency on BIN cohort</span>
+              </div>
+              <span class="factor-impact mono-data">17.01% Imp.</span>
+            </div>
+
+            <div class="factor-row">
+              <div class="factor-desc">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <span class="severity-tag severity-medium">RANK 3</span>
+                  <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">c2_card_count_1h (Burst Spike)</span>
+                </div>
+                <span>Sub-hour burst acceleration spike across payment gateway endpoints</span>
+              </div>
+              <span class="factor-impact mono-data">13.83% Imp.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contributing Factors Breakdown -->
+        <div class="inspector-section">
+          <div class="section-head-mini">
+            <span>Contributing Risk Signals</span>
+            <span class="section-badge">${factors.length} DETECTED</span>
+          </div>
+          <div class="factors-list">
+            ${factors.length === 0 ? '<span style="color:var(--status-allow); font-size:12px;">Standard organic transaction profile. No abnormal velocity flags.</span>' : ''}
+            ${factors.map(f => {
+              const sevClass = f.severity === 'CRITICAL' ? 'severity-critical' : f.severity === 'HIGH' ? 'severity-high' : f.severity === 'MEDIUM' ? 'severity-medium' : 'severity-low';
+              return `
+                <div class="factor-row">
+                  <div class="factor-desc">
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                      <span class="severity-tag ${sevClass}">${f.severity}</span>
+                      <span class="mono-data" style="color:var(--text-secondary); font-size:10px;">${f.tier || 'BEHAVIORAL'}</span>
+                    </div>
+                    <span>${f.description}</span>
+                  </div>
+                  <span class="factor-impact mono-data">+${f.impact ? f.impact.toFixed(2) : '0.25'}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
         </div>
       </div>
     `;
+
+    // Bind collapsible toggle
+    const toggleBtn = inspector.querySelector('#v-b-toggle-forensics');
+    const collapsible = inspector.querySelector('#v-b-forensics-collapsible');
+    toggleBtn?.addEventListener('click', () => {
+      const isCollapsed = collapsible.classList.contains('collapsed');
+      collapsible.classList.toggle('collapsed', !isCollapsed);
+      toggleBtn.classList.toggle('active', isCollapsed);
+    });
   }
 }

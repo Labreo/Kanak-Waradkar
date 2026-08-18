@@ -1,7 +1,7 @@
 /* ==========================================================================
-   PROJECT TRIAD — SIGNATURE CLOSING LOOP CONCENTRIC GAUGE
-   - Distinctive Concentric Spiral/Ring Visualization
-   - Visualizes Evasion Rate and Defensive Adaptation Tightening Across Cycles
+   PROJECT TRIAD — SIGNATURE CLOSING LOOP RADIAL PROGRESS GAUGE
+   - Genuine Radial Progress Ring with Proportional Arc Fill
+   - Visualizes Evasion Rate Tracking and Defensive Adaptation Across Cycles
    - Cool Cyan (#5FD8D0) & Warm Amber (#F2A93B) Palette
    ========================================================================== */
 
@@ -27,58 +27,134 @@
 .loop-svg {
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg);
   overflow: visible;
 }
 
-/* Concentric Track Guidelines */
-.gauge-track {
+/* Background Continuous Track */
+.gauge-track-bg {
   fill: none;
+  stroke: rgba(86, 90, 120, 0.25);
+  stroke-width: 8px;
+  opacity: 0.85;
+}
+
+/* Calibrated Radial Scale Ticks */
+.gauge-scale-tick {
   stroke: rgba(86, 90, 120, 0.35);
+  stroke-width: 1px;
+}
+
+.gauge-scale-tick.major {
+  stroke: rgba(95, 216, 208, 0.45);
   stroke-width: 1.5px;
-  stroke-dasharray: 4 6;
-  opacity: 0.7;
 }
 
-.gauge-track.active-track {
-  stroke: var(--accent-cyan);
-  opacity: 0.9;
-  stroke-width: 2px;
-  stroke-dasharray: none;
-  filter: drop-shadow(0 0 6px rgba(95, 216, 208, 0.3));
+.gauge-scale-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: var(--weight-bold);
+  fill: var(--text-muted);
+  letter-spacing: 0.5px;
 }
 
-/* Spiral Tightening Arc */
-.gauge-spiral-path {
+/* Genuine Proportional Radial Progress Arc */
+.gauge-progress-arc {
   fill: none;
-  stroke: url(#spiralGradient);
-  stroke-width: 5.5px;
+  stroke: url(#gaugeArcGradient);
+  stroke-width: 8px;
   stroke-linecap: round;
-  transition: stroke-dashoffset 600ms cubic-bezier(0.16, 1, 0.3, 1), stroke 300ms ease;
-  filter: drop-shadow(0 0 14px rgba(95, 216, 208, 0.55)) drop-shadow(0 0 24px rgba(242, 169, 59, 0.35));
+  transition: stroke-dashoffset 800ms cubic-bezier(0.16, 1, 0.3, 1), stroke 400ms ease;
+  filter: drop-shadow(0 0 10px rgba(95, 216, 208, 0.5)) drop-shadow(0 0 20px rgba(242, 169, 59, 0.3));
 }
 
-/* Cycle Node Points */
-.cycle-node-outer {
+/* Indicator Head at Tip of Arc */
+.gauge-indicator-head {
+  fill: var(--accent-amber);
+  stroke: var(--bg-surface-base, #0C0E1E);
+  stroke-width: 2px;
+  opacity: 0;
+  transition: cx 800ms cubic-bezier(0.16, 1, 0.3, 1), cy 800ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms ease;
+}
+
+.gauge-indicator-head.active {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px var(--accent-amber));
+}
+
+/* Cycle Marker Elements */
+.cycle-marker-group {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.cycle-marker-group:hover .cycle-marker-node {
+  stroke: var(--text-primary);
+  filter: drop-shadow(0 0 8px var(--accent-cyan));
+}
+
+.cycle-marker-group:hover .cycle-marker-badge-bg {
+  border-color: var(--border-highlight);
+  fill: var(--bg-surface-overlay);
+}
+
+.cycle-marker-connector {
+  stroke: rgba(86, 90, 120, 0.3);
+  stroke-width: 1px;
+  stroke-dasharray: 2 2;
+  transition: stroke var(--transition-fast);
+}
+
+.cycle-marker-group.selected .cycle-marker-connector {
+  stroke: var(--accent-cyan);
+  stroke-dasharray: none;
+}
+
+.cycle-marker-node {
   fill: var(--bg-surface-raised);
   stroke: var(--accent-cyan);
-  stroke-width: 2.5px;
-  cursor: pointer;
+  stroke-width: 2px;
   transition: all var(--transition-fast);
 }
 
-.cycle-node-inner {
+.cycle-marker-inner {
   fill: var(--accent-cyan);
-  transition: transform 200ms ease;
+  transition: fill var(--transition-fast);
 }
 
-.cycle-node-outer.selected {
-  stroke: var(--accent-amber);
-  filter: drop-shadow(0 0 10px var(--accent-amber));
+.cycle-marker-node.selected {
+  stroke: var(--accent-cyan);
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 0 10px var(--accent-cyan));
 }
 
-.cycle-node-outer.selected + .cycle-node-inner {
-  fill: var(--accent-amber);
+.cycle-marker-group.selected .cycle-marker-inner {
+  fill: var(--accent-cyan);
+}
+
+/* Cycle Marker Label Badges */
+.cycle-marker-badge-bg {
+  fill: var(--bg-surface-raised);
+  stroke: var(--border-default);
+  stroke-width: 1px;
+  transition: all var(--transition-fast);
+}
+
+.cycle-marker-badge-bg.selected {
+  fill: var(--accent-cyan-dim);
+  stroke: var(--accent-cyan-border);
+  filter: drop-shadow(0 0 8px rgba(95, 216, 208, 0.25));
+}
+
+.cycle-marker-badge-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  fill: var(--text-secondary);
+  transition: fill var(--transition-fast);
+}
+
+.cycle-marker-badge-text.selected {
+  fill: var(--accent-cyan);
 }
 
 /* Center Readout HUD */
@@ -137,9 +213,9 @@
 }
 
 .gauge-delta-pill.positive {
-  background: var(--accent-amber-dim);
-  color: var(--accent-amber);
-  border: 1px solid var(--accent-amber-border);
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan-border);
 }
 
 .gauge-delta-pill.neutral {
@@ -155,6 +231,7 @@
   justify-content: center;
   gap: var(--space-2);
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .cycle-btn {

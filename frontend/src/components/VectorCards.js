@@ -14,8 +14,8 @@ export const VECTOR_DEFINITIONS = [
     description: 'Frankenstein identities fusing authentic stolen anchor PII with synthesized demographic overlays and modified PDF417 barcodes.',
     grounding: 'Grounded in AAMVA 2020 Barcode Spec & SSA DMF',
     metrics: [
-      { label: 'Defense Recall', val: '100%', highlight: 'cyan' },
-      { label: 'Max Evasion', val: '68%', highlight: 'amber' },
+      { label: 'Defense Recall', val: '100%', highlight: 'normal' },
+      { label: 'Max Evasion', val: '68%', highlight: 'normal' },
       { label: 'Samples', val: '500', highlight: 'normal' }
     ]
   },
@@ -27,8 +27,8 @@ export const VECTOR_DEFINITIONS = [
     description: 'Automated velocity burst probes, ISO 8583 decline cascades, and session-dilated card enumeration attacks.',
     grounding: 'Grounded in IEEE-CIS (590k) & PaySim (6.36M ops)',
     metrics: [
-      { label: 'Defense AUC', val: '0.934', highlight: 'cyan' },
-      { label: 'Max Evasion', val: '87%', highlight: 'amber' },
+      { label: 'Defense AUC', val: '0.934', highlight: 'normal' },
+      { label: 'Max Evasion', val: '87%', highlight: 'normal' },
       { label: 'Evaluated', val: '24,000', highlight: 'normal' }
     ]
   },
@@ -40,9 +40,9 @@ export const VECTOR_DEFINITIONS = [
     description: 'Indirect prompt injections concealed in web payloads and invoice memos redirecting autonomous agent wallet transfers.',
     grounding: 'Air-Gapped Local Sandbox + Pre-Execution Interception',
     metrics: [
-      { label: 'Defense Recall', val: '100%', highlight: 'cyan' },
-      { label: 'Max Evasion', val: '83%', highlight: 'amber' },
-      { label: 'Loss Prevented', val: '$0.00', highlight: 'cyan' }
+      { label: 'Defense Recall', val: '100%', highlight: 'normal' },
+      { label: 'Max Evasion', val: '83%', highlight: 'normal' },
+      { label: 'Loss Prevented', val: '$0.00', highlight: 'normal' }
     ]
   }
 ];

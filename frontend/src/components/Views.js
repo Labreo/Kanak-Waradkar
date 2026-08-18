@@ -41,11 +41,11 @@ export function renderOverviewView(router) {
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">Avg Recall</span>
-        <span class="stat-tile-val mono-data accent-cyan">96.6%</span>
+        <span class="stat-tile-val mono-data">96.6%</span>
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">Max Evasion</span>
-        <span class="stat-tile-val mono-data accent-amber">87.0%</span>
+        <span class="stat-tile-val mono-data accent-cyan">87.0%</span>
       </div>
     </div>
   `;
@@ -76,7 +76,7 @@ export function renderOverviewView(router) {
           <span class="vector-pill">LOOP</span>
           <h3 class="panel-title">Closed-Loop Evasion &amp; Adaptation Trajectory</h3>
         </div>
-        <span class="section-badge">CONCENTRIC SPIRAL</span>
+        <span class="section-badge">RADIAL PROGRESS RING</span>
       </div>
       <div id="overview-loop-mount"></div>
     </div>

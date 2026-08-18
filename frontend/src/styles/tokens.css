@@ -10,21 +10,22 @@
      1. COLOR PALETTE (5-HEX SYSTEM + DERIVED TINTS)
      ------------------------------------------------------------------------- */
   
-  /* Base Surfaces: Deep Indigo / Ink (deliberately NOT generic pitch black #000) */
+  /* Base Surfaces: Deep Indigo / Ink Elevation Hierarchy */
   --bg-canvas: #0C0E1E;              /* Deep ink canvas background */
-  --bg-surface: #12142B;             /* Primary container & card surface */
-  --bg-surface-raised: #181B38;      /* Elevated cards & interactive panels */
-  --bg-surface-overlay: #1F2347;     /* Hover states, modal overlays, active wells */
-  --bg-surface-glass: rgba(18, 20, 43, 0.85); /* Frosted glassmorphism background */
+  --bg-surface: #141732;             /* Primary container surface */
+  --bg-surface-raised: #1A1E3E;      /* Elevated primary content panels & cards */
+  --bg-surface-overlay: #22274F;     /* Hover states, modal overlays, nested contrast wells */
+  --bg-surface-glass: rgba(26, 30, 62, 0.88); /* Frosted glassmorphism background */
+  --bg-inset: #090B17;               /* Recessed inner wells (tables, terminal) */
 
-  /* Primary Accent: Warm Amber (#F2A93B) — Alert States & Fraud Value / Capital */
+  /* Strict Alert Accent: Warm Amber (#F2A93B) — Strictly for Flagged / Alert / High-Risk / Blocked States */
   --accent-amber: #F2A93B;
   --accent-amber-hover: #FFB94F;
   --accent-amber-dim: rgba(242, 169, 59, 0.15);
   --accent-amber-glow: rgba(242, 169, 59, 0.35);
   --accent-amber-border: rgba(242, 169, 59, 0.5);
 
-  /* Signature Accent: Cool Cyan (#5FD8D0) — Closed-Loop Adaptation & Defense Learning */
+  /* Strict Interactive & System Accent: Cool Cyan (#5FD8D0) — Active, Navigational & System-State Elements */
   --accent-cyan: #5FD8D0;
   --accent-cyan-hover: #7EEDE6;
   --accent-cyan-dim: rgba(95, 216, 208, 0.14);

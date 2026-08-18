@@ -207,10 +207,10 @@ All numbers are pulled directly from committed, machine-readable metrics files (
 | **Dataset Class Balance** | 150 Legit (30%) / 350 Fraud (70%)| 11,679 Legit / 321 Fraud (2.68%) | 24,635 Legit (98.5%) / 365 Fraud | 80 Legit (40%) / 120 Fraud (60%) | Real-world imbalance |
 | **Operational Threshold** | Score $\ge 0.25$ | Probability $\ge 0.30$ | Probability $\ge 0.30$ | Confidence $\ge 0.50$ | Cost-calibrated |
 | **Operational Recall** | **`100.00%`** (350 / 350) | **`88.47%`** (284 / 321) | **`89.86%`** (328 / 365) | **`100.00%`** (120 / 120) | $\ge 85.0\%$ Target |
-| **Operational Precision** | **`100.00%`** (350 / 350) | **`6.33%`** (284 / 4,482) | **`7.23%`** (328 / 4,537) | **`100.00%`** (120 / 120) | Domain-calibrated |
+| **Operational Precision** | **`100.00%`** (350 / 350) | **`6.33%`** (284 / 4,484) | **`7.23%`** (328 / 4,537) | **`100.00%`** (120 / 120) | Domain-calibrated |
 | **Operational F1-Score** | **`1.0000`** | **`0.1182`** | **`0.1338`** | **`1.0000`** | Harmonic Mean |
-| **False Positive Rate (FPR)**| **`0.00%`** (0 / 150) | **`35.96%`** (4,198 / 11,679) | **`17.09%`** (4,209 / 24,635) | **`0.00%`** (0 / 80) | Controlled Friction |
-| **Specificity (TNR)** | **`100.00%`** (150 / 150) | **`64.04%`** (7,481 / 11,679) | **`82.91%`** (20,426 / 24,635)| **`100.00%`** (80 / 80) | Baseline Pass Rate |
+| **False Positive Rate (FPR)**| **`0.00%`** (0 / 150) | **`35.96%`** (4,200 / 11,679) | **`17.09%`** (4,209 / 24,635) | **`0.00%`** (0 / 80) | Controlled Friction |
+| **Specificity (TNR)** | **`100.00%`** (150 / 150) | **`64.04%`** (7,479 / 11,679) | **`82.91%`** (20,426 / 24,635)| **`100.00%`** (80 / 80) | Baseline Pass Rate |
 | **Overall Accuracy** | **`100.00%`** | **`64.69%`** | **`83.02%`** | **`100.00%`** | Total Sample Accuracy |
 | **Balanced Accuracy** | **`100.00%`** | **`76.26%`** | **`86.39%`** | **`100.00%`** | Unweighted Mean |
 | **ROC-AUC** | **`1.0000`** | **`0.8428`** | **`0.9336`** | **`1.0000`** | Continuous Ranking |
@@ -233,7 +233,7 @@ All numbers are pulled directly from committed, machine-readable metrics files (
 
 #### Vector B: Primary Real IEEE-CIS Matrix vs. Secondary Composite Matrix
 - **Primary: Real IEEE-CIS Out-of-Time Slice (n=12,000, Operational Policy: prob $\ge 0.30$):**
-  - Actual Legitimate (n=11,679): **TN = `7,481`** (`64.04%`), **FP = `4,198`** (`35.96%`).
+  - Actual Legitimate (n=11,679): **TN = `7,479`** (`64.04%`), **FP = `4,200`** (`35.96%`).
   - Actual Fraud (n=321): **FN = `37`** (`11.53%`), **TP = `284`** (`88.47%`).
 - **Secondary: Multi-Source Composite Matrix (Out-of-Time Combined, n=25,000, Operational Policy: prob $\ge 0.30$):**
   - Actual Legitimate (n=24,635): **TN = `20,426`** (`82.91%`), **FP = `4,209`** (`17.09%`).
@@ -261,8 +261,8 @@ Rather than hiding noisy real-world card fraud behind clean synthetic benchmarks
 - **ROC-AUC:** **`0.8428`** (robust rank-ordering across unseen forward-in-time transactions)
 - **PR-AUC:** **`0.3259`** (strong precision-recall curve under severe 2.68% real-world fraud base rate)
 - **Operational Recall (`prob >= 0.30`):** **`88.47%`** (284 of 321 real fraud attacks intercepted)
-- **Operational Precision:** **`6.33%`** (284 TP / 4,482 total flagged alerts)
-- **False Positive Rate (FPR):** **`35.96%`** (4,198 FP / 11,679 clean transactions)
+- **Operational Precision:** **`6.33%`** (284 TP / 4,484 total flagged alerts)
+- **False Positive Rate (FPR):** **`35.96%`** (4,200 FP / 11,679 clean transactions)
 
 We explicitly acknowledge the 35.96% False Positive Rate on real IEEE-CIS data as a known operational limitation of deploying a standalone tabular GBDT without historical cardholder identity graphs or behavioral biometrics, and our immediate next step is calibrating dynamic merchant-specific decision thresholds and integrating graph-based cardholder entity embeddings to compress false positives below 10% while preserving sub-second authorization latency.
 

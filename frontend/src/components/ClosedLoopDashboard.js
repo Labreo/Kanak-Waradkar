@@ -59,7 +59,7 @@ export class ClosedLoopDashboard {
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">ADVERSARIAL GAIN</span>
-                <span class="stat-tile-val mono-data accent-amber" id="v-l-gain-val">+83.0%</span>
+                <span class="stat-tile-val mono-data accent-cyan" id="v-l-gain-val">+83.0%</span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">STATE MACHINE</span>
@@ -154,7 +154,7 @@ export class ClosedLoopDashboard {
             <div class="panel-header">
               <div class="panel-title-group">
                 <span class="vector-pill">GEOMETRY</span>
-                <h3 class="panel-title">Signature Concentric Closing Loop Gauge</h3>
+                <h3 class="panel-title">Signature Closed-Loop Radial Progress Gauge</h3>
               </div>
               <span class="section-badge" id="v-l-gauge-badge">CYCLE 2 ACTIVE</span>
             </div>
@@ -308,6 +308,7 @@ export class ClosedLoopDashboard {
     if (!this.gaugeInstance) {
       gaugeContainer.innerHTML = '';
       this.gaugeInstance = new ClosingLoopGauge(gaugeContainer, {
+        initialCycle: 2,
         onCycleSelect: (cycle) => {
           this.updateHUDFromCycle(cycle);
         }
@@ -329,6 +330,17 @@ export class ClosedLoopDashboard {
     if (summaryText) summaryText.textContent = cycle.mutation || 'Cycle mutations applied.';
     if (evasStat) evasStat.textContent = `${((cycle.evasionRate || 0) * 100).toFixed(1)}%`;
     if (recallStat) recallStat.textContent = `${((cycle.detectionRate || 0) * 100).toFixed(1)}%`;
+
+    // Wire global header cycle telemetry to match selected cycle
+    if (typeof document !== 'undefined') {
+      const headerCycle = document.querySelector('#header-cycle-val');
+      if (headerCycle) {
+        const shortLabel = cycle.label && cycle.label.includes('//') 
+          ? cycle.label.split('//')[1].trim() 
+          : (cycle.tier ? cycle.tier.replace(/Tier\s*\d+:?\s*/i, '').trim() : 'ADAPTED');
+        headerCycle.textContent = `${cycle.id} // ${shortLabel.toUpperCase()}`;
+      }
+    }
   }
 
   renderTrajectoryChart() {
@@ -449,20 +461,23 @@ export class ClosedLoopDashboard {
             <table class="mutations-table">
               <thead>
                 <tr>
-                  <th style="width:28%">Parameter Mutated</th>
-                  <th style="width:32%">Transition</th>
-                  <th style="width:40%">Adversarial Rationale</th>
+                  <th style="width:24%">Parameter Mutated</th>
+                  <th style="width:38%">Transition</th>
+                  <th style="width:38%">Adversarial Rationale</th>
                 </tr>
               </thead>
               <tbody>
                 ${muts.map(m => `
                   <tr>
-                    <td class="mono-data" style="color:var(--accent-cyan);">${m.parameter}</td>
-                    <td class="mono-data" style="font-size:10px;">
-                      <span style="color:var(--text-muted);">${String(m.previous_value).substring(0, 30)}</span> &rarr;
-                      <strong style="color:var(--accent-amber);">${String(m.mutated_value).substring(0, 30)}</strong>
+                    <td class="mono-data" style="color:var(--accent-cyan); font-size:11px; word-break:break-word;">${m.parameter}</td>
+                    <td class="mono-data">
+                      <div class="transition-flow">
+                        <span class="transition-prev">${String(m.previous_value)}</span>
+                        <span class="transition-arrow">&rarr;</span>
+                        <strong class="transition-mut">${String(m.mutated_value)}</strong>
+                      </div>
                     </td>
-                    <td style="color:var(--text-secondary); font-size:11px;">${m.rationale}</td>
+                    <td style="color:var(--text-secondary); font-size:11px; line-height:1.45; word-break:break-word;">${m.rationale}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -529,9 +544,11 @@ export class ClosedLoopDashboard {
       this.renderAllViews();
 
       // Update global header status indicator if present
-      const headerCycle = document.querySelector('#global-cycle-status');
-      if (headerCycle) {
-        headerCycle.textContent = `C2 // ADAPTED (VECT ${this.activeVector})`;
+      if (typeof document !== 'undefined') {
+        const headerCycle = document.querySelector('#header-cycle-val');
+        if (headerCycle) {
+          headerCycle.textContent = `C2 // ADAPTED (VECT ${this.activeVector})`;
+        }
       }
 
     } catch (err) {

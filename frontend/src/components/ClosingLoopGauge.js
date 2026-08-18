@@ -1,9 +1,17 @@
 /**
- * PROJECT TRIAD — SIGNATURE CLOSING LOOP CONCENTRIC GAUGE
+ * PROJECT TRIAD — SIGNATURE CLOSING LOOP RADIAL PROGRESS GAUGE
  * 
- * Renders an interactive SVG concentric ring/spiral visualization representing
- * closed-loop adversarial evasion trajectories across cycles (C0 -> C1 -> C2).
- * Color Palette: Cool Cyan (#5FD8D0) & Warm Amber (#F2A93B).
+ * Renders a genuine radial progress ring visualization representing
+ * closed-loop adversarial evasion trajectories across cycles (C0 -> C1 -> C2 -> C3).
+ * 
+ * Geometry:
+ * - Single continuous circular ring (radius R = 110, circumference C = 2 * PI * R ≈ 691.15).
+ * - Arc fill length is computed directly and proportionally from current evasion rate:
+ *   stroke-dashoffset = C * (1.0 - evasionRate)
+ * - Cycle markers (C0, C1, C2, C3) sit as labeled points along that single continuous ring
+ *   at their exact proportional angular positions (angle = evasionRate * 360°).
+ * - Smooth CSS transitions animate the ring filling/emptying when switching cycles.
+ * - Color Palette: Cool Cyan (#5FD8D0) & Warm Amber (#F2A93B).
  */
 
 export class ClosingLoopGauge {
@@ -11,7 +19,9 @@ export class ClosingLoopGauge {
     this.container = containerElement;
     this.onCycleSelect = options.onCycleSelect || (() => {});
     this.currentCycle = options.initialCycle !== undefined ? options.initialCycle : 2;
-    
+    this.radius = 110;
+    this.circumference = +(2 * Math.PI * this.radius).toFixed(2); // ~691.15
+
     // Default 4-cycle progression representative of TRIAD telemetry
     this.cycleData = [
       {
@@ -19,8 +29,6 @@ export class ClosingLoopGauge {
         label: 'Cycle 0 // Baseline',
         evasionRate: 0.0,
         detectionRate: 1.0,
-        radius: 120,
-        angle: 0,
         tier: 'Tier 1: Direct Probes',
         mutation: 'Naive Attack Signatures (Baseline Generation)',
         delta: '0.0%',
@@ -31,8 +39,6 @@ export class ClosingLoopGauge {
         label: 'Cycle 1 // Mutated',
         evasionRate: 0.29,
         detectionRate: 0.71,
-        radius: 95,
-        angle: 100,
         tier: 'Tier 2: Structural Camouflage',
         mutation: 'Repaired Barcodes, Session Dilation & CSS Cloaking',
         delta: '+29.0%',
@@ -43,8 +49,6 @@ export class ClosingLoopGauge {
         label: 'Cycle 2 // Evolved',
         evasionRate: 0.83,
         detectionRate: 0.17,
-        radius: 70,
-        angle: 200,
         tier: 'Tier 3: Semantic Pretexting',
         mutation: 'Native EXIF, Organic Basket Sizes & AP Invoice Pretexts',
         delta: '+83.0%',
@@ -55,8 +59,6 @@ export class ClosingLoopGauge {
         label: 'Cycle 3 // Retrained',
         evasionRate: 0.04,
         detectionRate: 0.96,
-        radius: 48,
-        angle: 300,
         tier: 'Tier 3: Retrained Defense',
         mutation: 'Closed-Loop Defense Retraining & Parameter Surface Adaptation',
         delta: '-79.0% RECOVERY',
@@ -71,6 +73,7 @@ export class ClosingLoopGauge {
     if (cycleIndex >= 0 && cycleIndex < this.cycleData.length) {
       this.currentCycle = cycleIndex;
       this.updateHUD();
+      this.updateArc();
       this.updateActiveClasses();
       this.onCycleSelect(this.cycleData[this.currentCycle]);
     }
@@ -78,13 +81,10 @@ export class ClosingLoopGauge {
 
   updateData(cycles) {
     if (Array.isArray(cycles) && cycles.length > 0) {
-      const radii = [120, 95, 70, 48, 35];
-      const count = cycles.length;
-
       this.cycleData = cycles.map((c, i) => {
         const evas = c.evasion_rate !== undefined ? c.evasion_rate : (c.evasionRate || 0);
         const muts = c.mutations_applied || [];
-        let mutText = c.cycle_summary || (muts.length > 0 ? muts.map(m => m.parameter).join(', ') : 'Baseline Generation');
+        const mutText = c.cycle_summary || (muts.length > 0 ? muts.map(m => m.parameter).join(', ') : 'Baseline Generation');
         
         let deltaVal = '0.0%';
         let deltaType = 'neutral';
@@ -102,15 +102,11 @@ export class ClosingLoopGauge {
           }
         }
 
-        const angle = count > 1 ? (i / count) * 360 : 0;
-
         return {
           id: `C${c.cycle_index !== undefined ? c.cycle_index : i}`,
           label: `Cycle ${c.cycle_index !== undefined ? c.cycle_index : i} // ${c.mutation_tier || 'MUTATED'}`,
           evasionRate: evas,
           detectionRate: 1.0 - evas,
-          radius: radii[Math.min(i, radii.length - 1)],
-          angle: angle,
           tier: c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : `Cycle ${i}`,
           mutation: mutText,
           delta: deltaVal,
@@ -118,7 +114,7 @@ export class ClosingLoopGauge {
         };
       });
 
-      this.currentCycle = this.cycleData.length - 1;
+      this.currentCycle = Math.min(this.currentCycle, this.cycleData.length - 1);
       this.render();
       this.onCycleSelect(this.cycleData[this.currentCycle]);
     }
@@ -129,44 +125,108 @@ export class ClosingLoopGauge {
     this.setCycle(next);
   }
 
+  /**
+   * Computes Cartesian coordinate (x, y) on the radial ring for a given evasion rate percentage.
+   * Angle starts at 12 o'clock (0°) and progresses clockwise (0.25 -> 3 o'clock, 0.5 -> 6 o'clock, etc.).
+   */
+  calculateRingCoordinates(evasionRate, radius = this.radius) {
+    const angleDeg = (evasionRate || 0) * 360;
+    const angleRad = (angleDeg * Math.PI) / 180.0;
+    return {
+      x: +(radius * Math.sin(angleRad)).toFixed(2),
+      y: +(-radius * Math.cos(angleRad)).toFixed(2),
+      angle: angleDeg
+    };
+  }
+
+  /**
+   * Backward-compatible polarToCartesian helper.
+   * Angle in degrees where 0° is right (+X) or standard trigonometry.
+   */
+  polarToCartesian(radius, angleInDegrees) {
+    const angleInRadians = (angleInDegrees * Math.PI) / 180.0;
+    return {
+      x: +(radius * Math.cos(angleInRadians)).toFixed(2),
+      y: +(radius * Math.sin(angleInRadians)).toFixed(2)
+    };
+  }
+
+  /**
+   * Computes stroke-dashoffset for a given evasion rate.
+   * 0.0 -> offset = C (empty)
+   * 1.0 -> offset = 0 (full circle)
+   */
+  calculateDashOffset(evasionRate) {
+    const clamped = Math.max(0, Math.min(1, evasionRate || 0));
+    return +(this.circumference * (1.0 - clamped)).toFixed(2);
+  }
+
   render() {
+    const current = this.cycleData[this.currentCycle] || this.cycleData[0];
+    const initialDashOffset = this.calculateDashOffset(current.evasionRate);
+
     this.container.innerHTML = `
       <div class="loop-gauge-container">
         <div class="loop-gauge-viewport">
           <svg class="loop-svg" viewBox="-160 -160 320 320" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="spiralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient id="gaugeArcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#5FD8D0" />
-                <stop offset="55%" stop-color="#F2A93B" />
-                <stop offset="100%" stop-color="#E09B32" />
+                <stop offset="45%" stop-color="#7CE3DC" />
+                <stop offset="80%" stop-color="#F2A93B" />
+                <stop offset="100%" stop-color="#FF9E1B" />
               </linearGradient>
               <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(95, 216, 208, 0.12)" />
+                <stop offset="0%" stop-color="rgba(95, 216, 208, 0.14)" />
+                <stop offset="70%" stop-color="rgba(242, 169, 59, 0.04)" />
                 <stop offset="100%" stop-color="transparent" />
               </radialGradient>
+              <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
             </defs>
 
             <!-- Center ambient glow -->
-            <circle cx="0" cy="0" r="140" fill="url(#centerGlow)" />
+            <circle cx="0" cy="0" r="135" fill="url(#centerGlow)" />
 
-            <!-- Concentric Guide Rings -->
-            ${this.cycleData.map((c, i) => `
-              <circle cx="0" cy="0" r="${c.radius}" class="gauge-track ${this.currentCycle === i ? 'active-track' : ''}" id="track-${i}" />
-            `).join('')}
+            <!-- Calibrated Radial Scale Ticks -->
+            ${this.renderScaleTicks()}
 
-            <!-- Dynamic Tightening Spiral Curve -->
-            <path id="spiral-path" class="gauge-spiral-path" d="${this.calculateSpiralPath()}" />
+            <!-- Background Continuous Track Ring -->
+            <circle cx="0" cy="0" r="${this.radius}" class="gauge-track-bg" />
 
-            <!-- Cycle Marker Nodes -->
-            ${this.renderCycleNodes()}
+            <!-- Genuine Proportional Radial Progress Ring -->
+            <circle
+              id="gauge-progress-arc"
+              cx="0"
+              cy="0"
+              r="${this.radius}"
+              class="gauge-progress-arc"
+              stroke-dasharray="${this.circumference}"
+              stroke-dashoffset="${initialDashOffset}"
+              transform="rotate(-90)"
+            />
+
+            <!-- Leading Edge Indicator Head -->
+            <circle
+              id="gauge-indicator-head"
+              cx="${this.calculateRingCoordinates(current.evasionRate).x}"
+              cy="${this.calculateRingCoordinates(current.evasionRate).y}"
+              r="4.5"
+              class="gauge-indicator-head"
+            />
+
+            <!-- Cycle Marker Nodes positioned proportionally along the single continuous ring -->
+            ${this.renderCycleMarkers()}
           </svg>
 
           <!-- Center Information HUD -->
           <div class="gauge-center-hud">
-            <span class="gauge-cycle-tag" id="hud-cycle-tag">CYCLE 3</span>
-            <span class="gauge-rate-number mono-data" id="hud-rate-number">4%</span>
+            <span class="gauge-cycle-tag" id="hud-cycle-tag">${current.id} // ${current.tier.split(':')[0]}</span>
+            <span class="gauge-rate-number mono-data" id="hud-rate-number">${(current.evasionRate * 100).toFixed(0)}%</span>
             <span class="gauge-rate-label">EVASION RATE</span>
-            <span class="gauge-delta-pill positive" id="hud-delta-pill">RECOVERY</span>
+            <span class="gauge-delta-pill ${current.deltaType}" id="hud-delta-pill">${current.delta}</span>
           </div>
         </div>
 
@@ -182,7 +242,7 @@ export class ClosingLoopGauge {
 
         <!-- Loop Evolution Summary -->
         <div class="loop-summary-text" id="loop-summary-text">
-          ${this.cycleData[this.currentCycle].mutation}
+          ${current.tier}: ${current.mutation}
         </div>
       </div>
     `;
@@ -191,34 +251,100 @@ export class ClosingLoopGauge {
     this.updateHUD();
   }
 
-  calculateSpiralPath() {
-    if (this.cycleData.length < 2) return '';
-    const points = this.cycleData.map(c => this.polarToCartesian(c.radius, c.angle));
-    let path = `M ${points[0].x} ${points[0].y}`;
-    for (let i = 0; i < points.length - 1; i++) {
-      const p0 = points[i];
-      const p1 = points[i + 1];
-      path += ` Q ${p0.x * 0.7 + p1.x * 0.4} ${p0.y * 0.4 + p1.y * 0.7} ${p1.x} ${p1.y}`;
+  /**
+   * Renders calibrated tick marks around the ring to allow immediate visual estimation.
+   */
+  renderScaleTicks() {
+    const ticks = [];
+    // Major ticks every 25% (0%, 25%, 50%, 75%), Minor ticks every 5%
+    for (let p = 0; p < 1.0; p += 0.05) {
+      const isMajor = Math.abs(p % 0.25) < 0.001;
+      const rInner = isMajor ? this.radius - 8 : this.radius - 4;
+      const rOuter = isMajor ? this.radius + 8 : this.radius + 4;
+      const pInner = this.calculateRingCoordinates(p, rInner);
+      const pOuter = this.calculateRingCoordinates(p, rOuter);
+      
+      ticks.push(`
+        <line
+          x1="${pInner.x}"
+          y1="${pInner.y}"
+          x2="${pOuter.x}"
+          y2="${pOuter.y}"
+          class="gauge-scale-tick ${isMajor ? 'major' : 'minor'}"
+        />
+      `);
+
+      if (isMajor) {
+        const pLabel = this.calculateRingCoordinates(p, this.radius - 18);
+        ticks.push(`
+          <text
+            x="${pLabel.x}"
+            y="${pLabel.y + 3}"
+            class="gauge-scale-label"
+            text-anchor="middle"
+          >${Math.round(p * 100)}%</text>
+        `);
+      }
     }
-    return path;
+    return ticks.join('');
   }
 
-  polarToCartesian(radius, angleInDegrees) {
-    const angleInRadians = (angleInDegrees * Math.PI) / 180.0;
-    return {
-      x: +(radius * Math.cos(angleInRadians)).toFixed(2),
-      y: +(radius * Math.sin(angleInRadians)).toFixed(2)
-    };
-  }
-
-  renderCycleNodes() {
+  /**
+   * Renders cycle markers positioned along the single continuous ring at their exact proportional angle.
+   */
+  renderCycleMarkers() {
     return this.cycleData.map((c, i) => {
-      const pos = this.polarToCartesian(c.radius, c.angle);
+      const pos = this.calculateRingCoordinates(c.evasionRate, this.radius);
       const isSelected = i === this.currentCycle;
+
+      // Calculate radial badge position with smart offset to prevent overlapping
+      // (e.g. C0 at 0% and C3 at 4%)
+      let badgeAngle = c.evasionRate * 360;
+      if (c.evasionRate === 0 && this.cycleData.some((other, idx) => idx !== i && other.evasionRate > 0 && other.evasionRate <= 0.06)) {
+        badgeAngle = -12; // nudge C0 slightly left if near C3
+      } else if (c.evasionRate > 0 && c.evasionRate <= 0.06 && this.cycleData.some((other, idx) => idx !== i && other.evasionRate === 0)) {
+        badgeAngle = 18; // nudge C3 slightly right if near C0
+      }
+
+      const badgeRad = (badgeAngle * Math.PI) / 180.0;
+      const badgeR = this.radius + 26;
+      const badgeX = +(badgeR * Math.sin(badgeRad)).toFixed(2);
+      const badgeY = +(-badgeR * Math.cos(badgeRad)).toFixed(2);
+
       return `
-        <g class="cycle-node-group" data-cycle="${i}">
-          <circle cx="${pos.x}" cy="${pos.y}" r="8" class="cycle-node-outer ${isSelected ? 'selected' : ''}" id="node-outer-${i}" />
-          <circle cx="${pos.x}" cy="${pos.y}" r="3.5" class="cycle-node-inner" id="node-inner-${i}" />
+        <g class="cycle-marker-group ${isSelected ? 'selected' : ''}" data-cycle="${i}" id="marker-group-${i}">
+          <!-- Radial connector tick line from ring to badge -->
+          <line
+            x1="${pos.x}"
+            y1="${pos.y}"
+            x2="${badgeX}"
+            y2="${badgeY}"
+            class="cycle-marker-connector"
+          />
+
+          <!-- Node Ring Pin -->
+          <circle cx="${pos.x}" cy="${pos.y}" r="8" class="cycle-marker-node ${isSelected ? 'selected' : ''}" id="node-outer-${i}" />
+          <circle cx="${pos.x}" cy="${pos.y}" r="3.5" class="cycle-marker-inner" id="node-inner-${i}" />
+
+          <!-- Node Label Badge -->
+          <g class="cycle-marker-badge-group" transform="translate(${badgeX}, ${badgeY})">
+            <rect
+              x="-18"
+              y="-10"
+              width="36"
+              height="20"
+              rx="4"
+              class="cycle-marker-badge-bg ${isSelected ? 'selected' : ''}"
+              id="node-badge-bg-${i}"
+            />
+            <text
+              x="0"
+              y="3.5"
+              text-anchor="middle"
+              class="cycle-marker-badge-text ${isSelected ? 'selected' : ''}"
+              id="node-badge-text-${i}"
+            >${c.id}</text>
+          </g>
         </g>
       `;
     }).join('');
@@ -233,8 +359,8 @@ export class ClosingLoopGauge {
       });
     });
 
-    const nodeGroups = this.container.querySelectorAll('.cycle-node-group');
-    nodeGroups.forEach(g => {
+    const markerGroups = this.container.querySelectorAll('.cycle-marker-group');
+    markerGroups.forEach(g => {
       g.addEventListener('click', () => {
         const idx = parseInt(g.getAttribute('data-cycle'), 10);
         this.setCycle(idx);
@@ -242,17 +368,42 @@ export class ClosingLoopGauge {
     });
   }
 
+  /**
+   * Dynamically updates the radial progress arc offset and indicator head position
+   * with smooth transition animations.
+   */
+  updateArc() {
+    const current = this.cycleData[this.currentCycle];
+    if (!current) return;
+
+    const arc = this.container.querySelector('#gauge-progress-arc');
+    if (arc) {
+      const newOffset = this.calculateDashOffset(current.evasionRate);
+      arc.style.strokeDashoffset = newOffset;
+    }
+
+    const head = this.container.querySelector('#gauge-indicator-head');
+    if (head) {
+      const pos = this.calculateRingCoordinates(current.evasionRate);
+      head.setAttribute('cx', pos.x);
+      head.setAttribute('cy', pos.y);
+      head.classList.toggle('active', current.evasionRate > 0);
+    }
+  }
+
   updateHUD() {
     const current = this.cycleData[this.currentCycle];
+    if (!current) return;
+
     const hudTag = this.container.querySelector('#hud-cycle-tag');
     const hudNumber = this.container.querySelector('#hud-rate-number');
     const hudDelta = this.container.querySelector('#hud-delta-pill');
     const summaryText = this.container.querySelector('#loop-summary-text');
 
-    if (hudTag) hudTag.textContent = current.id + ' // ' + current.tier.split(':')[0];
+    if (hudTag) hudTag.textContent = `${current.id} // ${current.tier.split(':')[0]}`;
     if (hudNumber) hudNumber.textContent = `${(current.evasionRate * 100).toFixed(0)}%`;
     if (hudDelta) {
-      hudDelta.textContent = current.delta + ' GAIN';
+      hudDelta.textContent = current.delta;
       hudDelta.className = `gauge-delta-pill ${current.deltaType}`;
     }
     if (summaryText) {
@@ -262,13 +413,18 @@ export class ClosingLoopGauge {
 
   updateActiveClasses() {
     this.cycleData.forEach((_, i) => {
+      const isCurrent = i === this.currentCycle;
       const btn = this.container.querySelector(`#cycle-btn-${i}`);
-      const track = this.container.querySelector(`#track-${i}`);
+      const group = this.container.querySelector(`#marker-group-${i}`);
       const outerNode = this.container.querySelector(`#node-outer-${i}`);
-      
-      if (btn) btn.classList.toggle('active', i === this.currentCycle);
-      if (track) track.classList.toggle('active-track', i === this.currentCycle);
-      if (outerNode) outerNode.classList.toggle('selected', i === this.currentCycle);
+      const badgeBg = this.container.querySelector(`#node-badge-bg-${i}`);
+      const badgeText = this.container.querySelector(`#node-badge-text-${i}`);
+
+      if (btn) btn.classList.toggle('active', isCurrent);
+      if (group) group.classList.toggle('selected', isCurrent);
+      if (outerNode) outerNode.classList.toggle('selected', isCurrent);
+      if (badgeBg) badgeBg.classList.toggle('selected', isCurrent);
+      if (badgeText) badgeText.classList.toggle('selected', isCurrent);
     });
   }
 }
