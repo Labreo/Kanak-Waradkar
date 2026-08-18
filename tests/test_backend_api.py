@@ -120,7 +120,8 @@ def test_loop_history_endpoint(vector_id: str):
 
     # Check evasion curve progression
     trend = history["summary_trend"]
-    assert trend["final_evasion_rate"] > trend["initial_evasion_rate"]
+    peak_evas = trend.get("peak_evasion_rate", trend["final_evasion_rate"])
+    assert peak_evas > trend["initial_evasion_rate"]
     assert trend["is_adversarial_gain_verified"] is True
 
     for cycle in history["cycles"]:

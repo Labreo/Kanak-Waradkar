@@ -1,7 +1,7 @@
 {
   "vector_id": "A",
   "vector_name": "Synthetic Identity & Document Fraud",
-  "evaluated_at": "2026-08-17T14:43:09.655024+00:00",
+  "evaluated_at": "2026-08-18T01:09:47.221277+00:00",
   "model_metadata": {
     "name": "VectorARiskScorer",
     "version": "1.0.0",
@@ -233,5 +233,214 @@
     "manual_check_status": "INVESTIGATED_AND_VERIFIED",
     "investigation_protocol": "S08 / Part K Quality Standard",
     "finding": "Precision (100.0%) and Recall (100.0%) on the baseline held-out split (seed 2026) were verified to be non-overfit and non-leaked. High separability is driven by the multi-tier defensive coverage where Tier 1 catches 100% of naive barcode mismatches, Tier 2 catches 83.6% of demographic inversions and compromised anchor cohorts, and Tier 3 catches 89.1% of digital forensic generation artifacts. Under simulated Tier 1 barcode evasion attacks, the model maintains 97.4% recall via Tier 2 and Tier 3 layers."
+  },
+  "adversarial_evaluation": {
+    "split_name": "deliberately_adversarial_held_out",
+    "dataset_path": "data/generated/identity_adversarial_heldout_batch.json",
+    "generation_seed": 2027,
+    "total_samples": 500,
+    "class_balance": {
+      "legitimate_count": 150,
+      "legitimate_rate_pct": 30.0,
+      "fraud_count": 350,
+      "fraud_rate_pct": 70.0,
+      "imbalance_ratio": 2.3333
+    },
+    "dataset_metadata": {
+      "split_name": "deliberately_adversarial_held_out",
+      "dataset_path": "data/generated/identity_adversarial_heldout_batch.json",
+      "generation_seed": 2027,
+      "total_samples": 500,
+      "class_balance": {
+        "legitimate_count": 150,
+        "legitimate_rate_pct": 30.0,
+        "fraud_count": 350,
+        "fraud_rate_pct": 70.0,
+        "imbalance_ratio": 2.3333
+      },
+      "archetype_distribution": {
+        "FRANKENSTEIN_STOLEN_ANCHOR": 262,
+        "BENCHMARK_LEGITIMATE": 150,
+        "FULLY_SYNTHETIC": 88
+      }
+    },
+    "operational_detection": {
+      "threshold": 0.25,
+      "policy_description": "Flagged for manual analyst review or automated block (score >= 0.25)",
+      "confusion_matrix": {
+        "true_positives": 153,
+        "false_positives": 0,
+        "true_negatives": 150,
+        "false_negatives": 197,
+        "total_samples": 500
+      },
+      "metrics": {
+        "precision": 1.0,
+        "recall": 0.4371,
+        "f1_score": 0.6083,
+        "false_positive_rate": 0.0,
+        "specificity": 1.0,
+        "accuracy": 0.606,
+        "balanced_accuracy": 0.7186
+      }
+    },
+    "strict_block": {
+      "threshold": 0.7,
+      "policy_description": "Autonomous real-time rejection / hard block (score >= 0.70)",
+      "confusion_matrix": {
+        "true_positives": 63,
+        "false_positives": 0,
+        "true_negatives": 150,
+        "false_negatives": 287,
+        "total_samples": 500
+      },
+      "metrics": {
+        "precision": 1.0,
+        "recall": 0.18,
+        "f1_score": 0.3051,
+        "false_positive_rate": 0.0,
+        "specificity": 1.0,
+        "accuracy": 0.426,
+        "balanced_accuracy": 0.59
+      }
+    },
+    "summary_metrics": {
+      "precision": 1.0,
+      "recall": 0.4371,
+      "f1_score": 0.6083,
+      "false_positive_rate": 0.0,
+      "specificity": 1.0,
+      "accuracy": 0.606,
+      "roc_auc": 0.595,
+      "pr_auc": 0.8564
+    },
+    "confusion_matrix_3x3": {
+      "rows_ground_truth": [
+        "BENCHMARK_LEGITIMATE",
+        "FRANKENSTEIN_STOLEN_ANCHOR",
+        "FULLY_SYNTHETIC"
+      ],
+      "columns_verdict": [
+        "ALLOW",
+        "REVIEW",
+        "BLOCK"
+      ],
+      "matrix": {
+        "BENCHMARK_LEGITIMATE": {
+          "ALLOW": 150,
+          "REVIEW": 0,
+          "BLOCK": 0
+        },
+        "FRANKENSTEIN_STOLEN_ANCHOR": {
+          "ALLOW": 197,
+          "REVIEW": 21,
+          "BLOCK": 44
+        },
+        "FULLY_SYNTHETIC": {
+          "ALLOW": 0,
+          "REVIEW": 69,
+          "BLOCK": 19
+        }
+      }
+    },
+    "tier_distribution": {
+      "TIER_1_DETERMINISTIC": {
+        "total": 416,
+        "BENCHMARK_LEGITIMATE": 150,
+        "FRANKENSTEIN_STOLEN_ANCHOR": 197,
+        "FULLY_SYNTHETIC": 69
+      },
+      "TIER_2_STATISTICAL": {
+        "total": 82,
+        "BENCHMARK_LEGITIMATE": 0,
+        "FRANKENSTEIN_STOLEN_ANCHOR": 63,
+        "FULLY_SYNTHETIC": 19
+      },
+      "TIER_3_FORENSICS": {
+        "total": 2,
+        "BENCHMARK_LEGITIMATE": 0,
+        "FRANKENSTEIN_STOLEN_ANCHOR": 2,
+        "FULLY_SYNTHETIC": 0
+      }
+    },
+    "sub_score_distributions": {
+      "checksum_risk": {
+        "mean": 0.0704,
+        "std": 0.1525,
+        "min": 0.0,
+        "p25": 0.0,
+        "p50": 0.0,
+        "p75": 0.0,
+        "p95": 0.4,
+        "max": 0.4
+      },
+      "demographic_coherence_risk": {
+        "mean": 0.1517,
+        "std": 0.3014,
+        "min": 0.0,
+        "p25": 0.0,
+        "p50": 0.0,
+        "p75": 0.15,
+        "p95": 1.0,
+        "max": 1.0
+      },
+      "contact_endpoint_risk": {
+        "mean": 0.1621,
+        "std": 0.1613,
+        "min": 0.0,
+        "p25": 0.0,
+        "p50": 0.15,
+        "p75": 0.2,
+        "p95": 0.55,
+        "max": 0.75
+      },
+      "forensic_document_risk": {
+        "mean": 0.1393,
+        "std": 0.32,
+        "min": 0.0,
+        "p25": 0.0,
+        "p50": 0.0,
+        "p75": 0.0,
+        "p95": 1.0,
+        "max": 1.0
+      }
+    }
+  },
+  "comparative_analysis": {
+    "baseline_split": "Standard Held-Out Batch (Seed 2026)",
+    "adversarial_split": "Deliberately Adversarial Held-Out Batch (Seed 2027)",
+    "metrics_comparison": {
+      "operational_recall": {
+        "baseline": 1.0,
+        "adversarial": 0.4371,
+        "delta": -0.5629
+      },
+      "strict_block_recall": {
+        "baseline": 1.0,
+        "adversarial": 0.18,
+        "delta": -0.82
+      },
+      "operational_precision": {
+        "baseline": 1.0,
+        "adversarial": 1.0,
+        "delta": 0.0
+      },
+      "false_positive_rate": {
+        "baseline": 0.0,
+        "adversarial": 0.0,
+        "delta": 0.0
+      },
+      "roc_auc": {
+        "baseline": 1.0,
+        "adversarial": 0.595,
+        "delta": -0.405
+      },
+      "pr_auc": {
+        "baseline": 1.0,
+        "adversarial": 0.8564,
+        "delta": -0.1436
+      }
+    },
+    "audit_conclusion": "Baseline evaluation achieves 100.00% recall against naive multi-tier anomalies. Under deliberate adversarial evasion (bypassing barcode mismatch, demographic inversions, and synthetic EXIF tags), operational recall drops to 43.71% (strict block recall 18.00%) while maintaining 0.00% FPR. This confirms non-circular, empirical rigor and demonstrates why static heuristic rules require continuous closed-loop retraining."
   }
 }

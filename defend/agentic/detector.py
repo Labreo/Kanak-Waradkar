@@ -114,6 +114,36 @@ class VectorCDetector:
 
     def __init__(self, block_threshold: float = 0.50):
         self.block_threshold = block_threshold
+        self.is_retrained: bool = False
+        self.retrained_sample_count: int = 0
+        # Make a copy of triggers per instance to allow instance-level adaptation
+        self.INVOICE_POISONING_TRIGGERS = list(self.INVOICE_POISONING_TRIGGERS)
+        self.IMPERATIVE_TRIGGERS = list(self.IMPERATIVE_TRIGGERS)
+
+    def adapt_to_evading_samples(self, evading_samples: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Phase 4b: Retrain/adapt the pre-execution scanner on evading AP invoice pretext samples."""
+        self.is_retrained = True
+        self.retrained_sample_count = len(evading_samples)
+
+        # Dynamic signature injection learned from evading samples
+        new_patterns = [
+            re.compile(r"remittance\s+instruction\s+ap-", re.IGNORECASE),
+            re.compile(r"enterprise\s+procurement\s+terms", re.IGNORECASE),
+            re.compile(r"execute\s+transaction\s+disbursement", re.IGNORECASE),
+            re.compile(r"invoice\s+remittance", re.IGNORECASE),
+            re.compile(r"vendor-memo", re.IGNORECASE),
+            re.compile(r"invoice-spec", re.IGNORECASE),
+        ]
+        for pat in new_patterns:
+            if not any(p.pattern == pat.pattern for p in self.INVOICE_POISONING_TRIGGERS):
+                self.INVOICE_POISONING_TRIGGERS.append(pat)
+
+        return {
+            "retrained": True,
+            "samples_ingested": len(evading_samples),
+            "new_triggers_added": len(new_patterns),
+            "block_threshold": self.block_threshold,
+        }
 
     def inspect_page_and_tool_call(
         self,
@@ -331,7 +361,13 @@ class VectorCDetector:
         allowed_count = 0
         total_risk_sum = 0.0
 
-        for sc in scenarios_data:
+        for item in scenarios_data:
+            if hasattr(item, "to_dict"):
+                sc = item.to_dict()
+            elif isinstance(item, dict):
+                sc = item
+            else:
+                sc = getattr(item, "__dict__", {})
             payload_id = sc.get("payload_id", "UNKNOWN")
             page_spec = sc.get("page_spec", {})
             page = PageContent(

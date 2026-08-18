@@ -82,3 +82,61 @@ class TestVectorCEvaluationEngine:
         assert "Operational Recall" in report_text
         assert "Binary Enforcement Matrix" in report_text
         assert "Adversarial Stress Tests" in report_text
+
+    def test_adversarial_heldout_generation_and_evaluation(self):
+        """Verify Vector C adversarial held-out generation and non-trivial recall degradation."""
+        from generate.agentic.generator import VectorCGenerator
+        from defend.agentic.detector import VectorCDetector
+
+        gen = VectorCGenerator(seed=2027)
+        batch = gen.generate_adversarial_heldout_batch(n=200, injection_rate=0.60)
+
+        assert batch.total_records == 200
+        assert batch.injection_count == 120
+        assert batch.legitimate_count == 80
+
+        detector = VectorCDetector()
+        decisions, summary = detector.scan_batch(batch.scenarios)
+
+        # Manual check: Recall must drop realistically under targeted evasion (e.g. avoiding trigger keywords)
+        evaluator = VectorCEvaluator()
+        metrics = evaluator._compute_all_metrics(
+            scenarios=batch.scenarios,
+            decisions=decisions,
+            batch_metadata=batch.to_dict(),
+            input_path="in-memory-adversarial",
+        )
+
+        op_recall = metrics["summary_metrics"]["recall"]
+        missed_rate = metrics["summary_metrics"]["missed_detection_rate"]
+        assert 0.35 <= op_recall <= 0.65, f"Adversarial recall ({op_recall}) should drop realistically between 35% and 65%"
+        assert 0.35 <= missed_rate <= 0.65, f"Missed detection rate ({missed_rate}) should be between 35% and 65%"
+        assert metrics["summary_metrics"]["false_positive_rate"] == 0.0, "FPR should remain 0.0% on clean catalogs"
+        assert metrics["summary_metrics"]["precision"] == 1.0, "Precision should remain 100.0%"
+
+    def test_dual_evaluation_metrics_json_schema(self):
+        """Verify defend/agentic/metrics.json contains both baseline and adversarial evaluations alongside."""
+        metrics_path = Path("defend/agentic/metrics.json")
+        assert metrics_path.exists()
+
+        with open(metrics_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        assert "summary_metrics" in data
+        assert data["summary_metrics"]["recall"] == 1.0  # Baseline 100%
+
+        assert "adversarial_evaluation" in data
+        adv = data["adversarial_evaluation"]
+        assert adv["split_name"] == "deliberately_adversarial_held_out"
+        assert adv["dataset_metadata"]["total_samples"] == 200
+        assert adv["summary_metrics"]["recall"] < 0.90  # Non-tautological drop
+        assert adv["summary_metrics"]["missed_detection_rate"] > 0.10
+        assert adv["summary_metrics"]["false_positive_rate"] == 0.0
+
+        assert "comparative_analysis" in data
+        comp = data["comparative_analysis"]
+        assert "metrics_comparison" in comp
+        assert "operational_recall" in comp["metrics_comparison"]
+        assert comp["metrics_comparison"]["operational_recall"]["baseline"] == 1.0
+        assert comp["metrics_comparison"]["operational_recall"]["adversarial"] < 0.90
+        assert "audit_conclusion" in comp

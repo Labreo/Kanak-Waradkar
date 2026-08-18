@@ -18,7 +18,7 @@ When defenses remain static while attackers adapt, **defensive efficacy collapse
 **Project TRIAD** (Threat Reconnaissance, Identification, Attack Generation & Defense) solves this asymmetry through a unified, 4-pillar closed-loop framework:
 1. **IDENTIFY:** A comprehensive taxonomy and threat matrix mapping 10 emerging GenAI payment fraud sub-techniques across Onboarding/KYC (Vector A), Behavioral Transactions (Vector B), and Autonomous Agentic Payments (Vector C).
 2. **GENERATE:** Seedable, high-fidelity synthetic generation engines producing multi-modal attack batches and sequences whose statistical distributions mathematically match real-world benchmarks (590,540 IEEE-CIS transactions and 6,362,620 PaySim operations with **0.8693 macro fidelity**).
-3. **DEFEND:** Multi-tier defensive engines (Deterministic Checksums $\to$ Statistical Coherence $\to$ Deep Digital Forensics / GBDT Tabular Models / Pre-Execution Tool-Call Interceptors) achieving state-of-the-art out-of-time detection (ROC-AUC **0.9336** on Vector B, **100.00%** recall on Vector A and Vector C).
+3. **DEFEND:** Multi-tier defensive engines (Deterministic Checksums $\to$ Statistical Coherence $\to$ Deep Digital Forensics / GBDT Tabular Models / Pre-Execution Tool-Call Interceptors) achieving rigorous out-of-time detection (leading with **0.8428** ROC-AUC and **88.47%** recall on the primary real IEEE-CIS card benchmark / **0.9336** secondary multi-source composite, alongside **100.00%** baseline recall on Vector A and Vector C).
 4. **LOOP:** An automated adversarial mutation engine that feeds evading payloads back into generation, stress-testing defenses before real fraudsters exploit them in production.
 
 ```
@@ -185,8 +185,9 @@ Evaluating 500 synthetic identity profiles (`generate/identity/fidelity_report.m
    - Dual-threshold operational policy: Review Threshold $\ge 0.25$, Autonomous Block Threshold $\ge 0.70$.
 2. **Vector B Classifier (`defend/transaction/classifier.py`):**
    - `HistGradientBoostingClassifier` trained on 96,800 rows across 29 features with balanced class weighting and `<150MB` peak RAM footprint.
-   - Evaluated under a strictly time-respecting split ($t_{eval} > t_{train}$) across 25,000 transactions.
-   - Calibrated operational threshold: Review Threshold $\ge 0.30$, Autonomous Block Threshold $\ge 0.75$.
+   - **Primary Defensive Headline (Real IEEE-CIS Out-of-Time Slice):** Evaluated strictly forward-in-time ($t_{eval} > t_{train}$) on real-world e-commerce card transactions (n=12,000), achieving **`0.8428` ROC-AUC** and **`88.47%` recall** at a **`35.96%` False Positive Rate** (serving as a high-recall pre-authorization screening triage). We explicitly acknowledge the 35.96% FPR on real data as a known operational limitation, with retuned decision thresholds and graph-based entity embeddings established as immediate next steps.
+   - **Secondary Multi-Source Composite (Cross-Domain Stress Test Only):** Extended evaluation across 25,000 transactions (IEEE-CIS + PaySim + Synthetic) yielding composite **`0.9336` ROC-AUC** and **`89.86%` recall** (with composite FPR compressed to **`17.09%`** due to domain invariants in mobile money and synthetic micro-auths; presented explicitly as a secondary figure, not our headline, to avoid obscuring real-world card friction).
+   - Calibrated operational policy: Review Threshold $\ge 0.30$, Autonomous Block Threshold $\ge 0.75$.
 3. **Vector C Detector (`defend/agentic/detector.py`):**
    - Zero-trust pre-execution content scanner integrating a `pre_tool_call_hook` that inspects DOM attributes, comments, and transaction notes *before* execution reaches `FakeWallet.execute_payment`.
    - Four specialized scanning modules: Structural Concealment Scanner, Imperative Override Trigger Engine, Parameter Divergence Scanner, and AP Invoice Remittance Pretexting Detector. Block threshold: $\ge 0.50$.
@@ -197,27 +198,27 @@ Evaluating 500 synthetic identity profiles (`generate/identity/fidelity_report.m
 
 All numbers are pulled directly from committed, machine-readable metrics files (`defend/*/metrics.json`):
 
-| Evaluation Metric | Vector A (Identity & KYC) | Vector B (Transactions) | Vector C (Agentic Payments) | Benchmark Standard |
-| :--- | :--- | :--- | :--- | :--- |
-| **Model Name** | `VectorARiskScorer` (v1.0.0) | `VectorBClassifier` (v1.0.0) | `VectorCDetector` (v1.0.0) | — |
-| **Algorithm** | Multi-Tier Weighted Scorer | `HistGradientBoosting` | Pre-Execution Scanner | — |
-| **Evaluated Dataset** | `identity_heldout_batch.json` | `held_out_out_of_time_combined` | `agentic_heldout_batch.json` | Held-out Test Splits |
-| **Total Evaluated Records** | **`500` profiles** | **`25,000` transactions** | **`200` scenarios** | Large-scale evaluation |
-| **Dataset Class Balance** | 150 Legit (30%) / 350 Fraud (70%)| 24,635 Legit (98.5%) / 365 Fraud | 80 Legit (40%) / 120 Fraud (60%) | Real-world imbalance |
-| **Operational Threshold** | Score $\ge 0.25$ | Probability $\ge 0.30$ | Confidence $\ge 0.50$ | Cost-calibrated |
-| **Operational Recall** | **`100.00%`** (350 / 350) | **`89.86%`** (328 / 365) | **`100.00%`** (120 / 120) | $\ge 85.0\%$ Target |
-| **Operational Precision** | **`100.00%`** (350 / 350) | **`7.23%`** (328 / 4,537) | **`100.00%`** (120 / 120) | Domain-calibrated |
-| **Operational F1-Score** | **`1.0000`** | **`0.1338`** | **`1.0000`** | Harmonic Mean |
-| **False Positive Rate (FPR)**| **`0.00%`** (0 / 150) | **`17.09%`** (4,209 / 24,635) | **`0.00%`** (0 / 80) | Controlled Friction |
-| **Specificity (TNR)** | **`100.00%`** (150 / 150) | **`82.91%`** (20,426 / 24,635)| **`100.00%`** (80 / 80) | Baseline Pass Rate |
-| **Overall Accuracy** | **`100.00%`** | **`83.02%`** | **`100.00%`** | Total Sample Accuracy |
-| **Balanced Accuracy** | **`100.00%`** | **`86.39%`** | **`100.00%`** | Unweighted Mean |
-| **ROC-AUC** | **`1.0000`** | **`0.9336`** | **`1.0000`** | Continuous Ranking |
-| **PR-AUC** | **`1.0000`** | **`0.4266`** | **`1.0000`** | Imbalance Robustness |
-| **Strict Block Threshold** | Score $\ge 0.70$ | Probability $\ge 0.75$ | Confidence $\ge 0.50$ | Real-Time Block |
-| **Strict Block Precision** | **`100.00%`** (350 / 350) | **`23.48%`** (170 / 724) | **`100.00%`** (120 / 120) | Hard Block Accuracy |
-| **Strict Block Recall** | **`100.00%`** (350 / 350) | **`46.58%`** (170 / 365) | **`100.00%`** (120 / 120) | Autonomous Rejection |
-| **Strict Block FPR** | **`0.00%`** (0 / 150) | **`2.25%`** (554 / 24,635) | **`0.00%`** (0 / 80) | Low Customer Fallout |
+| Evaluation Metric | Vector A (Identity & KYC) | Vector B (Primary: Real IEEE-CIS) | Vector B (Secondary: Multi-Source) | Vector C (Agentic Payments) | Benchmark Standard |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Model Name** | `VectorARiskScorer` (v1.0.0) | `VectorBClassifier` (v1.0.0) | `VectorBClassifier` (v1.0.0) | `VectorCDetector` (v1.0.0) | — |
+| **Algorithm** | Multi-Tier Weighted Scorer | `HistGradientBoosting` | `HistGradientBoosting` | Pre-Execution Scanner | — |
+| **Evaluated Dataset** | `identity_heldout_batch.json` | `ieee_cis_out_of_time` (Real Card) | `held_out_out_of_time_combined` | `agentic_heldout_batch.json` | Held-out Test Splits |
+| **Total Evaluated Records** | **`500` profiles** | **`12,000` transactions** | **`25,000` transactions** | **`200` scenarios** | Large-scale evaluation |
+| **Dataset Class Balance** | 150 Legit (30%) / 350 Fraud (70%)| 11,679 Legit / 321 Fraud (2.68%) | 24,635 Legit (98.5%) / 365 Fraud | 80 Legit (40%) / 120 Fraud (60%) | Real-world imbalance |
+| **Operational Threshold** | Score $\ge 0.25$ | Probability $\ge 0.30$ | Probability $\ge 0.30$ | Confidence $\ge 0.50$ | Cost-calibrated |
+| **Operational Recall** | **`100.00%`** (350 / 350) | **`88.47%`** (284 / 321) | **`89.86%`** (328 / 365) | **`100.00%`** (120 / 120) | $\ge 85.0\%$ Target |
+| **Operational Precision** | **`100.00%`** (350 / 350) | **`6.33%`** (284 / 4,482) | **`7.23%`** (328 / 4,537) | **`100.00%`** (120 / 120) | Domain-calibrated |
+| **Operational F1-Score** | **`1.0000`** | **`0.1182`** | **`0.1338`** | **`1.0000`** | Harmonic Mean |
+| **False Positive Rate (FPR)**| **`0.00%`** (0 / 150) | **`35.96%`** (4,198 / 11,679) | **`17.09%`** (4,209 / 24,635) | **`0.00%`** (0 / 80) | Controlled Friction |
+| **Specificity (TNR)** | **`100.00%`** (150 / 150) | **`64.04%`** (7,481 / 11,679) | **`82.91%`** (20,426 / 24,635)| **`100.00%`** (80 / 80) | Baseline Pass Rate |
+| **Overall Accuracy** | **`100.00%`** | **`64.69%`** | **`83.02%`** | **`100.00%`** | Total Sample Accuracy |
+| **Balanced Accuracy** | **`100.00%`** | **`76.26%`** | **`86.39%`** | **`100.00%`** | Unweighted Mean |
+| **ROC-AUC** | **`1.0000`** | **`0.8428`** | **`0.9336`** | **`1.0000`** | Continuous Ranking |
+| **PR-AUC** | **`1.0000`** | **`0.3259`** | **`0.4266`** | **`1.0000`** | Imbalance Robustness |
+| **Strict Block Threshold** | Score $\ge 0.70$ | Probability $\ge 0.75$ | Probability $\ge 0.75$ | Confidence $\ge 0.50$ | Real-Time Block |
+| **Strict Block Precision** | **`100.00%`** (350 / 350) | **`19.74%`** (139 / 704) | **`23.48%`** (170 / 724) | **`100.00%`** (120 / 120) | Hard Block Accuracy |
+| **Strict Block Recall** | **`100.00%`** (350 / 350) | **`43.30%`** (139 / 321) | **`46.58%`** (170 / 365) | **`100.00%`** (120 / 120) | Autonomous Rejection |
+| **Strict Block FPR** | **`0.00%`** (0 / 150) | **`4.84%`** (565 / 11,679) | **`2.25%`** (554 / 24,635) | **`0.00%`** (0 / 80) | Low Customer Fallout |
 
 ---
 
@@ -230,11 +231,14 @@ All numbers are pulled directly from committed, machine-readable metrics files (
   - `FRANKENSTEIN_STOLEN_ANCHOR` (n=275): ALLOW = `0`, REVIEW = `0`, **BLOCK = `275`** (`100.0%`).
   - `FULLY_SYNTHETIC` (n=75): ALLOW = `0`, REVIEW = `0`, **BLOCK = `75`** (`100.0%`).
 
-#### Vector B: 2×2 Binary & 3×3 Threat Category Matrix (Out-of-Time Test, n=25,000)
-- **Binary Matrix (Operational Policy: prob $\ge 0.30$):**
+#### Vector B: Primary Real IEEE-CIS Matrix vs. Secondary Composite Matrix
+- **Primary: Real IEEE-CIS Out-of-Time Slice (n=12,000, Operational Policy: prob $\ge 0.30$):**
+  - Actual Legitimate (n=11,679): **TN = `7,481`** (`64.04%`), **FP = `4,198`** (`35.96%`).
+  - Actual Fraud (n=321): **FN = `37`** (`11.53%`), **TP = `284`** (`88.47%`).
+- **Secondary: Multi-Source Composite Matrix (Out-of-Time Combined, n=25,000, Operational Policy: prob $\ge 0.30$):**
   - Actual Legitimate (n=24,635): **TN = `20,426`** (`82.91%`), **FP = `4,209`** (`17.09%`).
   - Actual Fraud (n=365): **FN = `37`** (`10.14%`), **TP = `328`** (`89.86%`).
-- **3×3 Verdict Matrix:**
+- **Composite 3×3 Threat Category Matrix (n=25,000):**
   - `BENCHMARK_LEGITIMATE` (n=24,635): **ALLOW = `20,426`** (`82.9%`), **REVIEW = `3,655`** (`14.8%`), **BLOCK = `554`** (`2.2%`).
   - `CARD_TESTING_RECON` (n=29): ALLOW = `0` (`0.0%`), REVIEW = `0` (`0.0%`), **BLOCK = `29`** (`100.0%`).
   - `BUST_OUT_DRAIN` (n=336): ALLOW = `37` (`11.0%`), **REVIEW = `158`** (`47.0%`), **BLOCK = `141`** (`42.0%`) $\to$ **`89.0%` Total Interception**.
@@ -250,12 +254,35 @@ All numbers are pulled directly from committed, machine-readable metrics files (
 
 ---
 
-### 3.4 Disaggregated Source Breakdown & Feature Importances (Vector B)
+### 3.4 Disaggregated Source Breakdown & Real-World Limitations (Vector B)
 
-#### Performance Disaggregated by Data Source
-- **Real IEEE-CIS Out-of-Time Partition (n=12,000):** ROC-AUC = **`0.8428`**, PR-AUC = **`0.3259`**, Operational Recall = **`88.47%`** (284 / 321), Precision = `6.33%`, FPR = `35.96%`.
-- **Real PaySim Out-of-Time Partition (n=12,000):** ROC-AUC = **`1.0000`**, PR-AUC = **`1.0000`**, Operational Recall = **`100.00%`** (6 / 6), Precision = `100.00%`, FPR = `0.00%` (strict balance drain invariants).
-- **Synthetic Vector B Held-Out Batch (n=1,000):** ROC-AUC = **`1.0000`**, PR-AUC = **`1.0000`**, Operational Recall = **`100.00%`** (38 / 38), Precision = `80.85%`, FPR = `0.94%`.
+#### 1. Primary Empirical Claim: Real IEEE-CIS Out-of-Time Benchmark (n=12,000)
+Rather than hiding noisy real-world card fraud behind clean synthetic benchmarks or blended multi-source figures, Project TRIAD leads with the un-gilded, chronologically split IEEE-CIS transaction benchmark as its primary behavioral defense claim:
+- **ROC-AUC:** **`0.8428`** (robust rank-ordering across unseen forward-in-time transactions)
+- **PR-AUC:** **`0.3259`** (strong precision-recall curve under severe 2.68% real-world fraud base rate)
+- **Operational Recall (`prob >= 0.30`):** **`88.47%`** (284 of 321 real fraud attacks intercepted)
+- **Operational Precision:** **`6.33%`** (284 TP / 4,482 total flagged alerts)
+- **False Positive Rate (FPR):** **`35.96%`** (4,198 FP / 11,679 clean transactions)
+
+We explicitly acknowledge the 35.96% False Positive Rate on real IEEE-CIS data as a known operational limitation of deploying a standalone tabular GBDT without historical cardholder identity graphs or behavioral biometrics, and our immediate next step is calibrating dynamic merchant-specific decision thresholds and integrating graph-based cardholder entity embeddings to compress false positives below 10% while preserving sub-second authorization latency.
+
+> [!WARNING]
+> **Defensive Transparency & Known Operational Limitation:**  
+> The **35.96% FPR** on the IEEE-CIS test slice is the true, unvarnished baseline of our standalone tabular classifier on real-world card data. We present this figure as our primary, most-defended benchmark rather than allowing multi-source aggregation to mask real-world friction.
+
+#### 2. Secondary Composite Figure: Multi-Source Cross-Domain Generalization (n=25,000)
+As a secondary diagnostic to evaluate cross-domain generalization across different payment modalities, we also evaluate a combined multi-source test aggregating IEEE-CIS card transactions (n=12,000), PaySim mobile money operations (n=12,000), and synthetic botnet attacks (n=1,000):
+- **Composite ROC-AUC:** **`0.9336`** | **PR-AUC:** **`0.4266`**
+- **Composite Operational Recall:** **`89.86%`** (328 / 365) | **Composite FPR:** **`17.09%`** (4,209 / 24,635) | **Precision:** **`7.23%`**
+
+**Why the blended FPR is lower (17.09% vs. 35.96%) — and why it is NOT our headline:**  
+In the multi-source dataset, PaySim mobile money transfers follow strict balance-drain arithmetic ($0.00\%$ FPR on 12,000 txns) and synthetic botnet attacks exhibit distinct micro-auth burst velocity ($0.94\%$ FPR on 1,000 txns). These high-separability domain invariants mathematically compress the aggregate FPR from 35.96% down to 17.09%. **We explicitly present this 17.09% blended number as a secondary composite diagnostic only, not our headline performance**, ensuring that real-world card friction is never obscured.
+
+#### 3. Complete Disaggregated Partition Breakdown
+- **Primary — Real IEEE-CIS Out-of-Time Partition (n=12,000):** ROC-AUC = **`0.8428`**, PR-AUC = **`0.3259`**, Operational Recall = **`88.47%`** (284 / 321), Precision = `6.33%`, FPR = `35.96%` *(Primary Headline Claim)*.
+- **Real PaySim Out-of-Time Partition (n=12,000):** ROC-AUC = **`1.0000`**, PR-AUC = **`1.0000`**, Operational Recall = **`100.00%`** (6 / 6), Precision = `100.00%`, FPR = `0.00%` *(Mobile Money Dual-Ledger Invariants)*.
+- **Synthetic Vector B Held-Out Batch (n=1,000):** ROC-AUC = **`1.0000`**, PR-AUC = **`1.0000`**, Operational Recall = **`100.00%`** (38 / 38), Precision = `80.85%`, FPR = `0.94%` *(Botnet Micro-Auth Invariants)*.
+- **Secondary — Blended Multi-Source Composite (n=25,000):** ROC-AUC = **`0.9336`**, PR-AUC = **`0.4266`**, Operational Recall = **`89.86%`** (328 / 365), Precision = `7.23%`, FPR = `17.09%` *(Secondary Diagnostic Only)*.
 
 #### Top 10 Gradient-Boosted Feature Importances
 Permutation importance confirms that the model relies on structural behavioral signatures rather than spurious identifiers:
@@ -275,7 +302,7 @@ Permutation importance confirms that the model relies on structural behavioral s
 ### 3.5 Part K Quality Standard & 99%+ Result Audits
 
 Per the Part K Quality Standard, any 99%+ metric was investigated for potential data leakage:
-- **Vector B Leakage Audit:** Training and evaluation partitions strictly respect chronological time progression ($t_{eval} > t_{train}$, IEEE-CIS eval min $1,132,174 > 1,132,163$ train max; PaySim eval min $32,400 \ge 32,400$ train max). Lookahead leakage is **0.0%**.
+- **Vector B Leakage & Generalization Audit:** Training and evaluation partitions strictly respect chronological time progression ($t_{eval} > t_{train}$, IEEE-CIS eval min $1,132,174 > 1,132,163$ train max; PaySim eval min $32,400 \ge 32,400$ train max). Lookahead leakage is **0.0%**. On real IEEE-CIS card transactions (primary benchmark), the model achieves **`0.8428` ROC-AUC** and **`88.47%` recall** at **`35.96%` FPR** (a known limitation targeted for threshold retuning and graph feature engineering), while the secondary multi-source composite evaluation achieves **`0.9336` ROC-AUC** and **`89.86%` recall** at **`17.09%` FPR**.
 - **Vector A Separability Audit:** The 100.0% recall on baseline synthetic data occurs because naive generation manifests concurrent anomalies across all three tiers (100% barcode mismatches in Tier 1, 63.64% demographic inversions in Tier 2, 91.64% synthetic EXIF tags in Tier 3). When attackers bypass Tier 1 barcodes in adversarial stress testing, Tier 2 and Tier 3 maintain **`97.4%+`** detection recall.
 - **Vector C Precision & Recall Audit:** The 100.0% recall and 0.0% FPR occur because the detector combines structural comment/CSS parsers with semantic recipient matching. Legitimate catalogs with complex text pass with **`100.0%`** clean approval (0 false alarms across 80 tests).
 
@@ -296,7 +323,7 @@ Per the Part K Quality Standard, any 99%+ metric was investigated for potential 
 
 ### 3.7 The Closed-Loop Novelty Claim (Evasion Rate over Mutation Cycles)
 
-The core architectural innovation of Project TRIAD is the **automated closed loop**. When static defenses face generative attackers that mutate after every cycle, detection efficacy degrades rapidly unless the defense continuously adapts.
+The multi-cycle evasion trajectories below prove that static fraud defenses inevitably degrade when confronted with mutating generative adversaries—an empirical reality that serves as the core justification for TRIAD's automated closed loop. Had the evasion rate remained flat at 0% across successive mutation cycles, it would have indicated only that the generator was trivial and failed to be genuinely adversarial, rather than demonstrating defensive invulnerability. By systematically discovering defensive blind spots across cycles, TRIAD generates the precise adversarial feedback required to trigger automated defense adaptation and restore operational recall.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -371,8 +398,8 @@ In live payment environments, false positives inflict direct economic damage: le
 
 1. **Three-Tier Action Policy (`ALLOW`, `REVIEW`, `BLOCK`):**
    - Rather than binary pass/fail, Vector B establishes an operational review tier ($0.30 \le \text{prob} < 0.75$) and a strict block tier ($\text{prob} \ge 0.75$).
-   - Under the strict block policy, **only 2.25% of legitimate transactions** (554 / 24,635) face autonomous rejection, preserving **97.75% of clean transaction volume** without friction.
-   - For ambiguous cases (`14.8%` of clean volume), transactions are routed to low-friction step-up authentication (3D Secure 2.0 / OTP challenge) or async fraud desk inspection, rather than outright rejection.
+   - Under the strict block policy on the primary real IEEE-CIS slice, **only 4.84% of legitimate card transactions** (565 / 11,679) face autonomous rejection (preserving **95.16% of clean card volume** with zero friction), while across the secondary multi-source composite this rate is **2.25%** (554 / 24,635).
+   - For ambiguous cases (`31.12%` of clean IEEE-CIS volume / `14.8%` of composite volume), transactions are routed to low-friction step-up authentication (3D Secure 2.0 / OTP challenge) or async fraud desk inspection, rather than outright rejection.
 2. **Zero False Alarm KYC & Agentic Baseline:**
    - Vector A achieves **0.00% False Positive Rate** (0 / 150 false blocks) on legitimate applicant profiles, guaranteeing zero friction for verified consumers.
    - Vector C achieves **0.00% False Positive Rate** (0 / 80 false blocks) across complex corporate procurement invoices and promotional e-commerce catalogs.

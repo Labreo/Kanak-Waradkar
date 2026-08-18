@@ -237,8 +237,13 @@ class VectorALoopEngine(BaseLoopOrchestrator):
             summary = "Baseline naive Frankenstein profiles caught primarily by Tier 1 barcode & SSA checksum rules."
         elif cycle_index == 1:
             summary = "Structural parity mutations (PDF417 repair, regional anchor alignment) bypassed Tier 1, raising evasion."
-        else:
+        elif cycle_index == 2:
             summary = "Deep forensic camouflage (iPhone EXIF, seasoned adult anchors, aged MNO endpoints) bypassed static rules."
+        else:
+            if evasion_rate <= 0.35:
+                summary = f"Cycle 3 Adaptive Recovery: Defend model retrained on Cycle 2 evading samples; detection recall recovered to {detection_rate*100:.2f}% (evasion reduced to {evasion_rate*100:.2f}%)."
+            else:
+                summary = f"Cycle 3 Finding: Static retraining alone was insufficient against deep forensic camouflage (evasion remained at {evasion_rate*100:.2f}%), arguing for hardware enclave cryptographic attestation rather than heuristic OCR inspection."
 
         return CycleResult(
             cycle_index=cycle_index,
@@ -261,6 +266,23 @@ class VectorALoopEngine(BaseLoopOrchestrator):
             cycle_summary=summary,
             executed_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         )
+
+    def retrain_defense(
+        self,
+        cycle_index: int,
+        evading_samples: List[Dict[str, Any]],
+        all_cycles: List[CycleResult],
+    ) -> List[MutationRecord]:
+        """Phase 4b: Retrain/adapt Vector A risk scorer on evading samples."""
+        self.scorer.adapt_to_evading_samples(evading_samples)
+        return [
+            MutationRecord(
+                parameter="defend.identity.risk_scorer.adaptive_retraining",
+                previous_value="static_heuristic_rules",
+                mutated_value=f"retrained_cluster_intercept ({len(evading_samples)} samples ingested)",
+                rationale="Retrained forensic scoring engine on Cycle 2 evading camouflage profiles; re-calibrated weights and forensic sensitivity.",
+            )
+        ]
 
     def mutate_parameters(
         self,
@@ -318,6 +340,16 @@ class VectorALoopEngine(BaseLoopOrchestrator):
                 previous_value="VOIP",
                 mutated_value="TIER_1_POSTPAID_WIRELESS (Verizon/AT&T)",
                 rationale="Migrate phone carrier from VOIP/Twilio to major mobile network operator with 800+ days tenure.",
+            ))
+
+        elif cycle_index == 2:
+            # Cycle 2 -> Cycle 3: Advanced camouflage attacks evaluated against Retrained Defend Model
+            next_tier = "TIER_3_RETRAINED_DEFENSE"
+            mutations.append(MutationRecord(
+                parameter="defensive_model_state",
+                previous_value="static_baseline_scorer",
+                mutated_value="retrained_adaptive_scorer",
+                rationale="Deployed retrained forensic defense model to evaluate detection recall recovery on advanced evasion attacks.",
             ))
 
         else:

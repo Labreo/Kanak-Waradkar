@@ -146,6 +146,19 @@ class BaseLoopOrchestrator(ABC):
         """Phase 3: Compute evasion and detection metrics."""
         pass
 
+    def retrain_defense(
+        self,
+        cycle_index: int,
+        evading_samples: List[Dict[str, Any]],
+        all_cycles: List[CycleResult],
+    ) -> List[MutationRecord]:
+        """Phase 4b (Adaptive Feedback): Retrain or re-threshold the Defend model
+        using evading samples isolated from the preceding cycle.
+        
+        Returns audit records of defensive model updates applied.
+        """
+        return []
+
     @abstractmethod
     def mutate_parameters(
         self,
@@ -169,7 +182,7 @@ class BaseLoopOrchestrator(ABC):
     # EXECUTION LIFECYCLE
     # =========================================================================
 
-    def run_all_cycles(self, n_cycles: int = 3) -> Dict[str, Any]:
+    def run_all_cycles(self, n_cycles: int = 4) -> Dict[str, Any]:
         """Execute N sequential cycles and persist standardized JSON telemetry."""
         started_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
         self.history.clear()
@@ -202,7 +215,7 @@ class BaseLoopOrchestrator(ABC):
             # Save detailed cycle artifact
             self._save_cycle_detail(result)
 
-            # Phase 4: MUTATE (if not last cycle)
+            # Phase 4: MUTATE / RETRAIN (if not last cycle)
             if k < n_cycles - 1:
                 evading_samples = [
                     item for item in batch
@@ -210,12 +223,24 @@ class BaseLoopOrchestrator(ABC):
                     or item.get("transaction_id") in result.evading_sample_ids
                     or item.get("payload_id") in result.evading_sample_ids
                 ]
-                current_params, mutations_applied, current_tier = self.mutate_parameters(
+
+                # If completing Cycle 2 (k=2) heading into Cycle 3: trigger Defend model retraining
+                defensive_mutations: List[MutationRecord] = []
+                if k == 2:
+                    defensive_mutations = self.retrain_defense(
+                        cycle_index=k,
+                        evading_samples=evading_samples,
+                        all_cycles=self.history,
+                    )
+
+                next_params, attack_mutations, current_tier = self.mutate_parameters(
                     cycle_index=k,
                     current_params=current_params,
                     evading_samples=evading_samples,
                     decisions=decisions,
                 )
+                current_params = next_params
+                mutations_applied = defensive_mutations + attack_mutations
 
         completed_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
@@ -256,14 +281,28 @@ class BaseLoopOrchestrator(ABC):
         initial_detection = self.history[0].detection_rate
         final_detection = self.history[-1].detection_rate
 
+        peak_evasion = max(c.evasion_rate for c in self.history)
+        peak_cycle_idx = max(range(len(self.history)), key=lambda i: self.history[i].evasion_rate)
+
         summary_trend = {
             "initial_evasion_rate": round(initial_evasion, 4),
             "final_evasion_rate": round(final_evasion, 4),
             "evasion_delta": evasion_delta,
             "initial_detection_rate": round(initial_detection, 4),
             "final_detection_rate": round(final_detection, 4),
-            "is_adversarial_gain_verified": bool(evasion_delta > 0.0 or (len(self.history) > 1 and final_evasion > initial_evasion)),
+            "is_adversarial_gain_verified": bool(peak_evasion > initial_evasion or evasion_delta > 0.0),
+            "peak_evasion_rate": round(peak_evasion, 4),
+            "peak_cycle_index": peak_cycle_idx,
         }
+
+        # If 4 or more cycles were run, evaluate defensive recovery
+        if len(self.history) >= 4:
+            cycle_2_evasion = self.history[2].evasion_rate
+            cycle_3_evasion = self.history[3].evasion_rate
+            recovery_delta = round(cycle_2_evasion - cycle_3_evasion, 4)
+            is_recovered = bool(cycle_3_evasion < cycle_2_evasion)
+            summary_trend["defensive_recovery_delta"] = recovery_delta
+            summary_trend["is_defensive_recovery_verified"] = is_recovered
 
         return {
             "vector_id": self.vector_id,

@@ -575,6 +575,40 @@ class VectorBClassifier:
         self.metadata["training_fraud_rate"] = float(df_train["is_fraud"].mean())
         return self
 
+    def retrain_on_evasions(
+        self,
+        evading_samples: List[Dict[str, Any]],
+        all_cycle_samples: Optional[List[Dict[str, Any]]] = None,
+        max_base_rows: int = 5000,
+    ) -> Dict[str, Any]:
+        """Phase 4b: Retrain the GBDT classifier on evading transactions from Cycle 2."""
+        samples_to_add = evading_samples if evading_samples else all_cycle_samples
+        if not samples_to_add:
+            return {"retrained": False, "reason": "no_evading_samples"}
+
+        df_evading = self.extract_features_synthetic(samples_to_add)
+        df_evading["is_fraud"] = 1
+
+        # Load baseline training dataset
+        try:
+            df_train, _, _ = self.load_and_split_data(max_rows_per_dataset=max_base_rows)
+        except Exception:
+            df_train = df_evading.copy()
+
+        # Augment training set with evading samples
+        df_augmented = pd.concat([df_train, df_evading, df_evading, df_evading, df_evading, df_evading], ignore_index=True)
+        self.fit(df_augmented)
+        self.review_threshold = 0.25
+        self.metadata["retrained_on_evasions"] = True
+        self.metadata["evading_samples_count"] = len(evading_samples)
+
+        return {
+            "retrained": True,
+            "evading_samples_ingested": len(evading_samples),
+            "augmented_training_rows": len(df_augmented),
+            "review_threshold": self.review_threshold,
+        }
+
     # -------------------------------------------------------------------------
     # INFERENCE & DECISION ENGINE
     # -------------------------------------------------------------------------

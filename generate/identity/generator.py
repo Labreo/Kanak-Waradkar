@@ -766,6 +766,222 @@ class VectorAIdentityGenerator:
 
         return batch
 
+    def generate_adversarial_heldout_batch(self, count: int = 500) -> Dict[str, Any]:
+        """Generate a deliberately adversarial held-out batch of identity profiles.
+        
+        Specifically engineered to stress-test the detector against attackers who avoid
+        every known Tier 1, Tier 2, and Tier 3 signal check:
+        1. Tier 1 Evasion:
+           - Valid barcode PDF417 payload match (front OCR demographic parity).
+           - Valid algorithmic checksums (MOD11 / Luhn) and valid national ID format.
+           - Valid MRZ check-digits.
+           - Established aged domains (>1000 days), non-disposable inboxes.
+           - Residential single/multi-family addresses (is_cmra = False).
+        2. Tier 2 Evasion:
+           - Plausible demographic alignment (SSN issuance year range aligns with birth + 18-20y).
+           - Active adult anchor cohort (anchor_entity_type = 'ACTIVE_ADULT', zero child/deceased/unassigned SSNs).
+           - Seasoned credit bureau vintage (48-180 months).
+           - Aligned anchor state with residential state.
+           - Postpaid wireless phone line with long tenure (>600 days).
+           - Low entropy email username (<0.32).
+           - Verified corporate employer registry with standard salary.
+        3. Tier 3 Evasion:
+           - Authentic optical hardware EXIF software headers (Apple iPhone 15 Pro, Fujitsu ScanSnap, Canon CanoScan).
+           - 300+ DPI resolution.
+           - Sub-pixel template alignment (>0.96).
+           - Low font kerning anomaly score (<0.08).
+           - Low photo tamper artifact score (<0.08).
+           - Standard hardware camera quantization profile, zero layer flattening.
+           - Plausible metadata creation timestamps (0-14 days delta).
+        
+        Cohort Composition:
+        - 150 Benchmark Legitimate Profiles (including edge cases like young adults & fresh movers) [30%]
+        - 350 Deliberately Adversarial Synthetic Profiles [70%]
+          * ~45% Level A Expert Adversaries (full 3-tier camouflage, score < 0.25 -> ALLOW)
+          * ~35% Level B Intermediate Adversaries (Tier 1 & Tier 3 fixed, subtle residual Tier 2/3 drift -> REVIEW)
+          * ~20% Level C Partial Adversaries (Tier 1 fixed, slight anchor/forensic mismatch -> BLOCK/REVIEW)
+        """
+        legit_count = int(count * 0.30)
+        adv_synth_count = count - legit_count
+
+        profiles = []
+        
+        # 1. Generate Legitimate Cohort (including thin-file and mover edge-cases)
+        for i in range(legit_count):
+            p = self._generate_profile(i, "BENCHMARK_LEGITIMATE")
+            # Inject realistic edge cases into ~15% of legitimate records
+            if i % 7 == 0:
+                # Young adult with 4-month credit vintage
+                birth_yr = 2005
+                p["real_fragment"]["anchor_birth_year"] = birth_yr
+                p["real_fragment"]["anchor_issuance_year_range"] = f"{birth_yr+1}-{birth_yr+3}"
+                p["fabricated_overlay"]["biographical"]["claimed_date_of_birth"] = f"{birth_yr}-05-12"
+                p["real_fragment"]["anchor_bureau_vintage_months"] = 4
+            elif i % 11 == 0:
+                # Fresh mover with 3-month address tenure
+                p["fabricated_overlay"]["residential_address"]["address_tenure_months"] = 3
+            profiles.append(p)
+
+        # 2. Generate Adversarial Synthetic Cohort
+        for i in range(adv_synth_count):
+            pidx = legit_count + i
+            arch = "FRANKENSTEIN_STOLEN_ANCHOR" if (i % 4 != 0) else "FULLY_SYNTHETIC"
+            p = self._generate_profile(pidx, arch)
+            
+            # Apply targeted adversarial evasion mutations
+            meta = p["synthesis_metadata"]
+            meta["is_synthetic"] = True
+            meta["evasion_target_tier"] = "TIER_3_ADVERSARIAL_EVASION"
+            
+            doc_meta = p["document_metadata"]
+            chk = doc_meta["checksum_validity"]
+            layout = doc_meta["field_layout_plausibility"]
+            tool_fp = doc_meta["creation_tool_fingerprint"]
+            overlay = p["fabricated_overlay"]
+            bio = overlay["biographical"]
+            contact = overlay["contact_endpoints"]
+            address = overlay["residential_address"]
+            emp = overlay["employment_profile"]
+            anchor = p["real_fragment"]
+
+            # --- Tier 1 Evasion (100% of adversarial cohort fixes Tier 1 checks) ---
+            chk["barcode_pdf417_payload_match"] = True
+            chk["algorithmic_checksum_valid"] = True
+            chk["checksum_spoofing_method"] = "CALCULATED_VALID"
+            chk["national_id_format_valid"] = True
+            chk["mrz_check_digits_match"] = True
+            
+            contact["email_is_disposable"] = False
+            contact["email_domain_age_days"] = self.rng.randint(800, 3500)
+            
+            address["is_cmra"] = False
+            address["address_type"] = self.rng.choice(["SINGLE_FAMILY_RESIDENCE", "MULTI_FAMILY_APARTMENT"])
+
+            # Determine evasion sophistication tier for this adversarial profile
+            evasion_skill_roll = self.rng.random()
+
+            if evasion_skill_roll < 0.45:
+                # === Level A: Full 3-Tier Camouflage (Expert Attacker) ===
+                anchor["anchor_entity_type"] = "ACTIVE_ADULT"
+                birth_yr = self.rng.randint(1975, 1996)
+                anchor["anchor_birth_year"] = birth_yr
+                anchor["anchor_issuance_year_range"] = f"{birth_yr+1}-{birth_yr+2}"
+                anchor["anchor_bureau_vintage_months"] = self.rng.randint(72, 180)
+                
+                dob_m = self.rng.randint(1, 12)
+                dob_d = self.rng.randint(1, 28)
+                bio["claimed_date_of_birth"] = f"{birth_yr:04d}-{dob_m:02d}-{dob_d:02d}"
+                
+                matching_metros = [m for m in US_METROS if m["state"] == anchor["anchor_issuing_state"]]
+                if matching_metros:
+                    metro = self.rng.choice(matching_metros)
+                    address["state"] = metro["state"]
+                    address["city"] = metro["city"]
+                    address["postal_code"] = f"{metro['zip_prefix']}{self.rng.randint(10, 99):02d}"
+                address["address_tenure_months"] = self.rng.randint(24, 96)
+
+                contact["phone_line_type"] = "TIER_1_POSTPAID_WIRELESS"
+                contact["phone_carrier_name"] = self.rng.choice(CARRIERS_POSTPAID)
+                contact["phone_tenure_days"] = self.rng.randint(600, 2400)
+                contact["email_entropy_score"] = round(self.rng.uniform(0.18, 0.32), 2)
+
+                emp["employer_corporate_registry_verified"] = True
+                ver_emp = self.rng.choice(EMPLOYERS_VERIFIED)
+                emp["employer_name"] = ver_emp["name"]
+                emp["annual_income"] = round(float(self.rng.gauss(ver_emp["base_salary"], 8000)), -2)
+
+                tool_fp["exif_software_header"] = self.rng.choice([
+                    "Apple iPhone 15 Pro iOS 17.4",
+                    "Fujitsu fi-7160 Document Scanner",
+                    "Canon CanoScan LiDE 400",
+                    "Sony Alpha a7 IV Firmware 2.0"
+                ])
+                tool_fp["dpi_resolution"] = self.rng.choice([300, 600])
+                tool_fp["compression_quantization_profile"] = "STANDARD_HARDWARE_CAMERA"
+                tool_fp["layer_flattening_detected"] = False
+                tool_fp["temporal_issuance_delta_days"] = self.rng.randint(0, 10)
+                
+                layout["font_kerning_anomaly_score"] = round(self.rng.uniform(0.02, 0.07), 3)
+                layout["photo_tamper_artifact_score"] = round(self.rng.uniform(0.02, 0.07), 3)
+                layout["bounding_box_jitter_score"] = round(self.rng.uniform(0.01, 0.05), 3)
+                layout["template_alignment_score"] = round(self.rng.uniform(0.96, 0.99), 3)
+
+            elif evasion_skill_roll < 0.80:
+                # === Level B: Intermediate Adversary (Subtle Residual Drift) ===
+                anchor["anchor_entity_type"] = "ACTIVE_ADULT"
+                birth_yr = self.rng.randint(1978, 1998)
+                anchor["anchor_birth_year"] = birth_yr
+                anchor["anchor_issuance_year_range"] = f"{birth_yr+1}-{birth_yr+3}"
+                anchor["anchor_bureau_vintage_months"] = self.rng.randint(18, 48)
+                
+                bio["claimed_date_of_birth"] = f"{birth_yr:04d}-{self.rng.randint(1,12):02d}-{self.rng.randint(1,28):02d}"
+                address["address_tenure_months"] = self.rng.randint(6, 20)
+
+                contact["phone_line_type"] = "PREPAID_MOBILE"
+                contact["phone_carrier_name"] = self.rng.choice(CARRIERS_PREPAID)
+                contact["phone_tenure_days"] = self.rng.randint(120, 450)
+                contact["email_entropy_score"] = round(self.rng.uniform(0.30, 0.48), 2)
+
+                emp["employer_corporate_registry_verified"] = True
+                emp["annual_income"] = round(float(self.rng.uniform(70000.0, 120000.0)), -2)
+
+                tool_fp["exif_software_header"] = "Apple iOS 16.6 (iPhone 14)"
+                tool_fp["dpi_resolution"] = 300
+                tool_fp["compression_quantization_profile"] = "WEB_RECOMPRESSED"
+                tool_fp["layer_flattening_detected"] = False
+                tool_fp["temporal_issuance_delta_days"] = self.rng.randint(2, 25)
+
+                layout["font_kerning_anomaly_score"] = round(self.rng.uniform(0.12, 0.24), 3)
+                layout["photo_tamper_artifact_score"] = round(self.rng.uniform(0.10, 0.26), 3)
+                layout["template_alignment_score"] = round(self.rng.uniform(0.91, 0.95), 3)
+
+            else:
+                # === Level C: Partial Adversary (Catches on 1-2 Defensive Tiers) ===
+                anchor["anchor_entity_type"] = self.rng.choice(["ACTIVE_ADULT", "DORMANT_FILE"])
+                birth_yr = self.rng.randint(1985, 2002)
+                anchor["anchor_birth_year"] = birth_yr - self.rng.randint(2, 8)
+                anchor["anchor_issuance_year_range"] = f"{anchor['anchor_birth_year']+1}-{anchor['anchor_birth_year']+3}"
+                anchor["anchor_bureau_vintage_months"] = self.rng.randint(6, 24)
+                
+                bio["claimed_date_of_birth"] = f"{birth_yr:04d}-{self.rng.randint(1,12):02d}-{self.rng.randint(1,28):02d}"
+                address["address_tenure_months"] = self.rng.randint(2, 12)
+
+                contact["phone_line_type"] = "PREPAID_MOBILE"
+                contact["phone_carrier_name"] = self.rng.choice(CARRIERS_PREPAID)
+                contact["phone_tenure_days"] = self.rng.randint(45, 180)
+                contact["email_entropy_score"] = round(self.rng.uniform(0.40, 0.65), 2)
+
+                emp["employer_corporate_registry_verified"] = False
+                emp["annual_income"] = round(float(self.rng.uniform(85000.0, 160000.0)), -2)
+
+                tool_fp["exif_software_header"] = "Adobe Photoshop 2024 (Windows)"
+                tool_fp["dpi_resolution"] = self.rng.choice([150, 300])
+                tool_fp["compression_quantization_profile"] = "WEB_RECOMPRESSED"
+                tool_fp["layer_flattening_detected"] = True
+                tool_fp["temporal_issuance_delta_days"] = self.rng.randint(-30, 40)
+
+                layout["font_kerning_anomaly_score"] = round(self.rng.uniform(0.22, 0.38), 3)
+                layout["photo_tamper_artifact_score"] = round(self.rng.uniform(0.20, 0.42), 3)
+                layout["template_alignment_score"] = round(self.rng.uniform(0.86, 0.92), 3)
+
+            profiles.append(p)
+
+        self.rng.shuffle(profiles)
+
+        generated_at = "2026-08-18T04:00:00Z"
+        batch_id = f"batch_identity_adversarial_v1_seed{self.seed}_n{count}"
+
+        batch = {
+            "batch_id": batch_id,
+            "generated_at": generated_at,
+            "generator_version": "1.0.0",
+            "evaluation_type": "DELIBERATELY_ADVERSARIAL_HELDOUT",
+            "total_records": len(profiles),
+            "profiles": profiles
+        }
+
+        return batch
+
 
 # =============================================================================
 # CLI ENTRYPOINT
@@ -784,6 +1000,11 @@ def main() -> None:
         help="Mean proportion of demographic fields fabricated (default: 0.75)"
     )
     parser.add_argument(
+        "--adversarial",
+        action="store_true",
+        help="Generate deliberately adversarial held-out batch avoiding Tier 1/2/3 signals"
+    )
+    parser.add_argument(
         "--output",
         type=str,
         default="data/generated/identity_batch.json",
@@ -794,7 +1015,10 @@ def main() -> None:
     args = parser.parse_args()
 
     generator = VectorAIdentityGenerator(seed=args.seed, frankenstein_ratio_mean=args.frankenstein_ratio)
-    batch = generator.generate_batch(count=args.n)
+    if args.adversarial:
+        batch = generator.generate_adversarial_heldout_batch(count=args.n)
+    else:
+        batch = generator.generate_batch(count=args.n)
 
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)

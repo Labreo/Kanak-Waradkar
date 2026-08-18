@@ -14,24 +14,11 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--space-6);
-  padding: var(--space-6);
-  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-raised) 100%);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-md);
+  padding: var(--space-4) 0 var(--space-2) 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
   position: relative;
-  overflow: hidden;
-}
-
-.command-hub-header::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 320px;
-  height: 100%;
-  background: radial-gradient(circle at 100% 0%, rgba(95, 216, 208, 0.08) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .hub-title-area {
@@ -45,7 +32,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
@@ -78,15 +65,16 @@
   flex-direction: column;
   gap: 2px;
   padding: var(--space-3) var(--space-4);
-  background: var(--bg-surface-raised);
+  background: var(--bg-surface);
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--border-muted);
   min-width: 125px;
 }
 
 .stat-tile-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
@@ -123,9 +111,10 @@
 }
 
 .section-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
   font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   padding: 2px 8px;
   border-radius: var(--radius-full);
   background: var(--bg-surface-raised);
@@ -148,8 +137,8 @@
   padding: var(--space-5);
   background: var(--bg-surface);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-muted);
+  box-shadow: none;
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
@@ -157,9 +146,8 @@
 }
 
 .vector-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-highlight);
-  box-shadow: var(--shadow-md), 0 0 20px rgba(95, 216, 208, 0.08);
+  transform: translateY(-2px);
+  border-color: var(--border-default);
   background: var(--bg-surface-raised);
 }
 
@@ -195,8 +183,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
+  min-width: 28px;
   height: 28px;
+  padding: 0 6px;
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -207,9 +196,10 @@
 }
 
 .vector-surface-tag {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
-  letter-spacing: var(--tracking-wider);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   color: var(--text-secondary);
   text-transform: uppercase;
 }
@@ -258,8 +248,10 @@
 }
 
 .metric-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   color: var(--text-muted);
   text-transform: uppercase;
 }
@@ -300,8 +292,9 @@
    ------------------------------------------------------------------------- */
 .command-hub-lower-grid {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: var(--space-5);
+  grid-template-columns: 1.35fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
 }
 
 .hub-panel {
@@ -311,8 +304,15 @@
   padding: var(--space-5);
   background: var(--bg-surface);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-muted);
+  box-shadow: none;
+}
+
+.loop-gauge-panel {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 
 .panel-header {
@@ -393,17 +393,18 @@
 }
 
 .threat-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
   padding: 2px 6px;
   border-radius: var(--radius-xs);
   text-transform: uppercase;
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
 }
 
-.badge-block { background: var(--status-block-dim); color: var(--status-block); border: 1px solid rgba(245, 101, 101, 0.4); }
-.badge-review { background: var(--status-review-dim); color: var(--status-review); border: 1px solid rgba(242, 169, 59, 0.4); }
-.badge-allow { background: var(--status-allow-dim); color: var(--status-allow); border: 1px solid rgba(72, 187, 120, 0.4); }
+.badge-block { background: var(--status-block-dim); color: var(--status-block); border: 1px solid var(--status-block-border); }
+.badge-review { background: var(--status-review-dim); color: var(--status-review); border: 1px solid var(--status-review-border); }
+.badge-allow { background: var(--status-allow-dim); color: var(--status-allow); border: 1px solid var(--status-allow-border); }
 
 /* -------------------------------------------------------------------------
    4. DEDICATED VECTOR VIEW SCAFFOLDS (VECTORS A, B, C & LOOP)
@@ -436,8 +437,10 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   color: var(--text-muted);
   text-transform: uppercase;
 }
@@ -486,8 +489,10 @@
 }
 
 .scaffold-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   padding: 4px 10px;
   border-radius: var(--radius-full);
   background: var(--accent-cyan-dim);

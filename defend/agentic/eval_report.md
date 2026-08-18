@@ -1,51 +1,78 @@
 # Vector C Evaluation Report — Agentic Payment Hijacking Defend Module
 
-**Generated At:** `2026-08-17T14:43:14.685322+00:00`  
+**Evaluation Session:** S17 / Adversarial Hardening Pass  
+**Generated At:** `2026-08-18T01:09:49.451902+00:00`  
 **Model Name:** `VectorCDetector` (v1.0.0)  
-**Dataset Split:** `held_out_test` (`data/generated/agentic_heldout_batch.json`, seed `2026`)  
-**Total Test Scenarios:** `200` (Injections: `120`, Legitimate: `80`)
+**Baseline Dataset Split:** `held_out_test` (`data/generated/agentic_heldout_batch.json`, seed `2026`)  
+**Adversarial Dataset Split:** `deliberately_adversarial_held_out` (`data/generated/agentic_adversarial_heldout_batch.json`, seed `2027`)  
+**Total Test Scenarios per Split:** `200` (Injections: `120`, Legitimate: `80`)
 
 ---
 
-## 1. Executive Summary & Security Posture
+## 1. Executive Summary & Dual Performance Scorecard
 
 In autonomous agentic purchasing workflows, **missed detections lead directly to irreversible financial loss**. Consequently, Vector C evaluation is **strictly recall-focused**. 
 
-The pre-execution content scanner intercepts candidate tool calls **before** execution reaches the simulated `FakeWallet`, enforcing a zero-trust boundary against indirect prompt injection.
+We evaluate the pre-execution content scanner across **two distinct held-out evaluation splits**:
+1. **Standard Held-Out Test Set (`seed=2026`):** Evaluates detection against standard prompt injection attacks containing known structural concealment tells (HTML/CSS comments, delimiter injection) and overt trigger phrases.
+2. **Deliberately Adversarial Held-Out Test Set (`seed=2027`):** Evaluates detection against an adversary who specifically engineered payloads to avoid all known keyword lists, concealment patterns, and suspicious `attacker_` recipient aliases.
 
-### Primary Operational Metrics (Threshold = `0.50`)
-
-| Metric | Score | Benchmark Target | Security Status |
-| :--- | :--- | :--- | :--- |
-| **Operational Recall** | **`100.00%`** | $\\ge 95.0\%$ | **PASS (100% Interception)** |
-| **Missed Detection Rate ($FNR$)** | **`0.00%`** | $\\le 5.0\%$ | **PASS (0 Escaped Injections)** |
-| **Precision** | **`100.00%`** | $\\ge 90.0\%$ | **PASS** |
-| **F1 Score** | **`1.0000`** | $\\ge 0.9000$ | **PASS** |
-| **False Positive Rate (FPR)** | **`0.00%`** | $\\le 5.0\%$ | **PASS (0 False Blocks)** |
-| **ROC-AUC** | **`1.0000`** | $\\ge 0.9500$ | **PASS** |
-| **PR-AUC** | **`1.0000`** | $\\ge 0.9000$ | **PASS** |
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                   VECTOR C DUAL EVALUATION SCORECARD (SIDE-BY-SIDE)                   │
+├──────────────────────────┬─────────────────────────────┬───────────────────────────────┤
+│          METRIC          │   STANDARD HELD-OUT SPLIT   │  DELIBERATELY ADVERSARIAL SET │
+├──────────────────────────┼─────────────────────────────┼───────────────────────────────┤
+│   OPERATIONAL RECALL     │           100.00%           │             50.00%             │
+│   MISSED DETECTION RATE  │             0.00%           │             50.00%             │
+│   OPERATIONAL PRECISION  │           100.00%           │           100.00%             │
+│   FALSE POSITIVE RATE    │             0.00%           │             0.00%             │
+│   F1 SCORE               │            1.0000           │            0.6667             │
+│   ROC-AUC                │            1.0000           │            0.7500             │
+│   PR-AUC                 │            1.0000           │            0.8617             │
+└──────────────────────────┴─────────────────────────────┴───────────────────────────────┘
+```
 
 ---
 
-## 2. Confusion Matrix & Operational Enforcement
+## 2. Side-by-Side Comparative Analysis
+
+Why reporting both numbers matters: **A detector tested only against its author's mental model will always look perfect.** When a judge or auditor asks *"what happens when an attacker knows your scanner's rules?"*, TRIAD provides transparent, empirical answers:
+
+| Evaluation Metric | Standard Held-Out Batch (Seed 2026) | Adversarial Held-Out Batch (Seed 2027) | Performance Delta | Security Interpretation |
+|---|:---:|:---:|:---:|---|
+| **Operational Recall** | **`100.00%`** | **`50.00%`** | `-50.00%` | Catches 100% of naive attacks; catches 50.0% of adversarial attacks via parameter divergence. |
+| **Missed Detection Rate ($FNR$)** | **`0.00%`** | **`50.00%`** | `+50.00%` | Evasive semantic payloads bypass static regex scanning when recipient parameters match metadata. |
+| **Operational Precision** | **`100.00%`** | **`100.00%`** | `+0.00%` | Zero false blocks across legitimate procurement catalogs in both splits. |
+| **False Positive Rate (FPR)** | **`0.00%`** | **`0.00%`** | `+0.00%` | Normal procurement workflows proceed with 0% friction. |
+| **ROC-AUC** | **`1.0000`** | **`0.7500`** | `-0.2500` | Rank-ordering separates divergence attacks from clean transactions. |
+| **PR-AUC** | **`1.0000`** | **`0.8617`** | `-0.1383` | Precision remains at 100% across intercepted cohort. |
+
+---
+
+## 3. Confusion Matrix & Financial Protection Audit
 
 ### Binary Enforcement Matrix
-
 | Ground Truth \ Decision | ALLOW (Clean) | BLOCK (Intercepted) | Total |
 | :--- | :---: | :---: | :---: |
 | **Malicious Injection** | `0` *(Missed)* | **`120`** *(Blocked)* | `120` |
 | **Legitimate Baseline** | **`80`** *(Allowed)* | `0` *(False Block)* | `80` |
 | **Total** | `80` | `120` | **`200`** |
 
-### Financial Protection Audit
-- **Attempted Theft Injections:** `120`
-- **Successfully Defended Injections:** `120` (`100.0%`)
-- **Escaped Injections (Losses Incurred):** `0` (`$0.00`)
-- **Preserved Wallet Balance Rate:** **`100.00%`**
+- **Attempted Injections:** `120` | **Intercepted:** `120` (`100.0%`) | **Unauthorized Financial Loss:** `$0.00`
+
+### 3.2 Deliberately Adversarial Split Enforcement
+| Ground Truth \ Decision | ALLOW (Clean / Evasions) | BLOCK (Intercepted) | Total |
+| :--- | :---: | :---: | :---: |
+| **Malicious Injection** | `60` *(Missed / Evaded)* | **`60`** *(Blocked)* | `120` |
+| **Legitimate Baseline** | **`80`** *(Allowed)* | `0` *(False Block)* | `80` |
+| **Total** | `140` | `60` | **`200`** |
+
+- **Attempted Injections:** `120` | **Intercepted via Divergence:** `60` (`50.0%`) | **Evading Semantic Injections:** `60`
 
 ---
 
-## 3. Breakdown by Injection Archetype & Technique
+## 4. Breakdown by Injection Archetype & Technique
 
 | Injection Archetype | Technique ID | Ground Truth | Total Samples | Blocked | Allowed | Interception Rate |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -58,7 +85,7 @@ The pre-execution content scanner intercepts candidate tool calls **before** exe
 
 ---
 
-## 4. Evasion Tier Resilience Breakdown
+## 5. Evasion Tier Resilience Breakdown
 
 | Evasion Tier | Total Tested | Blocked | Allowed | Detection Recall | Missed Detection Rate |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -69,7 +96,24 @@ The pre-execution content scanner intercepts candidate tool calls **before** exe
 
 ---
 
-## 5. Adversarial Stress Tests
+## 6. Manual Check & Root-Cause Investigation
+
+> [!IMPORTANT]
+> **Protocol Manual Check (Part K Quality Requirement):**  
+> *"If precision or recall is above ~99%, stop and investigate before trusting it. If the adversarial-set recall is still near 100%, that's suspicious in the other direction — go find out why before trusting it."*
+
+### 6.1 Investigation Findings
+1. **Why Baseline Recall is 100.0%:**  
+   In baseline generation, indirect prompt injections rely on structural concealment (HTML comments, hidden CSS, markdown directives) and overt trigger phrases (`[SYSTEM OVERRIDE]`, `IGNORE PREVIOUS INSTRUCTIONS`). The pre-execution scanner's regex engine detects 100% of these signatures.
+2. **Why Adversarial Recall Drops to `50.00%`:**  
+   When adversaries specifically avoid comments, hidden CSS, zero-width chars, and override keywords, static content scanning cannot detect the injection from text alone.
+   - **What caught the `50.00%`:** The parameter divergence engine intercepted attacks where the payload attempted to divert payment to a partner alias (`candidate_recipient != authorized_merchant`).
+   - **What bypassed the scanner (`50.00%`):** Subtle in-context prompt injections where the attacker matched the merchant ID or poisoned the order memo without triggering recipient divergence.
+   - **Why this validates TRIAD:** This proves that static regex / content scanning alone is fundamentally insufficient for autonomous agent safety. It establishes the empirical foundation for why TRIAD couples pre-execution scanning with multi-agent auditing (Granite Guardian pattern) and closed-loop mutation retraining.
+
+---
+
+## 7. Adversarial Stress Tests
 
 | Stress Scenario | Description | Total Samples | Recall / Clean Rate | Security Conclusion |
 | :--- | :--- | :---: | :---: | :--- |
@@ -79,9 +123,8 @@ The pre-execution content scanner intercepts candidate tool calls **before** exe
 
 ---
 
-## 6. Investigation & Quality Standard Notes
+## 8. Handoff & Downstream Integration Contract
 
-- **Recall-Weighted Security Standard:**  In agentic payment systems, missed detections (false negatives) represent immediate, unauthorized balance drains. Vector C evaluation is strictly recall-focused, establishing a 0.00% missed-detection rate across all 120 held-out injection payloads.
-- **Pre-Execution Tool Interception:**  All 120 malicious attacks were intercepted before the tool call reached FakeWallet.execute_payment, preserving 100% of the simulated balance ($0.00 unauthorized financial loss).
-- **Zero False Positive Burden:**  Legitimate e-commerce catalogs and corporate invoices achieved a 100% clean pass rate (0.0% FPR), ensuring defense does not impede normal purchasing operations.
-- **Multi-Signal Robustness:**  Across Tier 1 direct overrides, Tier 2 structural concealment (HTML/CSS/Markdown), and Tier 3 invoice remittance pretexts, the composite detector maintained 1.0000 ROC-AUC and 1.0000 PR-AUC.
+- **Machine-Readable Contract:** `defend/agentic/metrics.json`
+- **Solution Walkthrough Reference:** Cites Section 1 and Section 2 dual evaluation tables.
+- **Closed Loop Integration:** Evasion insights seed the mutation engine in S18–S21.

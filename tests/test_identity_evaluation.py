@@ -237,3 +237,54 @@ def test_vector_a_full_verification_suite():
     suite = VectorAVerificationSuite(Path("."))
     exit_code = suite.run_all()
     assert exit_code == 0, f"Verification suite failed with issues: {suite.failures}"
+
+
+def test_adversarial_heldout_generation_and_evaluation():
+    """Verify Vector A deliberately adversarial held-out batch generation and non-trivial recall degradation."""
+    from generate.identity.generator import VectorAIdentityGenerator
+    
+    gen = VectorAIdentityGenerator(seed=2027)
+    batch = gen.generate_adversarial_heldout_batch(count=500)
+    
+    assert batch["total_records"] == 500
+    legit_count = sum(1 for p in batch["profiles"] if p["synthesis_metadata"]["synthesis_type"] == "BENCHMARK_LEGITIMATE")
+    synth_count = sum(1 for p in batch["profiles"] if p["synthesis_metadata"]["synthesis_type"] != "BENCHMARK_LEGITIMATE")
+    assert legit_count == 150
+    assert synth_count == 350
+    
+    evaluator = VectorAEvaluator()
+    summary = evaluator.evaluate_batch(batch["profiles"], split_name="deliberately_adversarial_held_out")
+    
+    # Manual check: Recall must NOT be trivially ~100% under deliberate adversarial pressure
+    op_recall = summary.summary_metrics["recall"]
+    assert 0.30 <= op_recall <= 0.60, f"Adversarial recall ({op_recall}) should drop realistically between 30% and 60%"
+    assert summary.summary_metrics["false_positive_rate"] == 0.0, "FPR should remain 0.0% even on adversarial edge cases"
+    assert summary.summary_metrics["precision"] == 1.0, "Precision should remain 100.0%"
+
+
+def test_dual_evaluation_metrics_json_schema():
+    """Verify defend/identity/metrics.json contains both baseline and adversarial evaluations alongside."""
+    metrics_path = Path("defend/identity/metrics.json")
+    assert metrics_path.exists()
+    
+    with open(metrics_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        
+    assert "summary_metrics" in data
+    assert data["summary_metrics"]["recall"] == 1.0  # Baseline 100%
+    
+    assert "adversarial_evaluation" in data
+    adv = data["adversarial_evaluation"]
+    assert adv["split_name"] == "deliberately_adversarial_held_out"
+    assert adv["dataset_metadata"]["total_samples"] == 500
+    assert adv["summary_metrics"]["recall"] < 0.90  # Non-tautological drop
+    assert adv["summary_metrics"]["false_positive_rate"] == 0.0
+    
+    assert "comparative_analysis" in data
+    comp = data["comparative_analysis"]
+    assert "metrics_comparison" in comp
+    assert "operational_recall" in comp["metrics_comparison"]
+    assert comp["metrics_comparison"]["operational_recall"]["baseline"] == 1.0
+    assert comp["metrics_comparison"]["operational_recall"]["adversarial"] < 0.90
+    assert "audit_conclusion" in comp
+

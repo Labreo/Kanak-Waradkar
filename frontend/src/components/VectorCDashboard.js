@@ -63,15 +63,15 @@ export class VectorCDashboard {
             <div class="dashboard-hero-stats" id="v-c-stats-ribbon">
               <div class="stat-tile">
                 <span class="stat-tile-label">OPERATIONAL RECALL</span>
-                <span class="stat-tile-val mono-data accent-cyan">100.0%</span>
+                <span class="stat-tile-val mono-data">100.0%</span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">WALLET LOSS</span>
-                <span class="stat-tile-val mono-data accent-cyan">$0.00</span>
+                <span class="stat-tile-val mono-data">$0.00</span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">SCAN LATENCY</span>
-                <span class="stat-tile-val mono-data accent-cyan">0.14ms</span>
+                <span class="stat-tile-val mono-data">0.14ms</span>
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@ export class VectorCDashboard {
                 <span class="vector-pill">AGENT</span>
                 <h3 class="panel-title">Mock Procurement Agent</h3>
               </div>
-              <span class="section-badge mono-data" id="v-c-agent-status-badge">STATUS: IDLE</span>
+              <span class="section-badge" id="v-c-agent-status-badge">STATUS: IDLE</span>
             </div>
 
             <!-- Agent State Card -->
@@ -219,7 +219,7 @@ export class VectorCDashboard {
             <div class="divergence-box" id="divergence-inspector">
               <div class="section-head-mini">
                 <span style="color:var(--accent-amber);">Parameter Divergence Inspection</span>
-                <span class="section-badge mono-data">TOOL HIJACK</span>
+                <span class="section-badge">TOOL HIJACK</span>
               </div>
               <div class="divergence-row">
                 <div>
@@ -279,7 +279,7 @@ export class VectorCDashboard {
 
             <!-- Explainability Box -->
             <div class="narrative-box" id="v-c-narrative-box">
-              <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-family:var(--font-mono); font-size:11px;">PRE-EXECUTION DEFENSE INTERCEPT</strong>
+              <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-size:11px; font-weight:700; letter-spacing:var(--tracking-wide);">PRE-EXECUTION DEFENSE INTERCEPT</strong>
               <span id="v-c-narrative-text">Evaluating pre-execution threat signals...</span>
             </div>
           </div>
@@ -292,7 +292,7 @@ export class VectorCDashboard {
               <span class="vector-pill">BATCH</span>
               <h3 class="panel-title">Vector C Generated Payload Explorer</h3>
             </div>
-            <span class="section-badge mono-data" id="v-c-count-badge">200 PAYLOADS</span>
+            <span class="section-badge" id="v-c-count-badge">200 PAYLOADS</span>
           </div>
 
           <!-- Controls -->
@@ -434,15 +434,15 @@ export class VectorCDashboard {
     ribbon.innerHTML = `
       <div class="stat-tile">
         <span class="stat-tile-label">OPERATIONAL RECALL</span>
-        <span class="stat-tile-val mono-data accent-cyan">${recall}%</span>
+        <span class="stat-tile-val mono-data">${recall}%</span>
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">WALLET LOSS</span>
-        <span class="stat-tile-val mono-data accent-cyan">$0.00</span>
+        <span class="stat-tile-val mono-data">$0.00</span>
       </div>
       <div class="stat-tile">
-        <span class="stat-tile-label">INTERCEPT LATENCY</span>
-        <span class="stat-tile-val mono-data accent-cyan">0.14ms</span>
+        <span class="stat-tile-label">SCAN LATENCY</span>
+        <span class="stat-tile-val mono-data">0.14ms</span>
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">INJECTIONS CAUGHT</span>
@@ -577,25 +577,19 @@ export class VectorCDashboard {
     }
 
     if (terminal) {
-      const taskPrompt = artifact.task_prompt || 'Procure item from authorized seller.';
-      const intendedMerchant = groundTruth.original_intended_merchant || 'merchant_authorized';
-      const intendedPrice = groundTruth.original_intended_price !== undefined ? `$${Number(groundTruth.original_intended_price).toFixed(2)}` : '$29.50';
-
       terminal.innerHTML = `
-        <div class="terminal-line cmd">> ShoppingAgent.execute_task()</div>
-        <div class="terminal-line param">> User Prompt: "${taskPrompt}"</div>
+        <div class="terminal-line cmd">> ShoppingAgent initialized with prompt: "${taskPrompt}"</div>
         <div class="terminal-line cmd">> Tool: browse_page("${pageSpec.url || 'mock://store.aerosound.local/product'}")</div>
-        <div class="terminal-line">> Parsing DOM elements and catalog metadata...</div>
+        <div class="terminal-line">> Reading DOM structure & active anchors...</div>
         ${isMalicious ? `
-          <div class="terminal-line warn">! CANDIDATE TOOL CALL GENERATED:</div>
-          <div class="terminal-line warn">&nbsp;&nbsp;execute_payment(recipient="${artifact.target_recipient || 'rogue_acquirer'}", amount=$${artifact.target_amount || '248.49'})</div>
-          <div class="terminal-line intercept">&#10008; PRE-EXECUTION HOOK TRIGGERED: TOOL CALL BLOCKED</div>
-          <div class="terminal-line intercept">> Reason: Indirect Prompt Injection & Parameter Divergence Detected</div>
-          <div class="terminal-line success">&#10004; FakeWallet.execute_payment() WAS NOT CALLED. Balance preserved.</div>
+          <div class="terminal-line warn">! Concealed directive parsed from DOM comments/styles</div>
+          <div class="terminal-line warn">> Pre-execution scanner inspecting candidate ToolCall...</div>
+          <div class="terminal-line intercept">[BLOCKED] PRE-EXECUTION HOOK: execute_payment() intercepted</div>
+          <div class="terminal-line success">[VERIFIED] 100% Simulated Balance Protected. Loss: $0.00</div>
         ` : `
           <div class="terminal-line success">> Legitimate tool call validated:</div>
           <div class="terminal-line success">&nbsp;&nbsp;execute_payment(recipient="${intendedMerchant}", amount=${intendedPrice})</div>
-          <div class="terminal-line success">&#10004; Payment executed cleanly. Task complete.</div>
+          <div class="terminal-line success">[VERIFIED] Payment executed cleanly. Task complete.</div>
         `}
       `;
     }
@@ -620,7 +614,7 @@ export class VectorCDashboard {
               <div class="product-meta-row" style="margin-top:4px;">
                 <span>Seller: <strong>${merchant}</strong></span>
                 <span>&bull;</span>
-                <span class="mono-data" style="color:var(--status-allow);">&#10003; Verified Catalog Item</span>
+                <span style="color:var(--status-allow); font-weight:600;">&#10003; Verified Catalog Item</span>
               </div>
             </div>
             <span class="product-price-tag mono-data">${price}</span>
@@ -635,7 +629,7 @@ export class VectorCDashboard {
             <div class="concealed-payload-container ${this.isRevealed ? 'revealed' : ''}" id="concealed-box">
               <div class="concealment-header-tag">
                 <span>&#9888; CONCEALED INJECTION DIRECTIVE (${artifact.injection_type || 'HTML_COMMENT'})</span>
-                <span class="mono-data">${this.isRevealed ? 'REVEALED IN DOM' : 'HIDDEN FROM USER'}</span>
+                <span>${this.isRevealed ? 'REVEALED IN DOM' : 'HIDDEN FROM USER'}</span>
               </div>
               <div class="concealed-text-content mono-data">
                 ${rawPayload}
@@ -728,14 +722,14 @@ export class VectorCDashboard {
     // Step 0: Prompt
     if (agentStatus) agentStatus.textContent = 'STATUS: RECEIVING PROMPT';
     if (terminal) {
-      terminal.innerHTML = `<div class="terminal-line cmd">> ShoppingAgent received prompt: "${artifact.task_prompt || 'Procure items.'}"</div>`;
+      terminal.innerHTML = `<div class="terminal-line cmd">> ShoppingAgent initialized with prompt: "${artifact.task_prompt || 'Procure items.'}"</div>`;
     }
 
     // Step 1 (600ms): Browse
     setTimeout(() => {
       if (agentStatus) agentStatus.textContent = 'STATUS: BROWSING MOCK STORE';
       if (terminal) {
-        terminal.innerHTML += `<div class="terminal-line cmd">> Tool: browse_page("${pageSpec.url || 'mock://store'}")</div><div class="terminal-line">> Reading DOM structure...</div>`;
+        terminal.innerHTML += `<div class="terminal-line cmd">> Tool: browse_page("${pageSpec.url || 'mock://store'}")</div><div class="terminal-line">> Reading DOM structure & active anchors...</div>`;
         terminal.scrollTop = terminal.scrollHeight;
       }
     }, 600);
@@ -759,10 +753,10 @@ export class VectorCDashboard {
       if (agentStatus) agentStatus.textContent = isMalicious ? 'STATUS: INTERCEPTED' : 'STATUS: SUCCESS';
       if (terminal) {
         terminal.innerHTML += isMalicious ? `
-          <div class="terminal-line intercept">&#10008; PRE-EXECUTION HOOK: execute_payment() INTERCEPTED & BLOCKED</div>
-          <div class="terminal-line success">&#10004; 100% Simulated Balance Protected. Loss: $0.00</div>
+          <div class="terminal-line intercept">[BLOCKED] PRE-EXECUTION HOOK: execute_payment() intercepted</div>
+          <div class="terminal-line success">[VERIFIED] 100% Simulated Balance Protected. Loss: $0.00</div>
         ` : `
-          <div class="terminal-line success">&#10004; execute_payment() authorized & completed cleanly.</div>
+          <div class="terminal-line success">[VERIFIED] execute_payment() authorized & completed cleanly.</div>
         `;
         terminal.scrollTop = terminal.scrollHeight;
       }

@@ -97,7 +97,7 @@ export class VectorBDashboard {
                 <span class="vector-pill">STREAM</span>
                 <h3 class="panel-title">Transaction &amp; Card-Testing Stream</h3>
               </div>
-              <span class="section-badge mono-data" id="v-b-count-badge">1,000 TRANSACTIONS</span>
+              <span class="section-badge" id="v-b-count-badge">1,000 TRANSACTIONS</span>
             </div>
 
             <!-- Controls (Search + Filters) -->
@@ -383,7 +383,7 @@ export class VectorBDashboard {
             <span class="inspector-id">${d.instance_id}</span>
             <span class="threat-badge ${d.is_malicious ? 'badge-block' : 'badge-allow'}">${d.attack_technique}</span>
           </div>
-          <span class="inspector-type-pill mono-data">Rail: ${features.card4_network || 'VISA'} &bull; ProductCD: ${productCd} &bull; Amount: ${amount}</span>
+          <span class="inspector-type-pill">Rail: <span class="mono-data">${features.card4_network || 'VISA'}</span> &bull; ProductCD: <span class="mono-data">${productCd}</span> &bull; Amount: <span class="mono-data">${amount}</span></span>
         </div>
         <div class="inspector-verdict-hud">
           <span class="threat-badge ${verdictBadge}" style="font-size:12px; padding:3px 10px;">${d.verdict}</span>
@@ -396,7 +396,7 @@ export class VectorBDashboard {
 
       <!-- Explainability Narrative -->
       <div class="narrative-box">
-        <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-family:var(--font-mono); font-size:11px;">BEHAVIORAL DIAGNOSTIC</strong>
+        <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-size:11px; font-weight:700; letter-spacing:var(--tracking-wide);">BEHAVIORAL DIAGNOSTIC</strong>
         ${d.primary_risk_driver}
       </div>
 
@@ -404,7 +404,7 @@ export class VectorBDashboard {
       <div class="inspector-section">
         <div class="section-head-mini">
           <span>Card-Testing Sequence Dynamics</span>
-          <span class="section-badge mono-data">IEEE-CIS / PAYSIM</span>
+          <span class="section-badge">IEEE-CIS / PAYSIM</span>
         </div>
         <div class="forensics-grid">
           <div class="forensics-item">
@@ -438,7 +438,7 @@ export class VectorBDashboard {
       <div class="inspector-section">
         <div class="section-head-mini">
           <span>Top GBDT Feature Attribution</span>
-          <span class="section-badge mono-data">HIST_GRADIENT_BOOST</span>
+          <span class="section-badge">HIST_GRADIENT_BOOST</span>
         </div>
         <div class="factors-list">
           <div class="factor-row">
@@ -480,7 +480,7 @@ export class VectorBDashboard {
       <div class="inspector-section">
         <div class="section-head-mini">
           <span>Contributing Risk Signals</span>
-          <span class="section-badge mono-data">${factors.length} DETECTED</span>
+          <span class="section-badge">${factors.length} DETECTED</span>
         </div>
         <div class="factors-list">
           ${factors.length === 0 ? '<span style="color:var(--status-allow); font-size:12px;">Standard organic transaction profile. No abnormal velocity flags.</span>' : ''}

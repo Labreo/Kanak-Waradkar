@@ -22,7 +22,7 @@ export class ClosedLoopDashboard {
     
     // Trigger Form State
     this.batchSize = 100;
-    this.cyclesCount = 3;
+    this.cyclesCount = 4;
     this.seed = 42;
 
     this.init();
@@ -55,7 +55,7 @@ export class ClosedLoopDashboard {
             <div class="dashboard-hero-stats" id="v-l-stats-ribbon">
               <div class="stat-tile">
                 <span class="stat-tile-label">COMPLETED CYCLES</span>
-                <span class="stat-tile-val mono-data accent-cyan">3 CYCLES / VECTOR</span>
+                <span class="stat-tile-val mono-data accent-cyan" id="v-l-completed-cycles">4 CYCLES / VECTOR</span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">ADVERSARIAL GAIN</span>
@@ -113,7 +113,8 @@ export class ClosedLoopDashboard {
               <div class="trigger-input-item">
                 <label for="v-l-cycles-count" class="trigger-input-label">Cycles</label>
                 <select id="v-l-cycles-count" class="trigger-select">
-                  <option value="3" selected>3 Iterations (C0 &rarr; C1 &rarr; C2)</option>
+                  <option value="3">3 Iterations (C0 &rarr; C1 &rarr; C2)</option>
+                  <option value="4" selected>4 Iterations (C0 &rarr; C1 &rarr; C2 &rarr; C3 [Retrain])</option>
                 </select>
               </div>
 
@@ -155,7 +156,7 @@ export class ClosedLoopDashboard {
                 <span class="vector-pill">GEOMETRY</span>
                 <h3 class="panel-title">Signature Concentric Closing Loop Gauge</h3>
               </div>
-              <span class="section-badge mono-data" id="v-l-gauge-badge">CYCLE 2 ACTIVE</span>
+              <span class="section-badge" id="v-l-gauge-badge">CYCLE 2 ACTIVE</span>
             </div>
             <div id="v-l-gauge-container" style="display:flex; justify-content:center; align-items:center; min-height:420px;"></div>
           </div>
@@ -208,7 +209,7 @@ export class ClosedLoopDashboard {
               <span class="vector-pill">AUDIT</span>
               <h3 class="panel-title">Cycle-by-Cycle Adversarial Mutation Registry</h3>
             </div>
-            <span class="section-badge mono-data" id="v-l-audit-count">3 CYCLES RECORDED</span>
+            <span class="section-badge" id="v-l-audit-count">3 CYCLES RECORDED</span>
           </div>
 
           <div class="mutation-cycle-accordion" id="v-l-mutation-log-container">
@@ -251,6 +252,9 @@ export class ClosedLoopDashboard {
     this.container.querySelector('#v-l-batch-size')?.addEventListener('change', (e) => {
       this.batchSize = Number(e.target.value);
     });
+    this.container.querySelector('#v-l-cycles-count')?.addEventListener('change', (e) => {
+      this.cyclesCount = Number(e.target.value);
+    });
     this.container.querySelector('#v-l-seed-input')?.addEventListener('input', (e) => {
       this.seed = Number(e.target.value) || 42;
     });
@@ -280,9 +284,20 @@ export class ClosedLoopDashboard {
 
   renderHeaderStats() {
     const trend = this.loopHistory.summary_trend || {};
+    const totalCycles = this.loopHistory.total_cycles_completed || (this.loopHistory.cycles ? this.loopHistory.cycles.length : 4);
     const gainVal = this.container.querySelector('#v-l-gain-val');
+    const completedCycles = this.container.querySelector('#v-l-completed-cycles');
+    const auditCount = this.container.querySelector('#v-l-audit-count');
+
     if (gainVal) {
-      gainVal.textContent = `+${((trend.evasion_delta || 0.83) * 100).toFixed(1)}%`;
+      const peakEvas = trend.peak_evasion_rate !== undefined ? trend.peak_evasion_rate : (trend.final_evasion_rate || 0.83);
+      gainVal.textContent = `+${(peakEvas * 100).toFixed(1)}% PEAK`;
+    }
+    if (completedCycles) {
+      completedCycles.textContent = `${totalCycles} CYCLES / VECTOR`;
+    }
+    if (auditCount) {
+      auditCount.textContent = `${totalCycles} CYCLES RECORDED`;
     }
   }
 
@@ -460,7 +475,7 @@ export class ClosedLoopDashboard {
 
           ${evadingIds.length > 0 ? `
             <div style="margin-top:6px;">
-              <span style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-family:var(--font-mono); display:block; margin-bottom:4px;">Evading Sample IDs:</span>
+              <span style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:600; letter-spacing:var(--tracking-wider); display:block; margin-bottom:4px;">Evading Sample IDs:</span>
               <div class="evading-samples-wrap">
                 ${evadingIds.slice(0, 10).map(id => `<span class="sample-id-chip">${id}</span>`).join('')}
                 ${evadingIds.length > 10 ? `<span class="footer-tag">+${evadingIds.length - 10} more</span>` : ''}

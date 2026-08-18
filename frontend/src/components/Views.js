@@ -58,7 +58,7 @@ export function renderOverviewView(router) {
     <div class="section-title-bar">
       <h2 class="section-heading">
         <span>Payment Threat Vectors</span>
-        <span class="section-badge mono-data">3 ACTIVE RAILS</span>
+        <span class="section-badge">3 ACTIVE RAILS</span>
       </h2>
     </div>
   `;
@@ -76,7 +76,7 @@ export function renderOverviewView(router) {
           <span class="vector-pill">LOOP</span>
           <h3 class="panel-title">Closed-Loop Evasion &amp; Adaptation Trajectory</h3>
         </div>
-        <span class="section-badge mono-data">CONCENTRIC SPIRAL</span>
+        <span class="section-badge">CONCENTRIC SPIRAL</span>
       </div>
       <div id="overview-loop-mount"></div>
     </div>
@@ -88,7 +88,7 @@ export function renderOverviewView(router) {
           <span class="vector-pill">SOC</span>
           <h3 class="panel-title">Attack Matrix &amp; Evasion Archetypes</h3>
         </div>
-        <span class="section-badge mono-data">TAXONOMY §2.1-§2.3</span>
+        <span class="section-badge">TAXONOMY §2.1-§2.3</span>
       </div>
       <div class="threat-matrix-list">
         <div class="threat-item">

@@ -12,7 +12,7 @@ export class ClosingLoopGauge {
     this.onCycleSelect = options.onCycleSelect || (() => {});
     this.currentCycle = options.initialCycle !== undefined ? options.initialCycle : 2;
     
-    // Default 3-cycle progression representative of TRIAD telemetry
+    // Default 4-cycle progression representative of TRIAD telemetry
     this.cycleData = [
       {
         id: 'C0',
@@ -32,7 +32,7 @@ export class ClosingLoopGauge {
         evasionRate: 0.29,
         detectionRate: 0.71,
         radius: 95,
-        angle: 120,
+        angle: 100,
         tier: 'Tier 2: Structural Camouflage',
         mutation: 'Repaired Barcodes, Session Dilation & CSS Cloaking',
         delta: '+29.0%',
@@ -44,10 +44,22 @@ export class ClosingLoopGauge {
         evasionRate: 0.83,
         detectionRate: 0.17,
         radius: 70,
-        angle: 240,
+        angle: 200,
         tier: 'Tier 3: Semantic Pretexting',
         mutation: 'Native EXIF, Organic Basket Sizes & AP Invoice Pretexts',
         delta: '+83.0%',
+        deltaType: 'positive'
+      },
+      {
+        id: 'C3',
+        label: 'Cycle 3 // Retrained',
+        evasionRate: 0.04,
+        detectionRate: 0.96,
+        radius: 48,
+        angle: 300,
+        tier: 'Tier 3: Retrained Defense',
+        mutation: 'Closed-Loop Defense Retraining & Parameter Surface Adaptation',
+        delta: '-79.0% RECOVERY',
         deltaType: 'positive'
       }
     ];
@@ -66,27 +78,43 @@ export class ClosingLoopGauge {
 
   updateData(cycles) {
     if (Array.isArray(cycles) && cycles.length > 0) {
-      const radii = [120, 95, 70, 50];
-      const angles = [0, 120, 240, 360];
+      const radii = [120, 95, 70, 48, 35];
+      const count = cycles.length;
 
       this.cycleData = cycles.map((c, i) => {
         const evas = c.evasion_rate !== undefined ? c.evasion_rate : (c.evasionRate || 0);
         const muts = c.mutations_applied || [];
         let mutText = c.cycle_summary || (muts.length > 0 ? muts.map(m => m.parameter).join(', ') : 'Baseline Generation');
         
-        const deltaVal = i === 0 ? '0.0%' : `+${(evas * 100).toFixed(1)}%`;
+        let deltaVal = '0.0%';
+        let deltaType = 'neutral';
+        if (i > 0) {
+          const prevEvas = cycles[i - 1].evasion_rate !== undefined ? cycles[i - 1].evasion_rate : 0;
+          const diff = evas - prevEvas;
+          if (diff < -0.05) {
+            deltaVal = `-${(Math.abs(diff) * 100).toFixed(1)}% RECOV`;
+            deltaType = 'positive';
+          } else if (diff > 0.05) {
+            deltaVal = `+${(diff * 100).toFixed(1)}% GAIN`;
+            deltaType = 'positive';
+          } else {
+            deltaVal = `${diff >= 0 ? '+' : ''}${(diff * 100).toFixed(1)}%`;
+          }
+        }
+
+        const angle = count > 1 ? (i / count) * 360 : 0;
 
         return {
           id: `C${c.cycle_index !== undefined ? c.cycle_index : i}`,
           label: `Cycle ${c.cycle_index !== undefined ? c.cycle_index : i} // ${c.mutation_tier || 'MUTATED'}`,
           evasionRate: evas,
           detectionRate: 1.0 - evas,
-          radius: radii[i % radii.length],
-          angle: angles[i % angles.length],
+          radius: radii[Math.min(i, radii.length - 1)],
+          angle: angle,
           tier: c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : `Cycle ${i}`,
           mutation: mutText,
           delta: deltaVal,
-          deltaType: evas > 0 ? 'positive' : 'neutral'
+          deltaType: deltaType
         };
       });
 
@@ -109,8 +137,8 @@ export class ClosingLoopGauge {
             <defs>
               <linearGradient id="spiralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#5FD8D0" />
-                <stop offset="50%" stop-color="#F2A93B" />
-                <stop offset="100%" stop-color="#F56565" />
+                <stop offset="55%" stop-color="#F2A93B" />
+                <stop offset="100%" stop-color="#E09B32" />
               </linearGradient>
               <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stop-color="rgba(95, 216, 208, 0.12)" />
@@ -122,9 +150,9 @@ export class ClosingLoopGauge {
             <circle cx="0" cy="0" r="140" fill="url(#centerGlow)" />
 
             <!-- Concentric Guide Rings -->
-            <circle cx="0" cy="0" r="120" class="gauge-track ${this.currentCycle === 0 ? 'active-track' : ''}" id="track-0" />
-            <circle cx="0" cy="0" r="95" class="gauge-track ${this.currentCycle === 1 ? 'active-track' : ''}" id="track-1" />
-            <circle cx="0" cy="0" r="70" class="gauge-track ${this.currentCycle === 2 ? 'active-track' : ''}" id="track-2" />
+            ${this.cycleData.map((c, i) => `
+              <circle cx="0" cy="0" r="${c.radius}" class="gauge-track ${this.currentCycle === i ? 'active-track' : ''}" id="track-${i}" />
+            `).join('')}
 
             <!-- Dynamic Tightening Spiral Curve -->
             <path id="spiral-path" class="gauge-spiral-path" d="${this.calculateSpiralPath()}" />
@@ -135,10 +163,10 @@ export class ClosingLoopGauge {
 
           <!-- Center Information HUD -->
           <div class="gauge-center-hud">
-            <span class="gauge-cycle-tag" id="hud-cycle-tag">CYCLE 2</span>
-            <span class="gauge-rate-number mono-data" id="hud-rate-number">83%</span>
+            <span class="gauge-cycle-tag" id="hud-cycle-tag">CYCLE 3</span>
+            <span class="gauge-rate-number mono-data" id="hud-rate-number">4%</span>
             <span class="gauge-rate-label">EVASION RATE</span>
-            <span class="gauge-delta-pill positive" id="hud-delta-pill">+83.0% GAIN</span>
+            <span class="gauge-delta-pill positive" id="hud-delta-pill">RECOVERY</span>
           </div>
         </div>
 
@@ -164,13 +192,15 @@ export class ClosingLoopGauge {
   }
 
   calculateSpiralPath() {
-    // Generate smooth cubic bezier SVG path contracting inward through C0 (r=120, a=0), C1 (r=95, a=120), C2 (r=70, a=240)
-    const p0 = this.polarToCartesian(120, 0);
-    const p1 = this.polarToCartesian(95, 120);
-    const p2 = this.polarToCartesian(70, 240);
-
-    // Smooth spiral arc string
-    return `M ${p0.x} ${p0.y} Q ${p0.x * 0.8 + p1.x * 0.4} ${p0.y * 0.4 + p1.y * 0.8} ${p1.x} ${p1.y} Q ${p1.x * 0.7 + p2.x * 0.4} ${p1.y * 0.4 + p2.y * 0.8} ${p2.x} ${p2.y}`;
+    if (this.cycleData.length < 2) return '';
+    const points = this.cycleData.map(c => this.polarToCartesian(c.radius, c.angle));
+    let path = `M ${points[0].x} ${points[0].y}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i];
+      const p1 = points[i + 1];
+      path += ` Q ${p0.x * 0.7 + p1.x * 0.4} ${p0.y * 0.4 + p1.y * 0.7} ${p1.x} ${p1.y}`;
+    }
+    return path;
   }
 
   polarToCartesian(radius, angleInDegrees) {

@@ -4,15 +4,17 @@
   "total_cycles_completed": 3,
   "base_seed": 42,
   "batch_size": 200,
-  "orchestration_started_at": "2026-08-17T14:43:29.344878+00:00",
-  "orchestration_completed_at": "2026-08-17T14:43:29.558059+00:00",
+  "orchestration_started_at": "2026-08-18T09:38:24.284695+00:00",
+  "orchestration_completed_at": "2026-08-18T09:38:24.427812+00:00",
   "summary_trend": {
     "initial_evasion_rate": 0.0,
     "final_evasion_rate": 0.8333,
     "evasion_delta": 0.8333,
     "initial_detection_rate": 1.0,
     "final_detection_rate": 0.1667,
-    "is_adversarial_gain_verified": true
+    "is_adversarial_gain_verified": true,
+    "peak_evasion_rate": 0.8333,
+    "peak_cycle_index": 2
   },
   "cycles": [
     {
@@ -34,7 +36,7 @@
       "mutations_applied": [],
       "evading_sample_ids": [],
       "cycle_summary": "Direct imperative overrides in HTML comments intercepted 100% by keyword and comment scanners.",
-      "executed_at": "2026-08-17T14:43:29.425058+00:00"
+      "executed_at": "2026-08-18T09:38:24.319717+00:00"
     },
     {
       "cycle_index": 1,
@@ -79,7 +81,7 @@
         "PAYLOAD-1042-0092-294A77"
       ],
       "cycle_summary": "CSS visual concealment and vanity alias camouflage bypassed naive comment filters, increasing evasion.",
-      "executed_at": "2026-08-17T14:43:29.501074+00:00"
+      "executed_at": "2026-08-18T09:38:24.372792+00:00"
     },
     {
       "cycle_index": 2,
@@ -124,7 +126,7 @@
         "PAYLOAD-2042-0044-A99FBB"
       ],
       "cycle_summary": "AP invoice remittance pretexting and zero-imperative vocabulary evaded static heuristic rules.",
-      "executed_at": "2026-08-17T14:43:29.546990+00:00"
+      "executed_at": "2026-08-18T09:38:24.417098+00:00"
     }
   ]
 }

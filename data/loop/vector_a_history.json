@@ -1,18 +1,22 @@
 {
   "vector_id": "A",
   "vector_name": "Synthetic Identity & Document Fraud",
-  "total_cycles_completed": 3,
+  "total_cycles_completed": 4,
   "base_seed": 42,
   "batch_size": 200,
-  "orchestration_started_at": "2026-08-17T14:43:28.438620+00:00",
-  "orchestration_completed_at": "2026-08-17T14:43:28.599746+00:00",
+  "orchestration_started_at": "2026-08-18T09:36:47.075889+00:00",
+  "orchestration_completed_at": "2026-08-18T09:36:47.237274+00:00",
   "summary_trend": {
     "initial_evasion_rate": 0.0,
-    "final_evasion_rate": 0.6786,
-    "evasion_delta": 0.6786,
+    "final_evasion_rate": 0.0714,
+    "evasion_delta": 0.0714,
     "initial_detection_rate": 1.0,
-    "final_detection_rate": 0.3214,
-    "is_adversarial_gain_verified": true
+    "final_detection_rate": 0.9286,
+    "is_adversarial_gain_verified": true,
+    "peak_evasion_rate": 0.6786,
+    "peak_cycle_index": 2,
+    "defensive_recovery_delta": 0.6071,
+    "is_defensive_recovery_verified": true
   },
   "cycles": [
     {
@@ -34,7 +38,7 @@
       "mutations_applied": [],
       "evading_sample_ids": [],
       "cycle_summary": "Baseline naive Frankenstein profiles caught primarily by Tier 1 barcode & SSA checksum rules.",
-      "executed_at": "2026-08-17T14:43:28.454515+00:00"
+      "executed_at": "2026-08-18T09:36:47.090332+00:00"
     },
     {
       "cycle_index": 1,
@@ -79,7 +83,7 @@
         "ID-1350D69A"
       ],
       "cycle_summary": "Structural parity mutations (PDF417 repair, regional anchor alignment) bypassed Tier 1, raising evasion.",
-      "executed_at": "2026-08-17T14:43:28.526027+00:00"
+      "executed_at": "2026-08-18T09:36:47.138210+00:00"
     },
     {
       "cycle_index": 2,
@@ -130,7 +134,52 @@
         "ID-787DD737"
       ],
       "cycle_summary": "Deep forensic camouflage (iPhone EXIF, seasoned adult anchors, aged MNO endpoints) bypassed static rules.",
-      "executed_at": "2026-08-17T14:43:28.573408+00:00"
+      "executed_at": "2026-08-18T09:36:47.178346+00:00"
+    },
+    {
+      "cycle_index": 3,
+      "cycle_id": "cycle_a_3",
+      "generation_seed": 3042,
+      "mutation_tier": "TIER_3_RETRAINED_DEFENSE",
+      "batch_size": 200,
+      "total_malicious": 140,
+      "total_legitimate": 60,
+      "evading_count": 10,
+      "caught_count": 130,
+      "false_positive_count": 0,
+      "evasion_rate": 0.0714,
+      "detection_rate": 0.9286,
+      "precision": 1.0,
+      "false_positive_rate": 0.0,
+      "mean_fraud_score": 0.7855,
+      "mutations_applied": [
+        {
+          "parameter": "defend.identity.risk_scorer.adaptive_retraining",
+          "previous_value": "static_heuristic_rules",
+          "mutated_value": "retrained_cluster_intercept (10 samples ingested)",
+          "rationale": "Retrained forensic scoring engine on Cycle 2 evading camouflage profiles; re-calibrated weights and forensic sensitivity."
+        },
+        {
+          "parameter": "defensive_model_state",
+          "previous_value": "static_baseline_scorer",
+          "mutated_value": "retrained_adaptive_scorer",
+          "rationale": "Deployed retrained forensic defense model to evaluate detection recall recovery on advanced evasion attacks."
+        }
+      ],
+      "evading_sample_ids": [
+        "ID-365396E8",
+        "ID-F34730E8",
+        "ID-B2F4B6E3",
+        "ID-6DC66052",
+        "ID-4C9DC4EE",
+        "ID-4B1EA899",
+        "ID-471070FC",
+        "ID-C2CE406C",
+        "ID-973B488F",
+        "ID-6AD22FF0"
+      ],
+      "cycle_summary": "Cycle 3 Adaptive Recovery: Defend model retrained on Cycle 2 evading samples; detection recall recovered to 92.86% (evasion reduced to 7.14%).",
+      "executed_at": "2026-08-18T09:36:47.213720+00:00"
     }
   ]
 }

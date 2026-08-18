@@ -97,7 +97,7 @@ body.triad-body {
 }
 
 .brand-badge-pill {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
@@ -200,7 +200,7 @@ body.triad-body {
 }
 
 .status-text {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
@@ -218,8 +218,10 @@ body.triad-body {
 }
 
 .telemetry-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   color: var(--text-muted);
 }
 
@@ -280,7 +282,7 @@ body.triad-body {
 }
 
 .footer-tag {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-weight: var(--weight-bold);
   color: var(--text-secondary);
 }

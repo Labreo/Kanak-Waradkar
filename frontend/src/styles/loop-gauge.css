@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-5);
   width: 100%;
 }
 
@@ -19,7 +19,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 380px;
+  max-width: 480px;
+  min-height: 380px;
   aspect-ratio: 1 / 1;
 }
 
@@ -33,32 +34,35 @@
 /* Concentric Track Guidelines */
 .gauge-track {
   fill: none;
-  stroke: var(--border-default);
+  stroke: rgba(86, 90, 120, 0.35);
   stroke-width: 1.5px;
-  stroke-dasharray: 3 6;
-  opacity: 0.6;
+  stroke-dasharray: 4 6;
+  opacity: 0.7;
 }
 
 .gauge-track.active-track {
-  stroke: var(--border-highlight);
+  stroke: var(--accent-cyan);
   opacity: 0.9;
+  stroke-width: 2px;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 6px rgba(95, 216, 208, 0.3));
 }
 
 /* Spiral Tightening Arc */
 .gauge-spiral-path {
   fill: none;
   stroke: url(#spiralGradient);
-  stroke-width: 4px;
+  stroke-width: 5.5px;
   stroke-linecap: round;
   transition: stroke-dashoffset 600ms cubic-bezier(0.16, 1, 0.3, 1), stroke 300ms ease;
-  filter: drop-shadow(0 0 8px rgba(95, 216, 208, 0.4));
+  filter: drop-shadow(0 0 14px rgba(95, 216, 208, 0.55)) drop-shadow(0 0 24px rgba(242, 169, 59, 0.35));
 }
 
 /* Cycle Node Points */
 .cycle-node-outer {
-  fill: var(--bg-surface);
+  fill: var(--bg-surface-raised);
   stroke: var(--accent-cyan);
-  stroke-width: 2px;
+  stroke-width: 2.5px;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -70,7 +74,7 @@
 
 .cycle-node-outer.selected {
   stroke: var(--accent-amber);
-  filter: drop-shadow(0 0 6px var(--accent-amber));
+  filter: drop-shadow(0 0 10px var(--accent-amber));
 }
 
 .cycle-node-outer.selected + .cycle-node-inner {
@@ -87,26 +91,26 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 2px;
+  gap: 3px;
   pointer-events: none;
 }
 
 .gauge-cycle-tag {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
   color: var(--accent-cyan);
   text-transform: uppercase;
   background: var(--accent-cyan-dim);
-  padding: 1px 6px;
+  padding: 2px 8px;
   border-radius: var(--radius-xs);
   border: 1px solid var(--accent-cyan-border);
 }
 
 .gauge-rate-number {
   font-family: var(--font-mono);
-  font-size: var(--text-3xl);
+  font-size: 2.75rem;
   font-weight: var(--weight-extrabold);
   color: var(--text-primary);
   line-height: 1;
@@ -114,18 +118,20 @@
 }
 
 .gauge-rate-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
+  font-weight: var(--weight-bold);
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: var(--tracking-wider);
 }
 
 .gauge-delta-pill {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-2xs);
   font-weight: var(--weight-bold);
-  padding: 2px 6px;
+  letter-spacing: var(--tracking-wide);
+  padding: 2px 8px;
   border-radius: var(--radius-xs);
   margin-top: 2px;
 }

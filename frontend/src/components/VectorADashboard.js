@@ -96,7 +96,7 @@ export class VectorADashboard {
                 <span class="vector-pill">FEED</span>
                 <h3 class="panel-title">Synthetic Identity Profile Stream</h3>
               </div>
-              <span class="section-badge mono-data" id="v-a-count-badge">500 RECORDS</span>
+              <span class="section-badge" id="v-a-count-badge">500 RECORDS</span>
             </div>
 
             <!-- Controls (Search + Filters) -->
@@ -378,7 +378,7 @@ export class VectorADashboard {
             <span class="inspector-id">${d.instance_id}</span>
             <span class="threat-badge ${d.is_malicious ? 'badge-block' : 'badge-allow'}">${d.attack_technique}</span>
           </div>
-          <span class="inspector-type-pill mono-data">${synthesis.synthesis_type || 'PROFILE'} &bull; Seed: ${synthesis.generation_seed || 42}</span>
+          <span class="inspector-type-pill">${synthesis.synthesis_type || 'PROFILE'} &bull; Seed: <span class="mono-data">${synthesis.generation_seed || 42}</span></span>
         </div>
         <div class="inspector-verdict-hud">
           <span class="threat-badge ${verdictBadge}" style="font-size:12px; padding:3px 10px;">${d.verdict}</span>
@@ -391,7 +391,7 @@ export class VectorADashboard {
 
       <!-- Explainability Narrative -->
       <div class="narrative-box">
-        <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-family:var(--font-mono); font-size:11px;">EXPLAINABILITY DIAGNOSTIC</strong>
+        <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-size:11px; font-weight:700; letter-spacing:var(--tracking-wide);">EXPLAINABILITY DIAGNOSTIC</strong>
         ${d.primary_risk_driver}
       </div>
 
@@ -399,7 +399,7 @@ export class VectorADashboard {
       <div class="inspector-section">
         <div class="section-head-mini">
           <span>Frankenstein Anatomy (Anchor vs Overlay)</span>
-          <span class="section-badge mono-data">TAXONOMY §2.1</span>
+          <span class="section-badge">TAXONOMY §2.1</span>
         </div>
         <div class="comparison-grid">
           <!-- Authentic Anchor Column -->
@@ -450,7 +450,7 @@ export class VectorADashboard {
       <div class="inspector-section">
         <div class="section-head-mini">
           <span>Digital Document Forensics</span>
-          <span class="section-badge mono-data">AAMVA PDF417 / EXIF</span>
+          <span class="section-badge">AAMVA PDF417 / EXIF</span>
         </div>
         <div class="forensics-grid">
           <div class="forensics-item">
@@ -484,7 +484,7 @@ export class VectorADashboard {
       <div class="inspector-section">
         <div class="section-head-mini">
           <span>Contributing Risk Signals</span>
-          <span class="section-badge mono-data">${factors.length} DETECTED</span>
+          <span class="section-badge">${factors.length} DETECTED</span>
         </div>
         <div class="factors-list">
           ${factors.length === 0 ? '<span style="color:var(--status-allow); font-size:12px;">No risk signals detected. Profile passed all verification gates.</span>' : ''}

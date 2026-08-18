@@ -244,8 +244,13 @@ class VectorBLoopEngine(BaseLoopOrchestrator):
             summary = "High-velocity micro-auth bursts intercepted by velocity counters (C14) and headless device telemetry."
         elif cycle_index == 1:
             summary = "Timing dilation and mobile browser spoofing suppressed velocity counters, increasing evasion."
-        else:
+        elif cycle_index == 2:
             summary = "Organic basket sizing and local IP routing blended attacks into empirical e-commerce patterns."
+        else:
+            if evasion_rate <= 0.35:
+                summary = f"Cycle 3 Adaptive Recovery: GBDT classifier retrained on Cycle 2 evading samples; detection recall recovered to {detection_rate*100:.2f}% (evasion reduced to {evasion_rate*100:.2f}%)."
+            else:
+                summary = f"Cycle 3 Finding: Tabular GBDT retraining alone was insufficient against stealth mimicry (evasion remained at {evasion_rate*100:.2f}%), arguing for graph-based merchant network analysis rather than isolated tabular scoring."
 
         return CycleResult(
             cycle_index=cycle_index,
@@ -268,6 +273,27 @@ class VectorBLoopEngine(BaseLoopOrchestrator):
             cycle_summary=summary,
             executed_at=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         )
+
+    def retrain_defense(
+        self,
+        cycle_index: int,
+        evading_samples: List[Dict[str, Any]],
+        all_cycles: List[CycleResult],
+    ) -> List[MutationRecord]:
+        """Phase 4b: Retrain Vector B GBDT classifier on evading transactions from Cycle 2."""
+        cycle_2_batch = all_cycles[-1].raw_batch if all_cycles else None
+        self.classifier.retrain_on_evasions(
+            evading_samples=evading_samples,
+            all_cycle_samples=cycle_2_batch,
+        )
+        return [
+            MutationRecord(
+                parameter="defend.transaction.classifier.gbdt_retraining",
+                previous_value="static_baseline_model",
+                mutated_value=f"retrained_on_cycle_2_evasions ({len(evading_samples)} evading txns ingested)",
+                rationale="Retrained HistGradientBoostingClassifier on stealth mimicry transactions from Cycle 2; decision boundary adapted.",
+            )
+        ]
 
     def mutate_parameters(
         self,
@@ -317,6 +343,16 @@ class VectorBLoopEngine(BaseLoopOrchestrator):
                 previous_value="> 1000 miles / proxy IP",
                 mutated_value="< 15 miles (local residential ISP)",
                 rationale="Route authorizations through local ISP subnets matching cardholder billing region.",
+            ))
+
+        elif cycle_index == 2:
+            # Cycle 2 -> Cycle 3: Advanced stealth mimicry evaluated against Retrained GBDT Model
+            next_tier = "TIER_3_RETRAINED_GBDT"
+            mutations.append(MutationRecord(
+                parameter="defensive_model_state",
+                previous_value="static_baseline_gbdt",
+                mutated_value="retrained_adaptive_gbdt",
+                rationale="Deployed retrained GBDT classifier to evaluate detection recall recovery on organic basket mimicry attacks.",
             ))
 
         else:

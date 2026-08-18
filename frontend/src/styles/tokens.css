@@ -38,20 +38,28 @@
   --text-inverse: #0C0E1E;          /* For high-contrast dark text on bright pills */
 
   /* Structural & Border Elements: Muted Slate (#565A78) */
-  --border-muted: rgba(86, 90, 120, 0.25);
-  --border-default: rgba(86, 90, 120, 0.45);
-  --border-strong: rgba(86, 90, 120, 0.75);
-  --border-highlight: rgba(95, 216, 208, 0.35);
-  --border-alert: rgba(242, 169, 59, 0.4);
+  --border-muted: rgba(86, 90, 120, 0.18);
+  --border-default: rgba(86, 90, 120, 0.32);
+  --border-strong: rgba(86, 90, 120, 0.6);
+  --border-highlight: rgba(95, 216, 208, 0.3);
+  --border-alert: rgba(242, 169, 59, 0.35);
 
-  /* Semantic Status Palette */
-  --status-allow: #48BB78;          /* Clean / Legitimate Baseline */
-  --status-allow-dim: rgba(72, 187, 120, 0.15);
-  --status-review: #F2A93B;         /* Flagged for Human / Tier 2 Inspection */
-  --status-review-dim: rgba(242, 169, 59, 0.15);
-  --status-block: #F56565;          /* Autonomous Hard Interception */
-  --status-block-dim: rgba(245, 101, 101, 0.15);
-  --status-evaded: #E53E3E;         /* Evasive Attack Breakthrough */
+  /* Semantic Status Palette (Bespoke & Restrained) */
+  /* Clean / Legitimate Baseline — Neutral Off-White / Muted Slate */
+  --status-allow: #C0C5DE;
+  --status-allow-dim: rgba(160, 165, 194, 0.12);
+  --status-allow-border: rgba(160, 165, 194, 0.28);
+
+  /* Flagged / Human / Tier 2 Inspection — Ochre Amber */
+  --status-review: #E09B32;
+  --status-review-dim: rgba(224, 155, 50, 0.12);
+  --status-review-border: rgba(224, 155, 50, 0.3);
+
+  /* Autonomous Hard Interception / Flagged / Attack — Warm Amber */
+  --status-block: #F2A93B;
+  --status-block-dim: rgba(242, 169, 59, 0.14);
+  --status-block-border: rgba(242, 169, 59, 0.4);
+  --status-evaded: #F2A93B;
 
   /* -------------------------------------------------------------------------
      2. TYPOGRAPHY TOKENS

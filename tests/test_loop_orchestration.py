@@ -191,3 +191,96 @@ class TestClosedLoopOrchestration:
         for c in summary["cycles"]:
             for key in required_cycle_keys:
                 assert key in c, f"Missing cycle key: {key}"
+
+    def test_vector_a_cycle_3_retraining_recovery(self, temp_output_dir: Path):
+        """Verify Vector A executes 4 cycles with Defend model retraining in Cycle 3 achieving visible recovery."""
+        engine = VectorALoopEngine(
+            base_seed=42,
+            batch_size=100,
+            output_dir=str(temp_output_dir),
+        )
+        summary = engine.run_all_cycles(n_cycles=4)
+
+        assert summary["vector_id"] == "A"
+        assert summary["total_cycles_completed"] == 4
+        assert len(summary["cycles"]) == 4
+
+        c0 = summary["cycles"][0]
+        c1 = summary["cycles"][1]
+        c2 = summary["cycles"][2]
+        c3 = summary["cycles"][3]
+
+        # Initial baseline evasion ~0%
+        assert c0["evasion_rate"] < 0.05
+        # Red-team evasion growth through C1 and C2
+        assert c1["evasion_rate"] > c0["evasion_rate"]
+        assert c2["evasion_rate"] > 0.50
+
+        # Cycle 3: Post-retrain recovery
+        assert c3["evasion_rate"] < c2["evasion_rate"]
+        assert c3["detection_rate"] > c2["detection_rate"]
+        assert c3["detection_rate"] >= 0.70
+        assert summary["summary_trend"]["is_defensive_recovery_verified"] is True
+        assert summary["summary_trend"]["defensive_recovery_delta"] > 0.30
+
+        # Verify all 4 cycle files persisted
+        for k in range(4):
+            assert (temp_output_dir / f"vector_a_cycle_{k}.json").exists()
+
+    def test_vector_b_cycle_3_retraining_recovery(self, temp_output_dir: Path):
+        """Verify Vector B executes 4 cycles with GBDT classifier retraining in Cycle 3 achieving visible recovery."""
+        engine = VectorBLoopEngine(
+            base_seed=42,
+            batch_size=100,
+            output_dir=str(temp_output_dir),
+        )
+        summary = engine.run_all_cycles(n_cycles=4)
+
+        assert summary["vector_id"] == "B"
+        assert summary["total_cycles_completed"] == 4
+        assert len(summary["cycles"]) == 4
+
+        c0 = summary["cycles"][0]
+        c1 = summary["cycles"][1]
+        c2 = summary["cycles"][2]
+        c3 = summary["cycles"][3]
+
+        assert c0["evasion_rate"] < 0.05
+        assert c2["evasion_rate"] > 0.60
+        assert c3["evasion_rate"] < c2["evasion_rate"]
+        assert c3["detection_rate"] > c2["detection_rate"]
+        assert c3["detection_rate"] >= 0.70
+        assert summary["summary_trend"]["is_defensive_recovery_verified"] is True
+        assert summary["summary_trend"]["defensive_recovery_delta"] > 0.40
+
+        for k in range(4):
+            assert (temp_output_dir / f"vector_b_cycle_{k}.json").exists()
+
+    def test_vector_c_cycle_3_retraining_recovery(self, temp_output_dir: Path):
+        """Verify Vector C executes 4 cycles with Pre-Execution Scanner retraining in Cycle 3 achieving visible recovery."""
+        engine = VectorCLoopEngine(
+            base_seed=42,
+            batch_size=100,
+            output_dir=str(temp_output_dir),
+        )
+        summary = engine.run_all_cycles(n_cycles=4)
+
+        assert summary["vector_id"] == "C"
+        assert summary["total_cycles_completed"] == 4
+        assert len(summary["cycles"]) == 4
+
+        c0 = summary["cycles"][0]
+        c1 = summary["cycles"][1]
+        c2 = summary["cycles"][2]
+        c3 = summary["cycles"][3]
+
+        assert c0["evasion_rate"] == 0.0
+        assert c2["evasion_rate"] > 0.50
+        assert c3["evasion_rate"] < c2["evasion_rate"]
+        assert c3["detection_rate"] > c2["detection_rate"]
+        assert c3["detection_rate"] >= 0.70
+        assert summary["summary_trend"]["is_defensive_recovery_verified"] is True
+        assert summary["summary_trend"]["defensive_recovery_delta"] > 0.40
+
+        for k in range(4):
+            assert (temp_output_dir / f"vector_c_cycle_{k}.json").exists()
