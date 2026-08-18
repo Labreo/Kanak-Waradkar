@@ -602,34 +602,56 @@ export class VectorCDashboard {
               </div>
             </div>
 
-            <!-- Risk Sub-Scores Radar -->
-            <div class="sub-scores-list" id="sub-scores-container">
-              <div class="sub-score-tile">
-                <span class="sub-score-label">Concealment</span>
-                <div class="sub-score-meter-row">
-                  <div class="score-mini-bar" style="width:50px;"><div class="score-mini-fill high" id="sub-conceal-bar" style="width:100%"></div></div>
-                  <span class="sub-score-num mono-data" id="sub-conceal-num">1.00</span>
-                </div>
+            <!-- 4-Axis Threat Radar & Sub-Scores -->
+            <div class="threat-radar-container">
+              <div class="radar-viewport">
+                <svg class="radar-svg" viewBox="0 0 160 160" id="v-c-radar-svg">
+                  <!-- Grid Axes -->
+                  <line class="radar-grid-axis" x1="80" y1="15" x2="80" y2="145" />
+                  <line class="radar-grid-axis" x1="15" y1="80" x2="145" y2="80" />
+                  <!-- Grid Diamond Rings -->
+                  <polygon class="radar-grid-ring" points="80,25 135,80 80,135 25,80" />
+                  <polygon class="radar-threshold-ring" points="80,52.5 107.5,80 80,107.5 52.5,80" />
+                  <!-- Baseline Envelope -->
+                  <polygon class="radar-polygon-baseline" points="80,72 88,80 80,88 72,80" />
+                  <!-- Active Threat Polygon -->
+                  <polygon class="radar-polygon-threat" id="v-c-threat-polygon" points="80,25 132,80 80,25 80,80" />
+                  <!-- Axis Labels -->
+                  <text class="radar-axis-label" x="80" y="10" text-anchor="middle">Concealment</text>
+                  <text class="radar-axis-label" x="148" y="83" text-anchor="start">Override</text>
+                  <text class="radar-axis-label" x="80" y="156" text-anchor="middle">Divergence</text>
+                  <text class="radar-axis-label" x="12" y="83" text-anchor="end">Pretext</text>
+                </svg>
               </div>
-              <div class="sub-score-tile">
-                <span class="sub-score-label">Override Verbs</span>
-                <div class="sub-score-meter-row">
-                  <div class="score-mini-bar" style="width:50px;"><div class="score-mini-fill high" id="sub-override-bar" style="width:95%"></div></div>
-                  <span class="sub-score-num mono-data" id="sub-override-num">0.95</span>
+
+              <div class="sub-scores-list" id="sub-scores-container">
+                <div class="sub-score-tile">
+                  <span class="sub-score-label">Concealment</span>
+                  <div class="sub-score-meter-row">
+                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-conceal-bar" style="width:100%"></div></div>
+                    <span class="sub-score-num mono-data" id="sub-conceal-num">1.00</span>
+                  </div>
                 </div>
-              </div>
-              <div class="sub-score-tile">
-                <span class="sub-score-label">Param Divergence</span>
-                <div class="sub-score-meter-row">
-                  <div class="score-mini-bar" style="width:50px;"><div class="score-mini-fill high" id="sub-param-bar" style="width:100%"></div></div>
-                  <span class="sub-score-num mono-data" id="sub-param-num">1.00</span>
+                <div class="sub-score-tile">
+                  <span class="sub-score-label">Override Verbs</span>
+                  <div class="sub-score-meter-row">
+                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-override-bar" style="width:95%"></div></div>
+                    <span class="sub-score-num mono-data" id="sub-override-num">0.95</span>
+                  </div>
                 </div>
-              </div>
-              <div class="sub-score-tile">
-                <span class="sub-score-label">Invoice Pretext</span>
-                <div class="sub-score-meter-row">
-                  <div class="score-mini-bar" style="width:50px;"><div class="score-mini-fill low" id="sub-inv-bar" style="width:0%"></div></div>
-                  <span class="sub-score-num mono-data" id="sub-inv-num">0.00</span>
+                <div class="sub-score-tile">
+                  <span class="sub-score-label">Param Divergence</span>
+                  <div class="sub-score-meter-row">
+                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-param-bar" style="width:100%"></div></div>
+                    <span class="sub-score-num mono-data" id="sub-param-num">1.00</span>
+                  </div>
+                </div>
+                <div class="sub-score-tile">
+                  <span class="sub-score-label">Invoice Pretext</span>
+                  <div class="sub-score-meter-row">
+                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-inv-bar" style="width:0%"></div></div>
+                    <span class="sub-score-num mono-data" id="sub-inv-num">0.00</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1074,7 +1096,7 @@ export class VectorCDashboard {
     if (intendedAmt) intendedAmt.textContent = intendedPrice;
     if (hijackedAmt) hijackedAmt.textContent = isMalicious ? `$${Number(artifact.target_amount || 248.49).toFixed(2)}` : '— (MATCH)';
 
-    // Sub-Scores
+    // Sub-Scores Computation
     const concVal = subScores.concealment_risk !== undefined ? subScores.concealment_risk : (isMalicious ? 1.0 : 0.0);
     const overVal = subScores.imperative_override_risk !== undefined ? subScores.imperative_override_risk : (isMalicious ? 0.95 : 0.0);
     const paramVal = subScores.parameter_divergence_risk !== undefined ? subScores.parameter_divergence_risk : (isMalicious ? 1.0 : 0.0);
@@ -1086,7 +1108,6 @@ export class VectorCDashboard {
       if (num) num.textContent = Number(val).toFixed(2);
       if (bar) {
         if (bar.style) bar.style.width = `${Math.round(val * 100)}%`;
-        bar.className = `score-mini-fill ${val >= 0.7 ? 'high' : val >= 0.3 ? 'med' : 'low'}`;
       }
     };
 
@@ -1094,6 +1115,21 @@ export class VectorCDashboard {
     setSubScore('override', overVal);
     setSubScore('param', paramVal);
     setSubScore('inv', invVal);
+
+    // 4-Axis Threat Radar Coordinates Computation (Center: 80, 80; Max Radius: 55)
+    const maxR = 55;
+    const cx = 80, cy = 80;
+    const topY = cy - (Math.max(0.08, concVal) * maxR);
+    const rightX = cx + (Math.max(0.08, overVal) * maxR);
+    const bottomY = cy + (Math.max(0.08, paramVal) * maxR);
+    const leftX = cx - (Math.max(0.08, invVal) * maxR);
+
+    const threatPolygon = this.container.querySelector('#v-c-threat-polygon');
+    if (threatPolygon) {
+      threatPolygon.setAttribute('points', `${cx},${topY} ${rightX},${cy} ${cx},${bottomY} ${leftX},${cy}`);
+      threatPolygon.style.fill = isMalicious ? 'rgba(242, 169, 59, 0.25)' : 'rgba(95, 216, 208, 0.15)';
+      threatPolygon.style.stroke = isMalicious ? 'var(--accent-amber)' : 'var(--accent-cyan)';
+    }
   }
 
   updateConcealmentVisual() {

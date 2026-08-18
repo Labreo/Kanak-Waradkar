@@ -9,47 +9,53 @@
  * 5. Closed Loop (Multi-Cycle Telemetry & Live Wave Trigger Engine)
  */
 
-import { renderVectorCards } from './VectorCards.js';
+import { renderVectorCards, updateVectorCardsData } from './VectorCards.js';
 import { ClosingLoopGauge } from './ClosingLoopGauge.js';
 import { VectorADashboard } from './VectorADashboard.js';
 import { VectorBDashboard } from './VectorBDashboard.js';
 import { VectorCDashboard } from './VectorCDashboard.js';
 import { ClosedLoopDashboard } from './ClosedLoopDashboard.js';
+import { fetchVectors } from '../services/api.js';
 
 export function renderOverviewView(router) {
   const root = document.createElement('div');
-  root.className = 'overview-view';
+  root.className = 'vector-view-container';
+
+  const shell = document.createElement('div');
+  shell.className = 'vector-view-shell overview-view';
 
   // 1. Command Hub Hero
-  const hero = document.createElement('section');
-  hero.className = 'command-hub-header';
+  const hero = document.createElement('div');
+  hero.className = 'dashboard-hero command-hub-header';
   hero.innerHTML = `
-    <div class="hub-title-area">
-      <div class="hub-eyebrow">
-        <span class="status-pulse"></span>
-        <span>Red-Team / Blue-Team Orchestration Engine</span>
+    <div class="dashboard-hero-top">
+      <div class="dashboard-hero-left">
+        <div class="view-hero-breadcrumbs">
+          <span class="status-pulse"></span>
+          <span>Red-Team / Blue-Team Orchestration Engine</span>
+        </div>
+        <h1 class="view-hero-title">Autonomous Payment Fraud Red-Teaming &amp; Defense System</h1>
+        <p class="hub-description">
+          Continuous adversarial feedback loop generating sophisticated synthetic fraud vectors, evaluating multi-tier defense scanners, and mutating evasive attack parameters across three mission-critical payment rails.
+        </p>
       </div>
-      <h1 class="hub-title">Autonomous Payment Fraud Red-Teaming &amp; Defense System</h1>
-      <p class="hub-description">
-        Continuous adversarial feedback loop generating sophisticated synthetic fraud vectors, evaluating multi-tier defense scanners, and mutating evasive attack parameters across three mission-critical payment rails.
-      </p>
-    </div>
-    <div class="hub-quick-stats">
-      <div class="stat-tile">
-        <span class="stat-tile-label">Total Vectors</span>
-        <span class="stat-tile-val mono-data">03</span>
-      </div>
-      <div class="stat-tile">
-        <span class="stat-tile-label">Avg Recall</span>
-        <span class="stat-tile-val mono-data">96.6%</span>
-      </div>
-      <div class="stat-tile">
-        <span class="stat-tile-label">Max Evasion</span>
-        <span class="stat-tile-val mono-data accent-cyan">87.0%</span>
+      <div class="dashboard-hero-stats">
+        <div class="stat-tile">
+          <span class="stat-tile-label">Total Vectors</span>
+          <span class="stat-tile-val mono-data">03</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile-label">Avg Recall</span>
+          <span class="stat-tile-val mono-data" id="hub-avg-recall">96.6%</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile-label">Max Evasion</span>
+          <span class="stat-tile-val mono-data accent-cyan" id="hub-max-evasion">87.0%</span>
+        </div>
       </div>
     </div>
   `;
-  root.appendChild(hero);
+  shell.appendChild(hero);
 
   // 2. Three Vector Cards (Equal Visual Weight)
   const cardsSection = document.createElement('section');
@@ -63,7 +69,7 @@ export function renderOverviewView(router) {
     </div>
   `;
   cardsSection.appendChild(renderVectorCards((target) => router.navigate(target)));
-  root.appendChild(cardsSection);
+  shell.appendChild(cardsSection);
 
   // 3. Lower Command Hub Grid (Signature Closing Loop + Threat Matrix Feed)
   const lowerGrid = document.createElement('section');
@@ -137,11 +143,11 @@ export function renderOverviewView(router) {
       </div>
     </div>
   `;
-  root.appendChild(lowerGrid);
+  shell.appendChild(lowerGrid);
 
-  // Mount ClosingLoopGauge in lower grid
-  setTimeout(() => {
-    const mount = root.querySelector('#overview-loop-mount');
+  // Mount ClosingLoopGauge in lower grid and fetch live vector summaries
+  setTimeout(async () => {
+    const mount = shell.querySelector('#overview-loop-mount');
     if (mount) {
       new ClosingLoopGauge(mount, {
         initialCycle: 2,
@@ -151,8 +157,33 @@ export function renderOverviewView(router) {
         }
       });
     }
+
+    try {
+      const summaries = await fetchVectors();
+      if (summaries && Array.isArray(summaries)) {
+        updateVectorCardsData(cardsSection, summaries);
+
+        // Compute aggregate metrics
+        let totalRecall = 0;
+        let maxEvas = 0;
+        summaries.forEach(s => {
+          if (s.current_defense_recall !== undefined) totalRecall += s.current_defense_recall;
+          if (s.latest_loop_evasion_rate !== undefined && s.latest_loop_evasion_rate > maxEvas) {
+            maxEvas = s.latest_loop_evasion_rate;
+          }
+        });
+        const avgRecall = summaries.length > 0 ? (totalRecall / summaries.length) * 100 : 96.6;
+        const avgRecallEl = shell.querySelector('#hub-avg-recall');
+        const maxEvasEl = shell.querySelector('#hub-max-evasion');
+        if (avgRecallEl) avgRecallEl.textContent = `${avgRecall.toFixed(1)}%`;
+        if (maxEvasEl) maxEvasEl.textContent = `${(maxEvas * 100).toFixed(1)}%`;
+      }
+    } catch (err) {
+      console.warn('Could not load live vector summaries for Command Hub:', err);
+    }
   }, 0);
 
+  root.appendChild(shell);
   return root;
 }
 

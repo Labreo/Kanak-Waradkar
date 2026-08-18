@@ -104,3 +104,67 @@ export function renderVectorCards(onNavigate) {
 
   return container;
 }
+
+export function updateVectorCardsData(container, summaries) {
+  if (!container || !summaries || !Array.isArray(summaries)) return;
+
+  summaries.forEach(s => {
+    const card = container.querySelector(`#card-vector-${s.vector_id.toLowerCase()}`);
+    if (!card) return;
+
+    const metricsGrid = card.querySelector('.card-metrics-grid');
+    if (!metricsGrid) return;
+
+    const recallStr = s.current_defense_recall !== undefined ? `${(s.current_defense_recall * 100).toFixed(1)}%` : '100.0%';
+    const aucStr = s.current_defense_auc !== undefined ? s.current_defense_auc.toFixed(3) : '0.934';
+    const evasStr = s.latest_loop_evasion_rate !== undefined ? `${(s.latest_loop_evasion_rate * 100).toFixed(0)}%` : '83%';
+    const totalStr = s.total_batch_samples !== undefined ? s.total_batch_samples.toLocaleString() : '500';
+
+    if (s.vector_id === 'A') {
+      metricsGrid.innerHTML = `
+        <div class="card-metric-col">
+          <span class="metric-label">Defense Recall</span>
+          <span class="metric-number mono-data accent-cyan">${recallStr}</span>
+        </div>
+        <div class="card-metric-col">
+          <span class="metric-label">Max Evasion</span>
+          <span class="metric-number mono-data accent-amber">${evasStr}</span>
+        </div>
+        <div class="card-metric-col">
+          <span class="metric-label">Profiles</span>
+          <span class="metric-number mono-data">${totalStr}</span>
+        </div>
+      `;
+    } else if (s.vector_id === 'B') {
+      metricsGrid.innerHTML = `
+        <div class="card-metric-col">
+          <span class="metric-label">Defense AUC</span>
+          <span class="metric-number mono-data accent-cyan">${aucStr}</span>
+        </div>
+        <div class="card-metric-col">
+          <span class="metric-label">Max Evasion</span>
+          <span class="metric-number mono-data accent-amber">${evasStr}</span>
+        </div>
+        <div class="card-metric-col">
+          <span class="metric-label">Evaluated</span>
+          <span class="metric-number mono-data">24,000+</span>
+        </div>
+      `;
+    } else if (s.vector_id === 'C') {
+      metricsGrid.innerHTML = `
+        <div class="card-metric-col">
+          <span class="metric-label">Defense Recall</span>
+          <span class="metric-number mono-data accent-cyan">${recallStr}</span>
+        </div>
+        <div class="card-metric-col">
+          <span class="metric-label">Max Evasion</span>
+          <span class="metric-number mono-data accent-amber">${evasStr}</span>
+        </div>
+        <div class="card-metric-col">
+          <span class="metric-label">Loss Prevented</span>
+          <span class="metric-number mono-data">$0.00</span>
+        </div>
+      `;
+    }
+  });
+}

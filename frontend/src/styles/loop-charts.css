@@ -17,7 +17,7 @@
   background: var(--bg-surface-raised);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .trigger-header-row {
@@ -32,10 +32,11 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  background: var(--bg-surface);
+  background: var(--bg-surface-nested);
   padding: 4px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 
 .rail-tab-btn {
@@ -54,12 +55,13 @@
 
 .rail-tab-btn:hover {
   color: var(--text-primary);
+  background: var(--bg-surface-overlay);
 }
 
 .rail-tab-btn.active {
   background: var(--bg-surface-overlay);
   color: var(--accent-cyan);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 10px rgba(95, 216, 208, 0.2);
   border: 1px solid var(--accent-cyan-border);
 }
 
@@ -71,9 +73,10 @@
   gap: var(--space-4);
   flex-wrap: wrap;
   padding: var(--space-3) var(--space-4);
-  background: var(--bg-surface);
+  background: var(--bg-surface-nested);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-muted);
+  box-shadow: var(--shadow-elevated-section);
 }
 
 .trigger-inputs-group {
@@ -100,9 +103,10 @@
 
 .trigger-select, .trigger-input-num {
   padding: 4px 10px;
-  background: var(--bg-surface-raised);
+  background: var(--bg-surface-overlay);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-sm);
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -111,6 +115,7 @@
 
 .trigger-select:focus, .trigger-input-num:focus {
   border-color: var(--accent-cyan-border);
+  box-shadow: 0 0 8px rgba(95, 216, 208, 0.25);
 }
 
 .run-wave-action-btn {
@@ -158,9 +163,10 @@
   justify-content: space-between;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
-  background: #080A15;
+  background: var(--bg-inset);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-muted);
+  box-shadow: var(--shadow-inset);
 }
 
 .stepper-step {
@@ -182,7 +188,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--bg-surface-raised);
+  background: var(--bg-surface-nested);
   border: 1px solid var(--border-default);
   font-family: var(--font-mono);
   font-size: 10px;
@@ -238,7 +244,7 @@
   background: var(--bg-surface-raised);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 /* -------------------------------------------------------------------------
@@ -363,7 +369,7 @@
   background: var(--bg-surface-raised);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .mutation-cycle-accordion {
@@ -377,14 +383,17 @@
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-4);
-  background: var(--bg-surface);
+  background: var(--bg-surface-nested);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-muted);
-  transition: border-color var(--transition-fast);
+  box-shadow: var(--shadow-elevated-section);
+  transition: all var(--transition-fast);
 }
 
 .mutation-cycle-item:hover {
+  background: var(--bg-surface-nested);
   border-color: var(--border-highlight);
+  box-shadow: var(--shadow-md);
 }
 
 .mutation-cycle-head {
@@ -414,8 +423,8 @@
 
 .mutations-table th {
   padding: var(--space-2) var(--space-3);
-  background: var(--bg-surface-raised);
-  color: var(--text-muted);
+  background: var(--bg-surface-overlay);
+  color: var(--text-secondary);
   font-family: var(--font-sans);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-wider);
@@ -472,7 +481,8 @@
   font-size: 10px;
   padding: 2px 6px;
   border-radius: var(--radius-xs);
-  background: var(--bg-surface-raised);
+  background: var(--bg-surface-overlay);
   border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
   color: var(--accent-amber);
 }

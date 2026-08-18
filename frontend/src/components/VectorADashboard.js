@@ -277,7 +277,7 @@ export class VectorADashboard {
 
     tbody.innerHTML = this.instances.map(item => {
       const isSelected = item.instance_id === this.selectedInstanceId;
-      const scorePct = Math.round(item.risk_score * 100);
+      const scorePct = Math.min(100, Math.max(0, Math.round(item.risk_score * 100)));
       const fillClass = item.risk_score >= 0.7 ? 'high' : item.risk_score >= 0.25 ? 'med' : 'low';
       const verdictBadge = item.verdict === 'BLOCK' ? 'badge-block' : item.verdict === 'REVIEW' ? 'badge-review' : 'badge-allow';
 
@@ -287,9 +287,12 @@ export class VectorADashboard {
           <td><span class="threat-badge ${item.is_malicious ? 'badge-block' : 'badge-allow'}">${item.archetype_or_technique.replace(/_/g, ' ')}</span></td>
           <td class="mono-data" style="font-size:11px; color:var(--text-secondary);">${item.evasion_tier ? item.evasion_tier.replace('_EVASION', '') : 'TIER_1'}</td>
           <td>
-            <div class="score-cell-group">
-              <div class="score-mini-bar">
-                <div class="score-mini-fill ${fillClass}" style="width:${scorePct}%"></div>
+            <div class="score-cell-group" title="Risk Score: ${item.risk_score.toFixed(3)} (Thresholds: Review 0.25, Block 0.70)">
+              <div class="calibrated-spark-bar">
+                <div class="calibrated-spark-track ${fillClass}" style="width:${scorePct}%"></div>
+                <div class="spark-threshold-tick" style="left:25%" title="Review Threshold (0.25)"></div>
+                <div class="spark-threshold-tick" style="left:70%" title="Block Threshold (0.70)"></div>
+                <div class="spark-pip" style="left:${scorePct}%"></div>
               </div>
               <span class="mono-data" style="font-size:11px; font-weight:700;">${item.risk_score.toFixed(3)}</span>
             </div>
@@ -369,9 +372,21 @@ export class VectorADashboard {
 
     const verdictBadge = d.verdict === 'BLOCK' ? 'badge-block' : d.verdict === 'REVIEW' ? 'badge-review' : 'badge-allow';
     const scoreColor = d.risk_score >= 0.7 ? 'var(--status-block)' : d.risk_score >= 0.25 ? 'var(--status-review)' : 'var(--status-allow)';
+    
+    // Computed Radial Mini-Gauge Geometry
+    const radius = 22;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference * (1 - Math.min(1.0, Math.max(0, d.risk_score)));
+    const strokeColor = d.risk_score >= 0.7 ? '#F2A93B' : d.risk_score >= 0.25 ? '#E09B32' : '#5FD8D0';
+
+    // Computed Multi-Tier Plausibility Breakdown
+    const t1Valid = Boolean(checksums.barcode_pdf417_payload_match && checksums.algorithmic_checksum_valid);
+    const t2Valid = !addr.is_cmra && (!contact.phone_line_type || contact.phone_line_type !== 'VOIP');
+    const t3Valid = (layout.font_kerning_anomaly_score || 0) < 0.4 && (layout.photo_tamper_artifact_score || 0) < 0.4;
+    const plausibilityIndex = (t1Valid ? 0.25 : 0.05) + (t2Valid ? 0.35 : 0.10) + (t3Valid ? 0.40 : 0.12);
 
     inspector.innerHTML = `
-      <!-- Inspector Header -->
+      <!-- Inspector Header with Computed Radial Mini-Gauge -->
       <div class="inspector-header">
         <div class="inspector-id-group">
           <div style="display:flex; align-items:center; gap:8px;">
@@ -381,10 +396,19 @@ export class VectorADashboard {
           <span class="inspector-type-pill">${synthesis.synthesis_type || 'PROFILE'} &bull; Seed: <span class="mono-data">${synthesis.generation_seed || 42}</span></span>
         </div>
         <div class="inspector-verdict-hud">
-          <span class="threat-badge ${verdictBadge}" style="font-size:12px; padding:3px 10px;">${d.verdict}</span>
-          <div class="inspector-score-pill" style="background:var(--bg-surface-raised); border:1px solid var(--border-default);">
-            <span style="color:var(--text-muted); font-size:11px;">RISK SCORE:</span>
-            <span class="mono-data" style="color:${scoreColor}; font-size:13px; font-weight:700;">${d.risk_score.toFixed(3)}</span>
+          <div class="inspector-radial-hud" title="Risk Probability: ${(d.risk_score * 100).toFixed(1)}%">
+            <svg class="mini-gauge-svg" viewBox="0 0 58 58">
+              <circle class="mini-gauge-track" cx="29" cy="29" r="${radius}" />
+              <circle class="mini-gauge-fill" cx="29" cy="29" r="${radius}" stroke="${strokeColor}" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" />
+            </svg>
+            <div class="mini-gauge-center">
+              <span class="mini-gauge-val" style="color:${strokeColor}">${(d.risk_score * 100).toFixed(0)}%</span>
+              <span class="mini-gauge-sub">RISK</span>
+            </div>
+          </div>
+          <div class="inspector-verdict-stack">
+            <span class="threat-badge ${verdictBadge}" style="font-size:12px; padding:3px 10px;">${d.verdict}</span>
+            <span class="mono-data" style="color:var(--text-muted); font-size:10px;">&Delta; Score: ${d.risk_score.toFixed(3)}</span>
           </div>
         </div>
       </div>
@@ -453,12 +477,26 @@ export class VectorADashboard {
       </button>
 
       <div class="drawer-collapsible-content collapsed" id="v-a-forensics-collapsible">
-        <!-- Document Forensics Inspection -->
+        <!-- Document Forensics Inspection & Plausibility Multi-Tier Track -->
         <div class="inspector-section">
           <div class="section-head-mini">
             <span>Digital Document Forensics</span>
             <span class="section-badge">AAMVA PDF417 / EXIF</span>
           </div>
+
+          <!-- Computed Segmented Plausibility Breakdown -->
+          <div class="plausibility-block-container">
+            <div class="plausibility-legend">
+              <span>Macro Plausibility Index: <strong class="mono-data" style="color:${plausibilityIndex > 0.7 ? 'var(--status-allow)' : 'var(--status-block)'}">${plausibilityIndex.toFixed(3)}</strong></span>
+              <span>T1 (25%) &bull; T2 (35%) &bull; T3 (40%)</span>
+            </div>
+            <div class="plausibility-stacked-track">
+              <div class="plausibility-seg ${t1Valid ? 'pass' : 'fail'}" style="flex:25" title="Tier 1 (Syntax / Barcode Checksum): ${t1Valid ? 'PASS' : 'FAIL'}"></div>
+              <div class="plausibility-seg ${t2Valid ? 'pass' : 'fail'}" style="flex:35" title="Tier 2 (Demographics / CMRA Purity): ${t2Valid ? 'PASS' : 'FAIL'}"></div>
+              <div class="plausibility-seg ${t3Valid ? 'pass' : 'warn'}" style="flex:40" title="Tier 3 (EXIF / Kerning / Tamper): ${t3Valid ? 'PASS' : 'WARN/FAIL'}"></div>
+            </div>
+          </div>
+
           <div class="forensics-grid">
             <div class="forensics-item">
               <span class="forensics-label">PDF417 Barcode Match</span>
