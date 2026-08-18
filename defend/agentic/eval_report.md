@@ -1,6 +1,6 @@
 # Vector C Evaluation Report — Agentic Payment Hijacking Defend Module
 
-**Generated At:** `2026-08-17T12:56:45.862218+00:00`  
+**Generated At:** `2026-08-17T14:43:14.685322+00:00`  
 **Model Name:** `VectorCDetector` (v1.0.0)  
 **Dataset Split:** `held_out_test` (`data/generated/agentic_heldout_batch.json`, seed `2026`)  
 **Total Test Scenarios:** `200` (Injections: `120`, Legitimate: `80`)

@@ -1,7 +1,7 @@
 # Vector B Evaluation & Metrics Report: Behavioral & Transaction Fraud
 
 **Evaluation Session:** S13 — Vector B Defend Evaluation  
-**Timestamp:** `2026-08-17T12:56:43.979471+00:00`  
+**Timestamp:** `2026-08-17T14:43:12.783052+00:00`  
 **Model Name:** `VectorBClassifier` (`HistGradientBoostingClassifier`)  
 **Dataset Split:** `held_out_out_of_time_combined` (IEEE-CIS Out-of-Time + PaySim Out-of-Time + Held-out Synthetic Seed 2026)  
 **Total Evaluated:** **`25,000` transactions** (`24,635` Legitimate [98.5%], `365` Fraud [1.5%])  

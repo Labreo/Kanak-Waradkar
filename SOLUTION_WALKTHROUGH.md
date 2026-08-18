@@ -13,7 +13,7 @@
 
 Generative AI has fundamentally inverted the economics of financial crime. Traditional fraud prevention architectures were built on the assumption of **static fraud signatures** — hardcoded velocity rules, fixed optical templates, and rigid text filters. However, modern generative models produce polymorphic, mathematically plausible synthetic identities, botnet purchasing patterns, and contextual prompt injections at near-zero marginal cost. 
 
-When defenses remain static while attackers adapt, **defensive efficacy collapses rapidly**. In empirical simulations, static rule and classifier defenses suffer up to an **88.24% evasion surge** across three mutation cycles.
+When defenses remain static while attackers adapt, **defensive efficacy collapses rapidly**. In empirical simulations, static rule and classifier defenses suffer up to an **87.32% evasion surge** across three mutation cycles.
 
 **Project TRIAD** (Threat Reconnaissance, Identification, Attack Generation & Defense) solves this asymmetry through a unified, 4-pillar closed-loop framework:
 1. **IDENTIFY:** A comprehensive taxonomy and threat matrix mapping 10 emerging GenAI payment fraud sub-techniques across Onboarding/KYC (Vector A), Behavioral Transactions (Vector B), and Autonomous Agentic Payments (Vector C).
@@ -305,25 +305,25 @@ The core architectural innovation of Project TRIAD is the **automated closed loo
 │ VECTOR A: SYNTHETIC IDENTITY   │ VECTOR B: BEHAVIORAL FRAUD     │ VECTOR C: AGENTIC HIJACKING    │
 ├────────────────────────────────┼────────────────────────────────┼────────────────────────────────┤
 │ Cycle 0 (Baseline):   0.00%    │ Cycle 0 (Baseline):   0.00%    │ Cycle 0 (Baseline):   0.00%    │
-│ Cycle 1 (Structural): 30.00%   │ Cycle 1 (Dilation):   22.22%   │ Cycle 1 (CSS Conceal):14.17%   │
-│ Cycle 2 (Forensics):  65.71%   │ Cycle 2 (Mimicry):    88.24%   │ Cycle 2 (AP Pretext): 83.33%   │
+│ Cycle 1 (Structural): 29.29%   │ Cycle 1 (Dilation):   28.75%   │ Cycle 1 (CSS Conceal):14.17%   │
+│ Cycle 2 (Forensics):  67.86%   │ Cycle 2 (Mimicry):    87.32%   │ Cycle 2 (AP Pretext): 83.33%   │
 ├────────────────────────────────┼────────────────────────────────┼────────────────────────────────┤
-│ Evasion Surge:       +65.71%   │ Evasion Surge:       +88.24%   │ Evasion Surge:       +83.33%   │
+│ Evasion Surge:       +67.86%   │ Evasion Surge:       +87.32%   │ Evasion Surge:       +83.33%   │
 └────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
 ```
 
 #### Multi-Cycle Progression Details (`data/loop/vector_{a,b,c}_history.json`):
-1. **Vector A Mutation Dynamics (Seed 42, n=100 per cycle):**
-   - *Cycle 0 (Tier 1 Baseline):* Evasion rate = **`0.00%`** (0 / 70 evading), Mean fraud score = `0.9904`. Caught by naive PDF417 barcode mismatches and SSA check digits.
-   - *Cycle 1 (Structural Alignment Mutation):* Generator repairs PDF417 barcode payloads and aligns state ZIP codes to anchor SSNs. Evasion surges to **`30.00%`** (21 / 70 evading), Mean score drops to `0.6405`.
-   - *Cycle 2 (Forensic Camouflage Mutation):* Generator replaces editing tool EXIF with iPhone 15 Pro tags, switches to active adult SSNs, and provisions postpaid wireless numbers. Evasion surges to **`65.71%`** (46 / 70 evading), Mean score drops to `0.2049`.
-   - **Net Adversarial Gain:** **`+65.71%` evasion increase**.
+1. **Vector A Mutation Dynamics (Seed 42, n=200 per cycle):**
+   - *Cycle 0 (Tier 1 Baseline):* Evasion rate = **`0.00%`** (0 / 140 evading), Mean fraud score = `0.9886`. Caught by naive PDF417 barcode mismatches and SSA check digits.
+   - *Cycle 1 (Structural Alignment Mutation):* Generator repairs PDF417 barcode payloads and aligns state ZIP codes to anchor SSNs. Evasion surges to **`29.29%`** (41 / 140 evading), Mean score drops to `0.6194`.
+   - *Cycle 2 (Forensic Camouflage Mutation):* Generator replaces editing tool EXIF with iPhone 15 Pro tags, switches to active adult SSNs, and provisions postpaid wireless numbers. Evasion surges to **`67.86%`** (95 / 140 evading), Mean score drops to `0.2031`.
+   - **Net Adversarial Gain:** **`+67.86%` evasion increase**.
 
-2. **Vector B Mutation Dynamics (Seed 42, n=50 per cycle):**
-   - *Cycle 0 (Basic Velocity Burst):* Evasion rate = **`0.00%`** (0 / 17 evading), Mean score = `0.9727`. Caught by sub-second inter-arrival times ($1.017\text{s}$) and headless browser tags.
-   - *Cycle 1 (Distributed IP / Timing Dilation):* Generator dilates pacing to 10–60s lognormal human intervals and spoofs iOS Mobile Safari telemetry. Evasion increases to **`22.22%`** (4 / 18 evading), Mean score drops to `0.7405`.
-   - *Cycle 2 (Stealth Mimicry Mutation):* Generator morphs micro-auths into typical $24.89–$114.50 retail baskets and routes through local residential ISPs (<15 miles). Evasion surges to **`88.24%`** (15 / 17 evading), Mean score drops to `0.1398`.
-   - **Net Adversarial Gain:** **`+88.24%` evasion increase**.
+2. **Vector B Mutation Dynamics (Seed 42, n=200 per cycle):**
+   - *Cycle 0 (Basic Velocity Burst):* Evasion rate = **`0.00%`** (0 / 76 evading), Mean score = `0.9463`. Caught by sub-second inter-arrival times and headless browser tags.
+   - *Cycle 1 (Distributed IP / Timing Dilation):* Generator dilates pacing to 10–60s lognormal human intervals and spoofs iOS Mobile Safari telemetry. Evasion increases to **`28.75%`** (23 / 80 evading), Mean score drops to `0.6399`.
+   - *Cycle 2 (Stealth Mimicry Mutation):* Generator morphs micro-auths into typical $24.89–$114.50 retail baskets and routes through local residential ISPs (<15 miles). Evasion surges to **`87.32%`** (62 / 71 evading), Mean score drops to `0.1649`.
+   - **Net Adversarial Gain:** **`+87.32%` evasion increase**.
 
 3. **Vector C Mutation Dynamics (Seed 42, n=200 per cycle):**
    - *Cycle 0 (Direct Override in HTML Comments):* Evasion rate = **`0.00%`** (0 / 120 evading), Mean score = `1.0000`. Caught by raw comment scanning and imperative override keywords.
@@ -337,25 +337,31 @@ The core architectural innovation of Project TRIAD is the **automated closed loo
 
 # Section 4: Real-World Feasibility in Live Payments
 
-### 4.1 Operational Latency Budget
-Payment networks operate under strict sub-second Service Level Agreements (SLAs), where gateway authorizations must resolve in under 100–300ms:
-- **Tier 1 Rule Evaluation:** Checksum, syntax, and deterministic barcode checks execute in **`< 1.0ms`**, resolving legitimate transactions instantly.
-- **Vector C Pre-Execution Content Scanner:** Inspects complete candidate tool calls and DOM ASTs in **`0.14ms` per transaction** (`0.03s` for an entire 200-sample batch), adding imperceptible overhead to autonomous agent workflows.
-- **Vector B GBDT Inference:** Evaluates 25,000 transactions in **`< 1.0s`** with a memory footprint of **`< 150MB` RAM**, making it suitable for edge deployment directly on card network switches.
-- **End-to-End REST API Latency:** Full-stack FastAPI deployment averages **`14.1ms` local response time** and **`355ms` worldwide response time** over Cloudflare global edge tunnels across all 25 API routes.
+### 4.1 Operational Latency Budget & Empirical Distribution
+Payment networks operate under strict sub-second Service Level Agreements (SLAs), where gateway authorizations must resolve in under 100–300ms. Rather than reporting a single speculative figure, Project TRIAD empirically benchmarks exact latency distributions across **at least 30 fresh requests per route** (`data/latency_benchmark_summary.json`):
+
+- **Tier-1 Rule Evaluation:** Checksum, syntax, and barcode integrity execute with a median latency of **`0.0023 ms`** (P95: `0.0034 ms`), resolving deterministic checks in microseconds.
+- **Vector C Pre-Execution Content Scanner:** Inspects complete candidate tool calls and DOM ASTs with a median latency of **`0.1196 ms` per scenario** (P95: `0.1517 ms`), adding negligible overhead to agentic workflows.
+- **Vector A Multi-Tier Risk Scorer:** Full multi-tier KYC evaluation executes at a median latency of **`0.0351 ms` per profile** (P95: `0.0423 ms`).
+- **Vector B GBDT Inference:** Evaluates vectorized batches at **`0.04 ms / txn`** and single REST transaction evaluations at a median latency of **`4.84 ms`** (P95: `10.23 ms`), well within card network gateway budgets.
+- **End-to-End REST API Routes:** Fast metadata and metrics routes resolve with a median latency of **`1.43 ms`** (P95: `1.75 ms`); complex instance drill-downs with deep JSON merging resolve with a median of **`21.57–25.08 ms`**; overall aggregate REST API response across all 21 routes yields **`5.23 ms median / 31.73 ms P95 / 11.29 ms mean`**.
+- **Global Edge Delivery:** Cloudflare edge tunnels deliver a verified median round-trip response of **`355.0 ms`** globally.
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                               OPERATIONAL LATENCY VS. SLA BUDGET                                 │
-├───────────────────────────────────────────────────────┬───────────────────┬──────────────────────┤
-│ PIPELINE COMPONENT                                    │ MEASURED LATENCY  │ GATEWAY SLA CEILING  │
-├───────────────────────────────────────────────────────┼───────────────────┼──────────────────────┤
-│ Tier-1 Checksum & Syntax Gate                         │ < 1.0 ms          │ 10.0 ms              │
-│ Vector C Pre-Execution Tool-Call Scanner              │ 0.14 ms           │ 5.0 ms               │
-│ Vector B Tabular GBDT Scoring Engine                  │ 0.04 ms / txn     │ 25.0 ms              │
-│ Full REST API Route (Summary / Metrics / Evaluation)  │ 14.1 ms           │ 100.0 ms             │
-│ Global Edge Delivery (Cloudflare Tunnel to Browser)   │ 355.0 ms          │ 1000.0 ms            │
-└───────────────────────────────────────────────────────┴───────────────────┴──────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                EMPIRICAL COMPONENT & API LATENCY DISTRIBUTIONS (N=30)                            │
+├───────────────────────────────────────────────────────┬───────────┬───────────┬───────────┬───────────┬──────────┤
+│ PIPELINE COMPONENT / ROUTE                            │ MIN (ms)  │ MEDIAN    │ P95 (ms)  │ MAX (ms)  │ SLA GOAL │
+├───────────────────────────────────────────────────────┼───────────┼───────────┼───────────┼───────────┼──────────┤
+│ Tier-1 Checksum & Syntax Gate (per profile)           │ 0.0011 ms │ 0.0023 ms │ 0.0034 ms │ 0.0094 ms │ 10.0 ms  │
+│ Vector C Pre-Execution Tool Scanner (per scenario)    │ 0.1041 ms │ 0.1196 ms │ 0.1517 ms │ 0.2450 ms │ 5.0 ms   │
+│ Vector A Multi-Tier Risk Scorer (per profile)         │ 0.0177 ms │ 0.0351 ms │ 0.0423 ms │ 0.0912 ms │ 15.0 ms  │
+│ Vector B GBDT Tabular Scoring (single transaction)    │ 3.1943 ms │ 4.8420 ms │ 10.227 ms │ 18.450 ms │ 25.0 ms  │
+│ Fast REST Routes (Health / Metrics / Loop History)    │ 1.35 ms   │ 1.44 ms   │ 1.75 ms   │ 1.94 ms   │ 50.0 ms  │
+│ Instance Drill-Down Routes (/api/instances)           │ 4.81 ms   │ 23.43 ms  │ 37.70 ms  │ 129.32 ms │ 100.0 ms │
+│ OVERALL REST API (Aggregate across all 21 routes)     │ 1.35 ms   │ 5.23 ms   │ 31.73 ms  │ 129.32 ms │ 100.0 ms │
+│ Global Edge Delivery (Cloudflare Tunnel to Browser)   │ 180.0 ms  │ 355.0 ms  │ 720.0 ms  │ 980.0 ms  │ 1000.0 ms│
+└───────────────────────────────────────────────────────┴───────────┴───────────┴───────────┴───────────┴──────────┘
 ```
 
 ---
@@ -422,7 +428,7 @@ To ensure that generative security tools cannot be repurposed for malicious inte
 Project TRIAD fulfills all criteria for the hackathon challenge:
 - **Novelty & Breadth:** 10 attack sub-techniques mapped across KYC, transaction processing, and agentic workflows.
 - **Scientific & Empirical Rigor:** 0.8693 macro fidelity against 590k IEEE-CIS and 6.36M PaySim records; 0% leakage out-of-time evaluation; 100% wallet preservation.
-- **The Closed-Loop Advantage:** Quantifiable adversarial evasion trajectories (+65.7% to +88.2%) demonstrating the necessity of automated generative red-teaming.
+- **The Closed-Loop Advantage:** Quantifiable adversarial evasion trajectories (+67.9% to +87.3%) demonstrating the necessity of automated generative red-teaming.
 - **Production Feasibility:** Sub-millisecond scoring, controlled 2.25% strict FPR, drop-in Docker architecture, and complete PII safety.
 
 ---

@@ -1,7 +1,7 @@
 # Vector B — Synthetic Transaction & Card-Testing Fidelity Comparison Report
 
 **Document Version:** `1.0.0`  
-**Generated At:** `2026-08-16T23:21:49.477861+00:00`  
+**Generated At:** `2026-08-17T14:43:21.203776+00:00`  
 **Batch ID:** `batch_txn_v1_seed42_n1000` (`1000` records, `824` sequences)  
 **Evaluation Standard:** Empirical Ground-Truth Baseline ([data/PROFILING_REPORT.md](file:///Users/sanjaywaradkar/TRIAD/data/PROFILING_REPORT.md) & [data/profiling_summary.json](file:///Users/sanjaywaradkar/TRIAD/data/profiling_summary.json))  
 **Macro Fidelity Score:** `0.8693` / `1.0000`

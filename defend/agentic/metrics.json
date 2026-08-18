@@ -1,7 +1,7 @@
 {
   "vector_id": "C",
   "vector_name": "Agentic Payment Hijacking & Indirect Prompt Injection",
-  "evaluated_at": "2026-08-17T12:56:45.862218+00:00",
+  "evaluated_at": "2026-08-17T14:43:14.685322+00:00",
   "model_metadata": {
     "name": "VectorCDetector",
     "version": "1.0.0",

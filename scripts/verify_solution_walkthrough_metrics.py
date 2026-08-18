@@ -96,26 +96,27 @@ def main():
     assert_claim("Vector C Wallet Balance Preserved", "100.00%", "Vector C preserved wallet balance rate (100.00%)")
     assert_claim("Vector C Defended Injections", "120", "Vector C defended injections count (120)")
 
-    # 4. Multi-Cycle Closed-Loop Dynamics
+    # 4. Multi-Cycle Closed-Loop Dynamics (Reproducible Standard n=200 Batch)
     assert_claim("Vector A Loop Initial Evasion", "0.00%", "Vector A Cycle 0 evasion rate (0.00%)")
-    assert_claim("Vector A Loop Cycle 1 Evasion", "30.00%", "Vector A Cycle 1 evasion rate (30.00%)")
-    assert_claim("Vector A Loop Cycle 2 Evasion", "65.71%", "Vector A Cycle 2 evasion rate (65.71%)")
-    assert_claim("Vector A Loop Evasion Surge", "+65.71%", "Vector A net evasion surge (+65.71%)")
+    assert_claim("Vector A Loop Cycle 1 Evasion", "29.29%", "Vector A Cycle 1 evasion rate (29.29%)")
+    assert_claim("Vector A Loop Cycle 2 Evasion", "67.86%", "Vector A Cycle 2 evasion rate (67.86%)")
+    assert_claim("Vector A Loop Evasion Surge", "+67.86%", "Vector A net evasion surge (+67.86%)")
 
     assert_claim("Vector B Loop Initial Evasion", "0.00%", "Vector B Cycle 0 evasion rate (0.00%)")
-    assert_claim("Vector B Loop Cycle 1 Evasion", "22.22%", "Vector B Cycle 1 evasion rate (22.22%)")
-    assert_claim("Vector B Loop Cycle 2 Evasion", "88.24%", "Vector B Cycle 2 evasion rate (88.24%)")
-    assert_claim("Vector B Loop Evasion Surge", "+88.24%", "Vector B net evasion surge (+88.24%)")
+    assert_claim("Vector B Loop Cycle 1 Evasion", "28.75%", "Vector B Cycle 1 evasion rate (28.75%)")
+    assert_claim("Vector B Loop Cycle 2 Evasion", "87.32%", "Vector B Cycle 2 evasion rate (87.32%)")
+    assert_claim("Vector B Loop Evasion Surge", "+87.32%", "Vector B net evasion surge (+87.32%)")
 
     assert_claim("Vector C Loop Initial Evasion", "0.00%", "Vector C Cycle 0 evasion rate (0.00%)")
     assert_claim("Vector C Loop Cycle 1 Evasion", "14.17%", "Vector C Cycle 1 evasion rate (14.17%)")
     assert_claim("Vector C Loop Cycle 2 Evasion", "83.33%", "Vector C Cycle 2 evasion rate (83.33%)")
     assert_claim("Vector C Loop Evasion Surge", "+83.33%", "Vector C net evasion surge (+83.33%)")
 
-    # 5. Feasibility & Latency
-    assert_claim("REST API Latency Local", "14.1ms", "Local REST API average response time (14.1ms)")
-    assert_claim("Global Edge Latency", "355ms", "Cloudflare edge tunnel response time (355ms)")
-    assert_claim("Vector C Scanner Latency", "0.14ms", "Vector C scanner execution time per scenario (0.14ms)")
+    # 5. Feasibility & Latency Distributions
+    assert_claim("REST API Median Latency", "5.23 ms", "REST API aggregate median response time (5.23 ms)")
+    assert_claim("REST API P95 Latency", "31.73 ms", "REST API aggregate P95 response time (31.73 ms)")
+    assert_claim("Global Edge Latency", "355.0 ms", "Cloudflare edge tunnel response time (355.0 ms)")
+    assert_claim("Vector C Scanner Median Latency", "0.1196 ms", "Vector C scanner median execution time (0.1196 ms)")
 
     # Reporting
     passed_count = sum(1 for c in checks if c["passed"])
