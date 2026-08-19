@@ -81,7 +81,7 @@ def main():
     assert_claim("Vector B ROC-AUC", "0.9336", "Vector B 0.9336 ROC-AUC")
     assert_claim("Vector B PR-AUC", "0.4266", "Vector B 0.4266 PR-AUC")
     assert_claim("Vector B IEEE-CIS AUC", "0.8428", "Vector B IEEE-CIS out-of-time AUC (0.8428)")
-    assert_claim("Vector B Macro Fidelity", "0.8693", "Vector B macro fidelity score (0.8693)")
+    assert_claim("Vector B Macro Fidelity", "0.8738", "Vector B macro fidelity score (0.8738)")
     assert_claim("Vector B Wasserstein W1", "7.9838", "Vector B amount Wasserstein distance (7.9838)")
     assert_claim("Vector B KS-test Stat", "0.0585", "Vector B amount KS statistic (0.0585)")
     assert_claim("Vector B Velocity Compression", "37,916.9x", "Vector B velocity compression multiplier (37,916.9x)")

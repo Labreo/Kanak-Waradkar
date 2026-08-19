@@ -46,12 +46,12 @@ PRODUCT_CD_DISTRIBUTION = [
     {"code": "S", "weight": 0.0197, "fraud_rate": 0.0590, "median_amt": 35.00, "mcc": "6540"},
 ]
 
-# Card Network Scheme Weights (IEEE-CIS card4)
+# Card Network Scheme Weights (IEEE-CIS card4 empirical shares: Visa ~65.4%, Mastercard ~32.1%, Discover ~1.1%, Amex ~1.4%)
 CARD_NETWORKS = [
     {"network": "visa", "weight": 0.654, "bin_prefixes": ["4024", "4128", "4249", "4501", "4716", "4912"]},
-    {"network": "mastercard", "weight": 0.292, "bin_prefixes": ["5120", "5248", "5399", "5412", "5500", "2221"]},
-    {"network": "discover", "weight": 0.036, "bin_prefixes": ["6011", "6440", "6500"]},
-    {"network": "american express", "weight": 0.018, "bin_prefixes": ["3400", "3712", "3782"]},
+    {"network": "mastercard", "weight": 0.321, "bin_prefixes": ["5120", "5248", "5399", "5412", "5500", "2221"]},
+    {"network": "discover", "weight": 0.011, "bin_prefixes": ["6011", "6440", "6500"]},
+    {"network": "american express", "weight": 0.014, "bin_prefixes": ["3400", "3712", "3782"]},
 ]
 
 # Major Issuing Bank Clusters (IEEE-CIS card2, card3, card5)

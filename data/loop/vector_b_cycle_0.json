@@ -17,7 +17,7 @@
   "mutations_applied": [],
   "evading_sample_ids": [],
   "cycle_summary": "High-velocity micro-auth bursts intercepted by velocity counters (C14) and headless device telemetry.",
-  "executed_at": "2026-08-19T00:14:16.954622+00:00",
+  "executed_at": "2026-08-19T00:26:16.909126+00:00",
   "raw_batch_count": 50,
   "decisions_count": 50,
   "raw_batch": [
@@ -3575,13 +3575,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644022",
+        "card1_bin": "539922",
         "card2_bank_code": 225,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644022-XXXX-6876",
+        "card_id_token": "CARD-539922-XXXX-6876",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -4430,7 +4430,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($19.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000002",
@@ -4439,7 +4439,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($15.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000003",
@@ -4491,7 +4491,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000004",
@@ -4543,7 +4543,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000005",
@@ -4595,7 +4595,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000006",
@@ -4647,7 +4647,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000007",
@@ -4699,7 +4699,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000008",
@@ -4751,7 +4751,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000009",
@@ -4803,7 +4803,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000010",
@@ -4855,7 +4855,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000011",
@@ -4907,7 +4907,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000012",
@@ -4959,7 +4959,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000013",
@@ -5011,7 +5011,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000014",
@@ -5063,7 +5063,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000015",
@@ -5115,7 +5115,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000016",
@@ -5167,7 +5167,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000017",
@@ -5219,7 +5219,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000018",
@@ -5271,7 +5271,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000019",
@@ -5323,7 +5323,7 @@
           "impact_score": 0.5
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000020",
@@ -5332,7 +5332,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($137.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000021",
@@ -5341,7 +5341,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($11.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000022",
@@ -5350,7 +5350,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($235.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000023",
@@ -5359,7 +5359,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($19.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000024",
@@ -5368,7 +5368,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($276.47), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000025",
@@ -5377,7 +5377,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (R), standard ticket ($45.91), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000026",
@@ -5394,7 +5394,7 @@
           "impact_score": 0.7
         }
       ],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000027",
@@ -5403,7 +5403,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($60.58), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000028",
@@ -5412,7 +5412,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($731.39), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000029",
@@ -5421,7 +5421,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($185.30), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000030",
@@ -5430,7 +5430,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($729.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000031",
@@ -5439,7 +5439,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($129.04), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000032",
@@ -5448,7 +5448,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($192.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000033",
@@ -5457,7 +5457,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($386.92), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000034",
@@ -5466,7 +5466,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($105.18), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000035",
@@ -5475,7 +5475,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($162.06), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000036",
@@ -5484,7 +5484,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($33.07), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000037",
@@ -5493,7 +5493,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($30.67), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000038",
@@ -5502,7 +5502,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($19.91), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000039",
@@ -5511,7 +5511,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($99.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000040",
@@ -5520,16 +5520,16 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($50.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000041",
-      "fraud_probability": 0.0196,
+      "fraud_probability": 0.0215,
       "action": "ALLOW",
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($11.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000042",
@@ -5538,7 +5538,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($108.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000043",
@@ -5547,7 +5547,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (H), standard ticket ($65.69), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000044",
@@ -5556,7 +5556,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($32.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000045",
@@ -5565,7 +5565,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($105.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000046",
@@ -5574,7 +5574,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($6.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000047",
@@ -5583,7 +5583,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($30.79), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000048",
@@ -5592,7 +5592,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($11.44), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000049",
@@ -5601,7 +5601,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (W), standard ticket ($11.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     },
     {
       "transaction_id": "TXN-01000050",
@@ -5610,7 +5610,7 @@
       "risk_tier": "LOW_RISK",
       "primary_risk_driver": "Normal behavioral profile: verified channel (C), standard ticket ($15.00), nominal velocity counters.",
       "top_features": [],
-      "evaluated_at": "2026-08-19T00:14:16.922663+00:00"
+      "evaluated_at": "2026-08-19T00:26:16.881812+00:00"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "batch_id": "batch_txn_v1_seed2026_n1000",
-  "generated_at": "2026-08-17T11:17:34.605862+00:00",
+  "generated_at": "2026-08-19T00:21:55.588954+00:00",
   "generator_version": "1.0.0",
   "total_records": 1000,
   "total_sequences": 840,
@@ -1096,13 +1096,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "601190",
+        "card1_bin": "524890",
         "card2_bank_code": 321,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 226,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-601190-XXXX-8864",
+        "card_id_token": "CARD-524890-XXXX-8864",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -6904,13 +6904,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644046",
+        "card1_bin": "541246",
         "card2_bank_code": 383,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 117,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644046-XXXX-6345",
+        "card_id_token": "CARD-541246-XXXX-6345",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -12008,13 +12008,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644080",
+        "card1_bin": "539980",
         "card2_bank_code": 490,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 137,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644080-XXXX-8204",
+        "card_id_token": "CARD-539980-XXXX-8204",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -13416,13 +13416,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "650036",
+        "card1_bin": "550036",
         "card2_bank_code": 490,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 137,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-650036-XXXX-7507",
+        "card_id_token": "CARD-550036-XXXX-7507",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -15264,13 +15264,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644074",
+        "card1_bin": "541274",
         "card2_bank_code": 111,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644074-XXXX-6323",
+        "card_id_token": "CARD-541274-XXXX-6323",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -17288,13 +17288,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644076",
+        "card1_bin": "541276",
         "card2_bank_code": 514,
         "card3_country_code": 185,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 137,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644076-XXXX-8397",
+        "card_id_token": "CARD-541276-XXXX-8397",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -17992,13 +17992,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "601196",
+        "card1_bin": "524896",
         "card2_bank_code": 490,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 137,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-601196-XXXX-2774",
+        "card_id_token": "CARD-524896-XXXX-2774",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -23448,13 +23448,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644062",
+        "card1_bin": "539962",
         "card2_bank_code": 111,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644062-XXXX-5136",
+        "card_id_token": "CARD-539962-XXXX-5136",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -23536,13 +23536,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644062",
+        "card1_bin": "539962",
         "card2_bank_code": 111,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644062-XXXX-5136",
+        "card_id_token": "CARD-539962-XXXX-5136",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -24416,13 +24416,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644064",
+        "card1_bin": "539964",
         "card2_bank_code": 383,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 117,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644064-XXXX-4157",
+        "card_id_token": "CARD-539964-XXXX-4157",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -24504,13 +24504,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644064",
+        "card1_bin": "539964",
         "card2_bank_code": 383,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 117,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644064-XXXX-4157",
+        "card_id_token": "CARD-539964-XXXX-4157",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -27056,13 +27056,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644048",
+        "card1_bin": "539948",
         "card2_bank_code": 225,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644048-XXXX-8862",
+        "card_id_token": "CARD-539948-XXXX-8862",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -31808,13 +31808,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644084",
+        "card1_bin": "541284",
         "card2_bank_code": 111,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644084-XXXX-8276",
+        "card_id_token": "CARD-541284-XXXX-8276",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -31896,13 +31896,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644084",
+        "card1_bin": "541284",
         "card2_bank_code": 111,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644084-XXXX-8276",
+        "card_id_token": "CARD-541284-XXXX-8276",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -33128,13 +33128,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "601150",
+        "card1_bin": "524850",
         "card2_bank_code": 225,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-601150-XXXX-5770",
+        "card_id_token": "CARD-524850-XXXX-5770",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -36648,13 +36648,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "650045",
+        "card1_bin": "222145",
         "card2_bank_code": 321,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 226,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-650045-XXXX-5857",
+        "card_id_token": "CARD-222145-XXXX-5857",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -42720,13 +42720,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "650077",
+        "card1_bin": "222177",
         "card2_bank_code": 383,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 117,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-650077-XXXX-1265",
+        "card_id_token": "CARD-222177-XXXX-1265",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -44744,13 +44744,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644025",
+        "card1_bin": "539925",
         "card2_bank_code": 225,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644025-XXXX-2144",
+        "card_id_token": "CARD-539925-XXXX-2144",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -47824,13 +47824,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "601176",
+        "card1_bin": "512076",
         "card2_bank_code": 225,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-601176-XXXX-4964",
+        "card_id_token": "CARD-512076-XXXX-4964",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -47912,13 +47912,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "650057",
+        "card1_bin": "222157",
         "card2_bank_code": 111,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-650057-XXXX-7977",
+        "card_id_token": "CARD-222157-XXXX-7977",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -48440,13 +48440,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644093",
+        "card1_bin": "539993",
         "card2_bank_code": 225,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644093-XXXX-1386",
+        "card_id_token": "CARD-539993-XXXX-1386",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -55304,13 +55304,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644076",
+        "card1_bin": "539976",
         "card2_bank_code": 383,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 117,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644076-XXXX-5914",
+        "card_id_token": "CARD-539976-XXXX-5914",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -67096,13 +67096,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "601141",
+        "card1_bin": "512041",
         "card2_bank_code": 404,
         "card3_country_code": 102,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 226,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-601141-XXXX-7451",
+        "card_id_token": "CARD-512041-XXXX-7451",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -70440,13 +70440,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644069",
+        "card1_bin": "539969",
         "card2_bank_code": 321,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 226,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644069-XXXX-9071",
+        "card_id_token": "CARD-539969-XXXX-9071",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -71496,13 +71496,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "601145",
+        "card1_bin": "512045",
         "card2_bank_code": 490,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 137,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-601145-XXXX-2804",
+        "card_id_token": "CARD-512045-XXXX-2804",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -73872,13 +73872,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644027",
+        "card1_bin": "539927",
         "card2_bank_code": 225,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "debit",
-        "card_id_token": "CARD-644027-XXXX-5910",
+        "card_id_token": "CARD-539927-XXXX-5910",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -78976,13 +78976,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "644039",
+        "card1_bin": "541239",
         "card2_bank_code": 111,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 224,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-644039-XXXX-2815",
+        "card_id_token": "CARD-541239-XXXX-2815",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -82760,13 +82760,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "650029",
+        "card1_bin": "222129",
         "card2_bank_code": 383,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 117,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-650029-XXXX-7916",
+        "card_id_token": "CARD-222129-XXXX-7916",
         "card_sequence_index": 1
       },
       "merchant_channel": {
@@ -82848,13 +82848,13 @@
         "is_exact_balance_drain": false
       },
       "payment_instrument": {
-        "card1_bin": "650029",
+        "card1_bin": "222129",
         "card2_bank_code": 383,
         "card3_country_code": 150,
-        "card4_network": "discover",
+        "card4_network": "mastercard",
         "card5_tier_category": 117,
         "card6_funding_type": "credit",
-        "card_id_token": "CARD-650029-XXXX-7916",
+        "card_id_token": "CARD-222129-XXXX-7916",
         "card_sequence_index": 1
       },
       "merchant_channel": {

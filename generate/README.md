@@ -30,5 +30,5 @@ python -m generate.agentic.generator --n 200 --seed 2026
 ## Statistical Fidelity Benchmark Summary
 
 - **Vector A Fidelity:** 100.0% national ID format validity, 0.8453 macro template alignment score, realistic EXIF compression and camera hardware signatures.
-- **Vector B Distributional Alignment:** Wasserstein distance of 7.98 on transaction amounts vs 590,540 real IEEE-CIS records; Jensen-Shannon Divergence of 0.0521 on card networks.
+- **Vector B Distributional Alignment:** Wasserstein distance of 7.98 on transaction amounts vs 590,540 real IEEE-CIS records; Jensen-Shannon Divergence of 0.0224 on card networks.
 - **Vector C Sandboxing:** Purely sandboxed `FakeWallet` mock environment with zero real network calls or financial risk.

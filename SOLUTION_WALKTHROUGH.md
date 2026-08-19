@@ -3,7 +3,7 @@
 
 **Document Version:** `1.0.0`  
 **Date:** `2026-08-17`  
-**Authors / Team TRIAD:** Kanak Waradkar
+**Author:** Kanak Sanjay Waradkar (Solo Submission)
 **Repository:** [https://github.com/Labreo/TRIAD](https://github.com/Labreo/TRIAD)  
 **Live Prototype & Edge Endpoint:** [https://cycles-warned-participation-oliver.trycloudflare.com](https://cycles-warned-participation-oliver.trycloudflare.com)  
 
@@ -17,7 +17,7 @@ When defenses remain static while attackers adapt, **defensive efficacy collapse
 
 **Project TRIAD** (Threat Reconnaissance, Identification, Attack Generation & Defense) solves this asymmetry through a unified, 4-pillar closed-loop framework:
 1. **IDENTIFY:** A comprehensive taxonomy and threat matrix mapping 10 emerging GenAI payment fraud sub-techniques across Onboarding/KYC (Vector A), Behavioral Transactions (Vector B), and Autonomous Agentic Payments (Vector C).
-2. **GENERATE:** Seedable, high-fidelity synthetic generation engines producing multi-modal attack batches and sequences whose statistical distributions mathematically match real-world benchmarks (590,540 IEEE-CIS transactions and 6,362,620 PaySim operations with **0.8693 macro fidelity**).
+2. **GENERATE:** Seedable, high-fidelity synthetic generation engines producing multi-modal attack batches and sequences whose statistical distributions mathematically match real-world benchmarks (590,540 IEEE-CIS transactions and 6,362,620 PaySim operations with **0.8738 macro fidelity**).
 3. **DEFEND:** Multi-tier defensive engines (Deterministic Checksums $\to$ Statistical Coherence $\to$ Deep Digital Forensics / GBDT Tabular Models / Pre-Execution Tool-Call Interceptors) achieving rigorous out-of-time detection (leading with **0.8428** ROC-AUC and **88.47%** recall on the primary real IEEE-CIS card benchmark / **0.9336** secondary multi-source composite, alongside **100.00%** baseline recall on Vector A and Vector C).
 4. **LOOP:** An automated adversarial mutation engine that feeds evading payloads back into generation, stress-testing defenses before real fraudsters exploit them in production.
 
@@ -116,11 +116,11 @@ Every metric is computed side-by-side against **590,540 real IEEE-CIS transactio
 
 | Similarity Dimension | Metric / Statistical Test | Computed Value | Benchmark Target | Empirical Validation Verdict |
 | :--- | :--- | :--- | :--- | :--- |
-| **Overall Macro Fidelity** | Composite Weighted Index | **`0.8693`** | $\ge 0.8500$ | **High Fidelity Alignment** |
+| **Overall Macro Fidelity** | Composite Weighted Index | **`0.8738`** | $\ge 0.8500$ | **High Fidelity Alignment** |
 | **Amount Distribution Distance** | Wasserstein Distance ($W_1$) | **`7.9838`** | $< 15.0$ | **Close Geometric Alignment** |
 | **Amount 2-Sample Goodness** | Kolmogorov-Smirnov Stat ($D_{KS}$) | **`0.0585`** | $< 0.15$ | **Minimal CDF Divergence** |
 | **ProductCD Channel Divergence** | Jensen-Shannon Divergence ($JSD$) | **`0.1128`** | $< 0.15$ | **Categorical Market Alignment** |
-| **Card Network Scheme Divergence**| Jensen-Shannon Divergence ($JSD$) | **`0.0521`** | $< 0.10$ | **Network Share Parity** |
+| **Card Network Scheme Divergence**| Jensen-Shannon Divergence ($JSD$) | **`0.0224`** | $< 0.10$ | **Network Share Parity** |
 | **Integer Amount Conservation** | Integer % Synthetic vs Real | **`52.00%` vs `51.65%`** | $\pm 5.0\%$ | **Rounding Physics Preserved** |
 | **Account Drain Conservation** | Exact Drain % Synthetic vs Real | **`100.00%` vs `97.82%`** | $\pm 3.0\%$ | **Dual-Ledger Physics Preserved** |
 | **Customer Mule Routing Rate** | `nameDest` Prefix 'C' Rate | **`100.00%` vs `100.00%`** | $100.0\%$ | **Mule Account Parity** |
@@ -139,7 +139,7 @@ Every metric is computed side-by-side against **590,540 real IEEE-CIS transactio
 │ Legitimate Mean Amount        │ $134.51                       │ $136.49                          │
 │ Legitimate Median Amount      │ $68.50                        │ $69.26                           │
 │ Visa Market Share             │ 65.16%                        │ 64.50%                           │
-│ Mastercard Market Share       │ 32.04%                        │ 30.20%                           │
+│ Mastercard Market Share       │ 32.04%                        │ 32.60%                           │
 │ Legitimate Inter-Arrival Time │ 38,561.51 seconds (~10.7 hrs) │ Human browsing session           │
 │ Card-Testing Inter-Arrival    │ 1.017 seconds                 │ 37,916.9x velocity compression   │
 │ Gateway Decline Rate          │ 0.00% clean baseline          │ 89.47% attack probe rejection    │
@@ -456,7 +456,7 @@ To ensure that generative security tools cannot be repurposed for malicious inte
 
 Project TRIAD fulfills all criteria for the hackathon challenge:
 - **Novelty & Breadth:** 10 attack sub-techniques mapped across KYC, transaction processing, and agentic workflows.
-- **Scientific & Empirical Rigor:** 0.8693 macro fidelity against 590k IEEE-CIS and 6.36M PaySim records; 0% leakage out-of-time evaluation; 100% wallet preservation.
+- **Scientific & Empirical Rigor:** 0.8738 macro fidelity against 590k IEEE-CIS and 6.36M PaySim records; 0% leakage out-of-time evaluation; 100% wallet preservation.
 - **The Closed-Loop Advantage:** Quantifiable adversarial evasion trajectories (+67.9% to +87.3%) demonstrating the necessity of automated generative red-teaming.
 - **Production Feasibility:** Sub-millisecond scoring, controlled 2.25% strict FPR, drop-in Docker architecture, and complete PII safety.
 

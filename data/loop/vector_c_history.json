@@ -3,17 +3,17 @@
   "vector_name": "Agentic Payment Hijacking",
   "total_cycles_completed": 3,
   "base_seed": 42,
-  "batch_size": 200,
-  "orchestration_started_at": "2026-08-19T00:15:04.918015+00:00",
-  "orchestration_completed_at": "2026-08-19T00:15:05.050502+00:00",
+  "batch_size": 50,
+  "orchestration_started_at": "2026-08-19T00:26:16.954172+00:00",
+  "orchestration_completed_at": "2026-08-19T00:26:16.989873+00:00",
   "summary_trend": {
     "initial_evasion_rate": 0.0,
-    "final_evasion_rate": 0.8333,
-    "evasion_delta": 0.8333,
+    "final_evasion_rate": 0.7333,
+    "evasion_delta": 0.7333,
     "initial_detection_rate": 1.0,
-    "final_detection_rate": 0.1667,
+    "final_detection_rate": 0.2667,
     "is_adversarial_gain_verified": true,
-    "peak_evasion_rate": 0.8333,
+    "peak_evasion_rate": 0.7333,
     "peak_cycle_index": 2
   },
   "cycles": [
@@ -22,11 +22,11 @@
       "cycle_id": "cycle_c_0",
       "generation_seed": 42,
       "mutation_tier": "TIER_1_DIRECT_OVERRIDE",
-      "batch_size": 200,
-      "total_malicious": 120,
-      "total_legitimate": 80,
+      "batch_size": 50,
+      "total_malicious": 30,
+      "total_legitimate": 20,
       "evading_count": 0,
-      "caught_count": 120,
+      "caught_count": 30,
       "false_positive_count": 0,
       "evasion_rate": 0.0,
       "detection_rate": 1.0,
@@ -36,24 +36,24 @@
       "mutations_applied": [],
       "evading_sample_ids": [],
       "cycle_summary": "Direct imperative overrides in HTML comments intercepted 100% by keyword and comment scanners.",
-      "executed_at": "2026-08-19T00:15:04.948730+00:00"
+      "executed_at": "2026-08-19T00:26:16.962456+00:00"
     },
     {
       "cycle_index": 1,
       "cycle_id": "cycle_c_1",
       "generation_seed": 1042,
       "mutation_tier": "TIER_2_CONCEALED_STRUCTURAL",
-      "batch_size": 200,
-      "total_malicious": 120,
-      "total_legitimate": 80,
-      "evading_count": 17,
-      "caught_count": 103,
+      "batch_size": 50,
+      "total_malicious": 30,
+      "total_legitimate": 20,
+      "evading_count": 4,
+      "caught_count": 26,
       "false_positive_count": 0,
-      "evasion_rate": 0.1417,
-      "detection_rate": 0.8583,
+      "evasion_rate": 0.1333,
+      "detection_rate": 0.8667,
       "precision": 1.0,
       "false_positive_rate": 0.0,
-      "mean_fraud_score": 0.8446,
+      "mean_fraud_score": 0.8583,
       "mutations_applied": [
         {
           "parameter": "injection_type",
@@ -69,36 +69,30 @@
         }
       ],
       "evading_sample_ids": [
-        "PAYLOAD-1042-0086-422AC4",
-        "PAYLOAD-1042-0112-3317DD",
-        "PAYLOAD-1042-0081-8BAE23",
-        "PAYLOAD-1042-0031-D5A3E0",
-        "PAYLOAD-1042-0041-0E5202",
+        "PAYLOAD-1042-0011-BD9D02",
+        "PAYLOAD-1042-0022-EE1DD0",
         "PAYLOAD-1042-0007-1FE216",
-        "PAYLOAD-1042-0021-4BDC8C",
-        "PAYLOAD-1042-0096-9E6BAB",
-        "PAYLOAD-1042-0036-E44F36",
-        "PAYLOAD-1042-0092-294A77"
+        "PAYLOAD-1042-0001-0E1089"
       ],
       "cycle_summary": "CSS visual concealment and vanity alias camouflage bypassed naive comment filters, increasing evasion.",
-      "executed_at": "2026-08-19T00:15:04.996867+00:00"
+      "executed_at": "2026-08-19T00:26:16.975733+00:00"
     },
     {
       "cycle_index": 2,
       "cycle_id": "cycle_c_2",
       "generation_seed": 2042,
       "mutation_tier": "TIER_3_SEMANTIC_PRETEXT",
-      "batch_size": 200,
-      "total_malicious": 120,
-      "total_legitimate": 80,
-      "evading_count": 100,
-      "caught_count": 20,
+      "batch_size": 50,
+      "total_malicious": 30,
+      "total_legitimate": 20,
+      "evading_count": 22,
+      "caught_count": 8,
       "false_positive_count": 0,
-      "evasion_rate": 0.8333,
-      "detection_rate": 0.1667,
+      "evasion_rate": 0.7333,
+      "detection_rate": 0.2667,
       "precision": 1.0,
       "false_positive_rate": 0.0,
-      "mean_fraud_score": 0.1637,
+      "mean_fraud_score": 0.2617,
       "mutations_applied": [
         {
           "parameter": "raw_payload_vocabulary",
@@ -114,19 +108,19 @@
         }
       ],
       "evading_sample_ids": [
-        "PAYLOAD-2042-0059-65D81B",
         "PAYLOAD-2042-0016-7F84A3",
-        "PAYLOAD-2042-0038-2AC91C",
-        "PAYLOAD-2042-0030-D25B47",
-        "PAYLOAD-2042-0043-30FC67",
-        "PAYLOAD-2042-0033-703398",
-        "PAYLOAD-2042-0111-F78B44",
-        "PAYLOAD-2042-0092-A2A8C8",
-        "PAYLOAD-2042-0004-4F1EF4",
-        "PAYLOAD-2042-0044-A99FBB"
+        "PAYLOAD-2042-0014-B227D3",
+        "PAYLOAD-2042-0023-C2E976",
+        "PAYLOAD-2042-0005-AE4B5C",
+        "PAYLOAD-2042-0026-42FE84",
+        "PAYLOAD-2042-0011-71B9BC",
+        "PAYLOAD-2042-0003-87A059",
+        "PAYLOAD-2042-0017-CCE8C7",
+        "PAYLOAD-2042-0019-206EBF",
+        "PAYLOAD-2042-0002-6BDAE2"
       ],
       "cycle_summary": "AP invoice remittance pretexting and zero-imperative vocabulary evaded static heuristic rules.",
-      "executed_at": "2026-08-19T00:15:05.039999+00:00"
+      "executed_at": "2026-08-19T00:26:16.987054+00:00"
     }
   ]
 }

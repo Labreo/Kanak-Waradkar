@@ -4,8 +4,8 @@
   "total_cycles_completed": 3,
   "base_seed": 42,
   "batch_size": 50,
-  "orchestration_started_at": "2026-08-19T00:14:16.874101+00:00",
-  "orchestration_completed_at": "2026-08-19T00:14:16.907523+00:00",
+  "orchestration_started_at": "2026-08-19T00:26:16.833053+00:00",
+  "orchestration_completed_at": "2026-08-19T00:26:16.867066+00:00",
   "summary_trend": {
     "initial_evasion_rate": 0.0,
     "final_evasion_rate": 0.6286,
@@ -36,7 +36,7 @@
       "mutations_applied": [],
       "evading_sample_ids": [],
       "cycle_summary": "Baseline naive Frankenstein profiles caught primarily by Tier 1 barcode & SSA checksum rules.",
-      "executed_at": "2026-08-19T00:14:16.878322+00:00"
+      "executed_at": "2026-08-19T00:26:16.836966+00:00"
     },
     {
       "cycle_index": 1,
@@ -81,7 +81,7 @@
         "ID-507BB15D"
       ],
       "cycle_summary": "Structural parity mutations (PDF417 repair, regional anchor alignment) bypassed Tier 1, raising evasion.",
-      "executed_at": "2026-08-19T00:14:16.890985+00:00"
+      "executed_at": "2026-08-19T00:26:16.849776+00:00"
     },
     {
       "cycle_index": 2,
@@ -132,7 +132,7 @@
         "ID-8157F45A"
       ],
       "cycle_summary": "Deep forensic camouflage (iPhone EXIF, seasoned adult anchors, aged MNO endpoints) bypassed static rules.",
-      "executed_at": "2026-08-19T00:14:16.901384+00:00"
+      "executed_at": "2026-08-19T00:26:16.860543+00:00"
     }
   ]
 }

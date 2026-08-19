@@ -1,10 +1,10 @@
 # Vector B — Synthetic Transaction & Card-Testing Fidelity Comparison Report
 
 **Document Version:** `1.0.0`  
-**Generated At:** `2026-08-19T00:13:38.142783+00:00`  
+**Generated At:** `2026-08-19T00:25:35.793415+00:00`  
 **Batch ID:** `batch_txn_v1_seed42_n1000` (`1000` records, `824` sequences)  
 **Evaluation Standard:** Empirical Ground-Truth Baseline ([data/PROFILING_REPORT.md](file:///Users/sanjaywaradkar/TRIAD/data/PROFILING_REPORT.md) & [data/profiling_summary.json](file:///Users/sanjaywaradkar/TRIAD/data/profiling_summary.json))  
-**Macro Fidelity Score:** `0.8693` / `1.0000`
+**Macro Fidelity Score:** `0.8738` / `1.0000`
 
 ---
 
@@ -14,11 +14,11 @@ This report compares the synthetic Vector B transaction batch directly against t
 
 | Similarity Dimension | Metric / Statistical Test | Computed Value | Interpretation & Benchmark Target |
 | :--- | :--- | :--- | :--- |
-| **Overall Macro Fidelity** | Composite Weighted Index | **`0.8693`** | **High Fidelity** (>= 0.8500) |
+| **Overall Macro Fidelity** | Composite Weighted Index | **`0.8738`** | **High Fidelity** (>= 0.8500) |
 | **Amount Distribution Distance** | Wasserstein Distance ($W_1$) | **`7.9838`** | Close geometric profile alignment ($< 15.0$) |
 | **Amount 2-Sample Goodness** | Kolmogorov-Smirnov Stat ($D_{KS}$) | **`0.0585`** | Minimal maximum vertical CDF divergence ($< 0.15$) |
 | **ProductCD Channel Divergence**| Jensen-Shannon Divergence ($JSD$) | **`0.1128`** | Excellent categorical alignment ($< 0.10$) |
-| **Card Network Scheme Divergence**| Jensen-Shannon Divergence ($JSD$) | **`0.0521`** | Network scheme market share parity ($< 0.10$) |
+| **Card Network Scheme Divergence**| Jensen-Shannon Divergence ($JSD$) | **`0.0224`** | Network scheme market share parity ($< 0.10$) |
 | **Integer Amount Conservation** | Integer % Synthetic vs Real | **`52.00%` vs `51.65%`** | Empirical rounding artifacts preserved |
 | **Account Drain Conservation** | Exact Drain % Synthetic vs Real | **`100.00%` vs `97.82%`** | PaySim dual-ledger drain physics preserved |
 
@@ -88,9 +88,9 @@ This report compares the synthetic Vector B transaction batch directly against t
 | Card Network Scheme | Real IEEE-CIS Market Share (%) | Vector B Synthetic Share (%) | Share Delta (%) |
 | :--- | :--- | :--- | :--- |
 | **`visa`** | `65.16%` | `64.50%` | `-0.66%` |
-| **`mastercard`** | `32.04%` | `30.20%` | `-1.84%` |
-| **`discover`** | `1.13%` | `2.70%` | `+1.57%` |
-| **`american express`** | `1.41%` | `2.60%` | `+1.19%` |
+| **`mastercard`** | `32.04%` | `32.60%` | `+0.56%` |
+| **`discover`** | `1.13%` | `0.80%` | `-0.33%` |
+| **`american express`** | `1.41%` | `2.10%` | `+0.69%` |
 
 ---
 
@@ -139,5 +139,5 @@ This report compares the synthetic Vector B transaction batch directly against t
 
 ## 9. Conclusion & Defensive Handoff (S12 Classifier)
 
-1. **Statistical Fidelity Confirmed**: The Vector B generation engine achieves a composite macro fidelity index of **`0.8693`**, reproducing the empirical median amount (`$65.00` vs `$68.77`), positive skewness, integer rounding frequency, ProductCD channel allocations, and PaySim ledger balance zeroing physics.
+1. **Statistical Fidelity Confirmed**: The Vector B generation engine achieves a composite macro fidelity index of **`0.8738`**, reproducing the empirical median amount (`$65.00` vs `$68.77`), positive skewness, integer rounding frequency, ProductCD channel allocations, and PaySim ledger balance zeroing physics.
 2. **Defensible Separation**: Card-testing attack sequences exhibit mathematically grounded distinctions (inter-arrival compression, decline cascades, rolling velocity surges) suitable for gradient-boosted tree classification in S12.

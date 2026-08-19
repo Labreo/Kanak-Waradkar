@@ -140,7 +140,7 @@ class DataService:
         if vid == "B":
             fid_summary = self._read_json("generate/transaction/fidelity_summary.json")
             if fid_summary:
-                macro_fidelity = fid_summary.get("metadata", {}).get("macro_fidelity_score", 0.8693)
+                macro_fidelity = fid_summary.get("metadata", {}).get("macro_fidelity_score", 0.8738)
 
         loss_prevented = None
         if vid == "C":

@@ -80,7 +80,7 @@ console.assert(shimmerCount === 6, `Expected 6 skeleton-shimmer spans in VectorC
 console.log(`✓ Verified ${shimmerCount} skeleton-shimmer placeholders in VectorCards initial render`);
 
 // Check that no hardcoded numbers appear in initial HTML
-const forbiddenNumbers = ['98.0%', '0.8693', '0.9336', '100.0%'];
+const forbiddenNumbers = ['98.0%', '0.8693', '0.8738', '0.9336', '100.0%'];
 for (const num of forbiddenNumbers) {
   console.assert(!initialCardHtml.includes(num), `Found forbidden hardcoded number "${num}" in initial VectorCards render!`);
 }
@@ -118,7 +118,7 @@ const mockFullContainer = {
   }
 };
 
-// Case 1: Partial summaries (missing fields should produce skeleton-shimmer, NOT 98.0% or 0.8693)
+// Case 1: Partial summaries (missing fields should produce skeleton-shimmer, NOT 98.0% or 0.8738)
 updateVectorCardsData(mockFullContainer, [
   { vector_id: 'A' },
   { vector_id: 'B' },
@@ -128,7 +128,7 @@ updateVectorCardsData(mockFullContainer, [
 console.assert(gridA.innerHTML.includes('skeleton-shimmer'), 'Vector A with undefined metrics must show skeleton-shimmer');
 console.assert(!gridA.innerHTML.includes('98.0%'), 'Vector A must NOT show fallback 98.0%');
 console.assert(gridB.innerHTML.includes('skeleton-shimmer'), 'Vector B with undefined metrics must show skeleton-shimmer');
-console.assert(!gridB.innerHTML.includes('0.8693'), 'Vector B must NOT show fallback 0.8693');
+console.assert(!gridB.innerHTML.includes('0.8738'), 'Vector B must NOT show fallback 0.8738');
 console.assert(!gridB.innerHTML.includes('0.9336'), 'Vector B must NOT show fallback 0.9336');
 console.assert(gridC.innerHTML.includes('skeleton-shimmer'), 'Vector C with undefined metrics must show skeleton-shimmer');
 console.log('✓ Verified updateVectorCardsData with missing/undefined fields preserves skeleton-shimmer');
@@ -136,14 +136,14 @@ console.log('✓ Verified updateVectorCardsData with missing/undefined fields pr
 // Case 2: Live summaries
 updateVectorCardsData(mockFullContainer, [
   { vector_id: 'A', current_defense_recall: 1.0, total_batch_samples: 500 },
-  { vector_id: 'B', current_defense_auc: 0.93358, macro_fidelity: 0.8693 },
+  { vector_id: 'B', current_defense_auc: 0.93358, macro_fidelity: 0.8738 },
   { vector_id: 'C', current_defense_recall: 1.0, loss_prevented: '$0.00' }
 ]);
 
 console.assert(gridA.innerHTML.includes('100.0%'), 'Vector A should display 100.0%');
 console.assert(gridA.innerHTML.includes('500'), 'Vector A should display 500');
 console.assert(gridB.innerHTML.includes('0.9336'), 'Vector B should display 0.9336');
-console.assert(gridB.innerHTML.includes('0.8693'), 'Vector B should display 0.8693');
+console.assert(gridB.innerHTML.includes('0.8738'), 'Vector B should display 0.8738');
 console.assert(gridC.innerHTML.includes('100.0%'), 'Vector C should display 100.0%');
 console.assert(gridC.innerHTML.includes('$0.00'), 'Vector C should display $0.00');
 console.log('✓ Verified updateVectorCardsData with live data populates live metrics correctly');

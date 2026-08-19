@@ -1,18 +1,18 @@
 {
   "metadata": {
     "batch_id": "batch_txn_v1_seed42_n1000",
-    "generated_at": "2026-08-16T23:18:32.283894+00:00",
-    "scored_at": "2026-08-19T00:13:38.142783+00:00",
+    "generated_at": "2026-08-19T00:21:55.387778+00:00",
+    "scored_at": "2026-08-19T00:25:35.793415+00:00",
     "total_records": 1000,
     "total_sequences": 824,
-    "macro_fidelity_score": 0.8693
+    "macro_fidelity_score": 0.8738
   },
   "similarity_metrics": {
     "wasserstein_distance_amount": 7.9838,
     "ks_statistic_amount": 0.0585,
     "ks_pvalue_amount": 0.003834,
     "jsd_product_cd": 0.1128,
-    "jsd_card4_network": 0.0521,
+    "jsd_card4_network": 0.0224,
     "integer_amount_share_pct": 52.0,
     "real_integer_amount_share_pct": 51.65
   },
@@ -180,22 +180,22 @@
       "share_delta_pct": -0.66
     },
     "mastercard": {
-      "synthetic_count": 302,
-      "synthetic_share_pct": 30.2,
+      "synthetic_count": 326,
+      "synthetic_share_pct": 32.6,
       "real_share_pct": 32.04,
-      "share_delta_pct": -1.84
+      "share_delta_pct": 0.56
     },
     "discover": {
-      "synthetic_count": 27,
-      "synthetic_share_pct": 2.7,
+      "synthetic_count": 8,
+      "synthetic_share_pct": 0.8,
       "real_share_pct": 1.13,
-      "share_delta_pct": 1.57
+      "share_delta_pct": -0.33
     },
     "american express": {
-      "synthetic_count": 26,
-      "synthetic_share_pct": 2.6,
+      "synthetic_count": 21,
+      "synthetic_share_pct": 2.1,
       "real_share_pct": 1.41,
-      "share_delta_pct": 1.19
+      "share_delta_pct": 0.69
     }
   },
   "timing_dynamics": {

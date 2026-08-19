@@ -125,7 +125,7 @@ export class VectorBDashboard {
                   </div>
                   <div class="hist-metric-col" style="text-align:right;">
                     <span class="hist-metric-label">DISTRIBUTION SIMILARITY (JS DIVERGENCE)</span>
-                    <span class="mono-data accent-cyan" style="font-size:18px; font-weight:800;">0.8693 MACRO FIDELITY</span>
+                    <span class="mono-data accent-cyan" style="font-size:18px; font-weight:800;">0.8738 MACRO FIDELITY</span>
                   </div>
                 </div>
 
@@ -820,7 +820,7 @@ export class VectorBDashboard {
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">MACRO FIDELITY</span>
-        <span class="stat-tile-val mono-data accent-amber">0.8693</span>
+        <span class="stat-tile-val mono-data accent-amber">0.8738</span>
       </div>
     `;
   }

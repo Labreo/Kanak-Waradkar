@@ -1,5 +1,5 @@
 # Project TRIAD — Closed-Loop Adversarial AI for Payment Fraud Defense
-### Team Black Hat Jr · Mastercard "AI Defence Lab for Payment Security" · Global Fintech Fest (GFF) 2026
+### Kanak Sanjay Waradkar · Mastercard "AI Defence Lab for Payment Security" · Global Fintech Fest (GFF) 2026
 
 [![Python 3.12](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-1.0.0-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
@@ -137,7 +137,7 @@ All metrics reported below are extracted directly from committed, reproducible e
 ### 5.3 Generate Pillar Statistical Fidelity Scores
 
 - **Vector A Statistical Plausibility:** Macro template alignment score of **0.8453**, national ID format validity of **100.0%**, and realistic forensic artifacts matching real camera hardware vs synthetic generators.
-- **Vector B Distributional Alignment:** Wasserstein distance of **7.98** on transaction amounts against 590,540 real IEEE-CIS records; Jensen-Shannon Divergence (JSD) of **0.0521** on card network distributions; integer amount share delta of **+0.35%** vs ground truth.
+- **Vector B Distributional Alignment:** Wasserstein distance of **7.98** on transaction amounts against 590,540 real IEEE-CIS records; Jensen-Shannon Divergence (JSD) of **0.0224** on card network distributions; integer amount share delta of **+0.35%** vs ground truth.
 
 ---
 
@@ -349,9 +349,9 @@ TRIAD/
 
 ---
 
-## 👥 11. Team & Acknowledgments
+## 👤 11. Author & Acknowledgments
 
-- **Team:** Black Hat Jr
+- **Author / Participant:** Kanak Sanjay Waradkar (Solo Submission)
 - **Challenge:** Mastercard "AI Defence Lab for Payment Security"
 - **Event:** Global Fintech Fest (GFF) 2026
 - **Datasets:** IEEE Computational Intelligence Society Fraud Detection Benchmark & PaySim Synthetic Financial Dataset (Blekinge Institute of Technology).

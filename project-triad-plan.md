@@ -1,5 +1,5 @@
 # Project TRIAD — Closed-Loop Adversarial AI for Payment Fraud Defense
-### Team Black Hat Jr · Mastercard "AI Defence Lab for Payment Security" · GFF 2026
+### Kanak Sanjay Waradkar · Mastercard "AI Defence Lab for Payment Security" · GFF 2026
 
 > One-liner: *A single closed-loop system that identifies emerging GenAI fraud vectors targeting payments, generates high-fidelity simulated attacks across those vectors, and defends against them in real time — with detections feeding back to make the next generated attack harder.*
 
@@ -122,13 +122,13 @@ Copied verbatim from the brief, turned into a literal checklist. This is the act
 
 | Agent | What it produces | Base technique | Output |
 |---|---|---|---|
-| **Identity/KYC Agent** | Synthetic identity docs + deepfake KYC clips | Document-template generation (forgery patterns from published document-forensics research) + face-swap/synthetic-face pipeline using **non-real, generated or team-consented faces only** (see §9 guardrails) | Labeled image/video + doc set |
+| **Identity/KYC Agent** | Synthetic identity docs + deepfake KYC clips | Document-template generation (forgery patterns from published document-forensics research) + face-swap/synthetic-face pipeline using **non-real, generated or consented faces only** (see §9 guardrails) | Labeled image/video + doc set |
 | **Storefront Agent** | Fake merchant sites, product catalogs, business docs | LLM-scripted storefront content generation, templated business registration docs | Labeled HTML/JSON storefront bundles |
 | **Scam-Script Agent** | Phishing messages, scam call/chat transcripts | LLM prompted against synthetic "victim profiles" (never real people's data) | Labeled text/transcript corpus |
 
 ### Fidelity checks (this is what "fidelity of simulated attacks" is graded on)
 - Compare distribution of synthetic vs. any public reference fraud dataset stats (transaction timing, amount distributions, document field patterns) — show a similarity metric, don't just assert it
-- Have a teammate blind-review a sample of generated vs. reference "real" examples — report the mistake rate
+- Perform a blind-review of a sample of generated vs. reference "real" examples — report the mistake rate
 
 ### Deliverable
 - [ ] `generate/{identity,storefront,scam}/` — one runnable agent per vector, CLI: `generate.py --vector X --n 500 --seed 42`
@@ -195,7 +195,7 @@ Build this last, once real numbers exist — don't pre-write efficacy claims.
 4. **Defend** — architecture + metrics table from §5, confusion matrices
 5. **The Loop** — the evasion-rate-over-cycles chart, explained as the novelty claim
 6. **Real-world feasibility** — talking points below
-7. **Team & roles**
+7. **Author & role**
 
 ### 8.1 Real-world feasibility talking points (map directly to the judged criterion)
 - Latency: tier-1 rule checks resolve most legitimate traffic in milliseconds; only ambiguous cases hit the heavier models — state actual measured latency numbers
@@ -207,7 +207,7 @@ Build this last, once real numbers exist — don't pre-write efficacy claims.
 
 ## 9. Ethical & Compliance Guardrails (non-negotiable, keep this in the repo README too)
 
-- All generated identities, faces, and documents are **synthetic or team-consented** — never a real, named individual. No impersonation of real public figures, real banks, or real Mastercard branding in generated storefronts/phishing content.
+- All generated identities, faces, and documents are **synthetic or consented** — never a real, named individual. No impersonation of real public figures, real banks, or real Mastercard branding in generated storefronts/phishing content.
 - No real PII of any kind (no scraped real breach data, no real cardholder data) — synthetic profiles only, clearly labeled as such in code and data files.
 - Generated phishing/scam content is never sent to real recipients or real infrastructure — everything stays inside the sandboxed demo environment.
 - No real merchant, real domain, or real payment rail is touched or tested against.
@@ -216,14 +216,11 @@ Build this last, once real numbers exist — don't pre-write efficacy claims.
 
 ---
 
-## 10. Team Roles
+## 10. Project Role & Ownership
 
-| Person | Primary Pillar | Notes |
+| Person | Primary Role | Notes |
 |---|---|---|
-| Kanak Waradkar | Lead + Defend (fusion engine) | Owns the loop mechanism end-to-end |
-| Abdullah Mukadam | Generate (agents + infra) | Owns generation pipelines and scaling |
-| Antonio Pinto | Solution walkthrough + feasibility narrative | Owns the story judges actually read/hear |
-| Erika Vaz | Defend (eval/metrics) + QA | Owns the numbers being real and reproducible |
+| Kanak Sanjay Waradkar | Solo Lead (Identify, Generate, Defend, Loop, UI) | Full end-to-end architecture, development, evaluation, and documentation |
 
 ---
 
@@ -274,7 +271,7 @@ Use these as literal go/no-go gates. Don't move to the next pillar until its gat
   - Check for hardcoded localhost URLs or API keys before deploy
 
 ### Gate 6 — Final Submission
-- **Manual:** Go through §1.1–§1.4 checklists literally, one box at a time, with a teammate watching over your shoulder. Confirm the writeup deadline one more time before you stop working.
+- **Manual:** Go through §1.1–§1.4 checklists literally, one box at a time. Confirm the writeup deadline one more time before you stop working.
 - **Automated (agentic IDE):**
   - Fresh-clone the repo into an empty directory and run the documented setup steps exactly as written — if it fails, the "reproducible" requirement fails
   - Confirm README's run instructions match the actual current CLI/entry points (docs drift is the most common last-day failure)
