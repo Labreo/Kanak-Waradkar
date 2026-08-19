@@ -5,12 +5,6 @@ from defend.identity.risk_scorer import (
     RiskVerdict,
     DetectionTier,
 )
-from defend.identity.evaluate import (
-    VectorAEvaluator,
-    EvaluationSummary,
-    ConfusionMatrix,
-    ClassificationMetrics,
-)
 
 __all__ = [
     "VectorARiskScorer",
@@ -23,4 +17,11 @@ __all__ = [
     "ConfusionMatrix",
     "ClassificationMetrics",
 ]
+
+
+def __getattr__(name: str):
+    if name in ("VectorAEvaluator", "EvaluationSummary", "ConfusionMatrix", "ClassificationMetrics"):
+        import defend.identity.evaluate as _eval
+        return getattr(_eval, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 

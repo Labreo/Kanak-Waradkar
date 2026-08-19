@@ -1,7 +1,7 @@
 # Vector A Evaluation & Metrics Report: Synthetic Identity & Document Fraud
 
 **Evaluation Session:** S08 / Adversarial Hardening Pass  
-**Timestamp:** `2026-08-18T01:09:47.221277+00:00`  
+**Timestamp:** `2026-08-19T00:13:31.586984+00:00`  
 **Model Name:** `VectorARiskScorer` (v`1.0.0`)  
 **Baseline Dataset Split:** `held_out_test` (`data/generated/identity_heldout_batch.json`, Seed `2026`)  
 **Adversarial Dataset Split:** `deliberately_adversarial_held_out` (`data/generated/identity_adversarial_heldout_batch.json`, Seed `2027`)  

@@ -6,14 +6,6 @@ for safe simulation and defense of prompt-injection payment hijacking.
 """
 
 from generate.agentic.agent import MockShoppingAgent
-from generate.agentic.generator import (
-    AgenticBatch,
-    AgenticPayload,
-    EvasionTier,
-    InjectionType,
-    PageSpec,
-    VectorCGenerator,
-)
 from generate.agentic.llm_engine import LLMDecision, LLMDecisionEngine
 from generate.agentic.sandbox import (
     AgentStep,
@@ -47,3 +39,10 @@ __all__ = [
     "InjectionType",
     "EvasionTier",
 ]
+
+
+def __getattr__(name: str):
+    if name in ("VectorCGenerator", "AgenticPayload", "AgenticBatch", "PageSpec", "InjectionType", "EvasionTier"):
+        import generate.agentic.generator as _gen
+        return getattr(_gen, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

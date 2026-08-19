@@ -11,11 +11,6 @@ from defend.transaction.classifier import (
     TransactionDecision,
     VectorBClassifier,
 )
-from defend.transaction.evaluate import (
-    ClassificationMetrics,
-    ConfusionMatrixData,
-    VectorBEvaluator,
-)
 
 __all__ = [
     "VectorBClassifier",
@@ -31,3 +26,10 @@ __all__ = [
     "CATEGORICAL_FEATURE_COLS",
     "ALL_FEATURE_COLS",
 ]
+
+
+def __getattr__(name: str):
+    if name in ("VectorBEvaluator", "ConfusionMatrixData", "ClassificationMetrics"):
+        import defend.transaction.evaluate as _eval
+        return getattr(_eval, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

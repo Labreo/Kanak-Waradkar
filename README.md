@@ -6,7 +6,7 @@
 [![Vite](https://img.shields.io/badge/Frontend-Vite%20SPA-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
 [![Docker](https://img.shields.io/badge/Container-Docker%20Compose-2496ED?logo=docker&logoColor=white)](https://docker.com)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Tests: 135 Passed](https://img.shields.io/badge/Tests-135%20Passed-brightgreen.svg)](tests/)
+[![Tests: 145 Passed](https://img.shields.io/badge/Tests-145%20Passed-brightgreen.svg)](tests/)
 
 > **One-Liner:** *A single closed-loop adversarial AI system that identifies emerging GenAI fraud vectors targeting payments, generates high-fidelity simulated attacks across those vectors, and defends against them in real time — with detections feeding back to iteratively mutate and harden the next generated attack batch.*
 
@@ -170,10 +170,13 @@ npm ci
 npm run build
 cd ..
 
-# 5. Run the full automated test suite (135 tests)
+# 5. Run the full automated test suite (145 tests)
 pytest
 
-# 6. Start the unified FastAPI backend server (serves API + SPA)
+# 6. (Optional) Run single-command master reproduction & benchmark verification
+python scripts/reproduce_all.py
+
+# 7. Start the unified FastAPI backend server (serves API + SPA)
 python -m backend.server --host 127.0.0.1 --port 8000
 ```
 
@@ -182,7 +185,14 @@ Open your browser to:
 - **Interactive OpenAPI Swagger Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 - **Health Check API:** [http://127.0.0.1:8000/api/health](http://127.0.0.1:8000/api/health)
 
-### 6.3 Option B: Docker Compose (Single Command)
+### 6.3 Option B: Master Reproduction Script (Single Command)
+
+```bash
+# Run all evaluators, fidelity scorers, closed loop, claim audit, full test suite, and smoke tests
+./scripts/reproduce_all.sh
+```
+
+### 6.4 Option C: Docker Compose (Single Command)
 
 ```bash
 # Build and run the unified containerized stack

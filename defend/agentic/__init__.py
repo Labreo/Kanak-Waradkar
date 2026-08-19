@@ -9,11 +9,6 @@ from defend.agentic.detector import (
     DetectionDecision,
     VectorCDetector,
 )
-from defend.agentic.evaluate import (
-    ClassificationMetrics,
-    ConfusionMatrix,
-    VectorCEvaluator,
-)
 
 __all__ = [
     "VectorCDetector",
@@ -22,3 +17,10 @@ __all__ = [
     "ConfusionMatrix",
     "ClassificationMetrics",
 ]
+
+
+def __getattr__(name: str):
+    if name in ("VectorCEvaluator", "ConfusionMatrix", "ClassificationMetrics"):
+        import defend.agentic.evaluate as _eval
+        return getattr(_eval, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
