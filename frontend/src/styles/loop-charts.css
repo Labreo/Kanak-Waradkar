@@ -118,42 +118,96 @@
   box-shadow: 0 0 8px rgba(95, 216, 208, 0.25);
 }
 
-.run-wave-action-btn {
+.trigger-actions-group {
   display: flex;
+  align-items: flex-end;
+  padding-top: 14px;
+}
+
+.trigger-execute-btn,
+.run-wave-action-btn {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--accent-cyan), #3AA8A0);
-  border: none;
-  color: var(--bg-canvas);
+  padding: 6px 16px;
+  min-height: 30px;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, #2DA69D 100%);
+  border: 1px solid rgba(95, 216, 208, 0.6);
+  color: var(--bg-inset);
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-extrabold);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
   cursor: pointer;
-  box-shadow: var(--shadow-cyan-glow);
-  transition: all var(--transition-fast);
+  box-shadow: 0 0 14px rgba(95, 216, 208, 0.28), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-fast) cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
+  user-select: none;
 }
 
+.trigger-execute-btn:hover:not(:disabled),
 .run-wave-action-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-  box-shadow: 0 0 24px rgba(95, 216, 208, 0.45);
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+  border-color: var(--accent-cyan-hover);
+  box-shadow: 0 0 22px rgba(95, 216, 208, 0.55), 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.run-wave-action-btn:disabled {
-  opacity: 0.6;
+.trigger-execute-btn:active:not(:disabled),
+.run-wave-action-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 0 10px rgba(95, 216, 208, 0.3);
+}
+
+.trigger-execute-btn:focus-visible,
+.run-wave-action-btn:focus-visible {
+  outline: 2px solid var(--accent-cyan-hover);
+  outline-offset: 2px;
+}
+
+.trigger-execute-btn:disabled:not(.running),
+.run-wave-action-btn:disabled:not(.running) {
+  opacity: 0.5;
   cursor: not-allowed;
   background: var(--bg-surface-overlay);
   color: var(--text-muted);
+  border-color: var(--border-default);
   box-shadow: none;
+  transform: none;
 }
 
+.trigger-execute-btn.running,
 .run-wave-action-btn.running {
-  background: var(--accent-cyan-hover);
-  color: var(--bg-canvas);
-  box-shadow: var(--shadow-cyan-glow);
+  background: linear-gradient(135deg, var(--accent-amber) 0%, #D98A20 100%);
+  border-color: rgba(242, 169, 59, 0.7);
+  color: var(--bg-inset);
+  box-shadow: 0 0 20px rgba(242, 169, 59, 0.5);
+  cursor: wait;
+  animation: btnPulse 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes btnPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(242, 169, 59, 0.35);
+  }
+  100% {
+    box-shadow: 0 0 24px rgba(242, 169, 59, 0.7);
+  }
+}
+
+.trigger-execute-btn .btn-icon,
+.run-wave-action-btn .btn-icon {
+  font-size: 10px;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.trigger-execute-btn:hover:not(:disabled) .btn-icon,
+.run-wave-action-btn:hover:not(:disabled) .btn-icon {
+  transform: translateX(1px);
 }
 
 /* Phase Transition Stepper */

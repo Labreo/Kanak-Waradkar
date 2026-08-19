@@ -2,7 +2,7 @@
   "metadata": {
     "batch_id": "batch_txn_v1_seed42_n1000",
     "generated_at": "2026-08-19T00:21:55.387778+00:00",
-    "scored_at": "2026-08-19T00:25:35.793415+00:00",
+    "scored_at": "2026-08-19T15:00:09.469827+00:00",
     "total_records": 1000,
     "total_sequences": 824,
     "macro_fidelity_score": 0.8738

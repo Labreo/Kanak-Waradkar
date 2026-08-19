@@ -47,7 +47,7 @@
     "ID-8157F45A"
   ],
   "cycle_summary": "Deep forensic camouflage (iPhone EXIF, seasoned adult anchors, aged MNO endpoints) bypassed static rules.",
-  "executed_at": "2026-08-19T00:26:16.860543+00:00",
+  "executed_at": "2026-08-19T15:00:40.160906+00:00",
   "raw_batch_count": 50,
   "decisions_count": 50,
   "raw_batch": [
@@ -4531,7 +4531,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859444+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159812+00:00"
     },
     {
       "profile_id": "ID-95D86900",
@@ -4554,7 +4554,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859474+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159842+00:00"
     },
     {
       "profile_id": "ID-97776314",
@@ -4577,7 +4577,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859493+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159859+00:00"
     },
     {
       "profile_id": "ID-04CDFE32",
@@ -4600,7 +4600,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859508+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159873+00:00"
     },
     {
       "profile_id": "ID-778505E1",
@@ -4623,7 +4623,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859524+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159888+00:00"
     },
     {
       "profile_id": "ID-9EEA83B9",
@@ -4646,7 +4646,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859538+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159902+00:00"
     },
     {
       "profile_id": "ID-D33BDDBC",
@@ -4661,7 +4661,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.859551+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159915+00:00"
     },
     {
       "profile_id": "ID-C00EF030",
@@ -4684,7 +4684,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859566+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159930+00:00"
     },
     {
       "profile_id": "ID-10F2D59F",
@@ -4714,7 +4714,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859584+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159946+00:00"
     },
     {
       "profile_id": "ID-BBB39229",
@@ -4828,7 +4828,7 @@
           "impact": 0.25
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859620+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159981+00:00"
     },
     {
       "profile_id": "ID-47AA46A4",
@@ -4858,7 +4858,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859638+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.159998+00:00"
     },
     {
       "profile_id": "ID-0DD2DD95",
@@ -4972,7 +4972,7 @@
           "impact": 0.25
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859702+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160063+00:00"
     },
     {
       "profile_id": "ID-96CCE3EA",
@@ -4995,7 +4995,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859718+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160078+00:00"
     },
     {
       "profile_id": "ID-A75E43BB",
@@ -5074,7 +5074,7 @@
           "impact": 0.25
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859744+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160103+00:00"
     },
     {
       "profile_id": "ID-281FED9E",
@@ -5097,7 +5097,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859759+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160118+00:00"
     },
     {
       "profile_id": "ID-2EA3690C",
@@ -5120,7 +5120,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859772+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160131+00:00"
     },
     {
       "profile_id": "ID-7CCB2A29",
@@ -5143,7 +5143,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859786+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160145+00:00"
     },
     {
       "profile_id": "ID-58C09CBC",
@@ -5158,7 +5158,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.859799+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160157+00:00"
     },
     {
       "profile_id": "ID-F58ABB19",
@@ -5181,7 +5181,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859812+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160170+00:00"
     },
     {
       "profile_id": "ID-673B8C47",
@@ -5196,7 +5196,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.859824+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160182+00:00"
     },
     {
       "profile_id": "ID-910C976C",
@@ -5219,7 +5219,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859839+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160196+00:00"
     },
     {
       "profile_id": "ID-D45688E3",
@@ -5347,7 +5347,7 @@
           "impact": 0.25
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859868+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160225+00:00"
     },
     {
       "profile_id": "ID-8157F45A",
@@ -5362,7 +5362,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.859881+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160237+00:00"
     },
     {
       "profile_id": "ID-787DD737",
@@ -5385,7 +5385,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859894+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160251+00:00"
     },
     {
       "profile_id": "ID-C571D052",
@@ -5400,7 +5400,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.859906+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160263+00:00"
     },
     {
       "profile_id": "ID-C4155A58",
@@ -5430,7 +5430,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859922+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160278+00:00"
     },
     {
       "profile_id": "ID-3E6F4538",
@@ -5453,7 +5453,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859936+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160292+00:00"
     },
     {
       "profile_id": "ID-59E3AC70",
@@ -5476,7 +5476,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859950+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160305+00:00"
     },
     {
       "profile_id": "ID-453588DB",
@@ -5499,7 +5499,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859963+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160319+00:00"
     },
     {
       "profile_id": "ID-2485FA0B",
@@ -5529,7 +5529,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.859979+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160334+00:00"
     },
     {
       "profile_id": "ID-BDD7BA32",
@@ -5544,7 +5544,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.859991+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160346+00:00"
     },
     {
       "profile_id": "ID-329750D9",
@@ -5559,7 +5559,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.860002+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160358+00:00"
     },
     {
       "profile_id": "ID-EFADF018",
@@ -5574,7 +5574,7 @@
         "forensic_document_risk": 0.0
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.860015+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160370+00:00"
     },
     {
       "profile_id": "ID-3C0C7293",
@@ -5709,7 +5709,7 @@
           "impact": 0.25
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860043+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160399+00:00"
     },
     {
       "profile_id": "ID-804FED92",
@@ -5732,7 +5732,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860056+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160413+00:00"
     },
     {
       "profile_id": "ID-AB8561A6",
@@ -5755,7 +5755,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860069+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160425+00:00"
     },
     {
       "profile_id": "ID-491E7235",
@@ -5876,7 +5876,7 @@
           "impact": 0.25
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860099+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160454+00:00"
     },
     {
       "profile_id": "ID-BDAB9F19",
@@ -5899,7 +5899,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860113+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160468+00:00"
     },
     {
       "profile_id": "ID-28B046DA",
@@ -5914,7 +5914,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.860125+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160480+00:00"
     },
     {
       "profile_id": "ID-AE698A50",
@@ -5937,7 +5937,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860139+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160493+00:00"
     },
     {
       "profile_id": "ID-B93F65D3",
@@ -5960,7 +5960,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860152+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160507+00:00"
     },
     {
       "profile_id": "ID-F890E67A",
@@ -5983,7 +5983,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860165+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160519+00:00"
     },
     {
       "profile_id": "ID-58B87B00",
@@ -6006,7 +6006,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860178+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160533+00:00"
     },
     {
       "profile_id": "ID-9592E402",
@@ -6029,7 +6029,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860191+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160545+00:00"
     },
     {
       "profile_id": "ID-F14242B6",
@@ -6052,7 +6052,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860204+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160559+00:00"
     },
     {
       "profile_id": "ID-1E4504F2",
@@ -6067,7 +6067,7 @@
         "forensic_document_risk": 0.15
       },
       "contributing_factors": [],
-      "evaluated_at": "2026-08-19T00:26:16.860216+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160571+00:00"
     },
     {
       "profile_id": "ID-DECAADED",
@@ -6090,7 +6090,7 @@
           "impact": 0.2
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860230+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160584+00:00"
     },
     {
       "profile_id": "ID-37C707DF",
@@ -6113,7 +6113,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860243+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160596+00:00"
     },
     {
       "profile_id": "ID-1688DF6F",
@@ -6199,7 +6199,7 @@
           "impact": 0.25
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860268+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160621+00:00"
     },
     {
       "profile_id": "ID-8B0BCE92",
@@ -6229,7 +6229,7 @@
           "impact": 0.35
         }
       ],
-      "evaluated_at": "2026-08-19T00:26:16.860285+00:00"
+      "evaluated_at": "2026-08-19T15:00:40.160637+00:00"
     }
   ]
 }

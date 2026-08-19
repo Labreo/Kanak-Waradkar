@@ -138,8 +138,9 @@ class LLMDecisionEngine:
                 raw_response=entry.get("raw_response"),
             )
 
-        # 2. Live LLM Call (if API key configured)
-        if self._has_live_llm_credentials():
+        # 2. Live LLM Call (if API key configured and explicitly requested or prefer_offline_cache is False)
+        use_live = (not self.prefer_offline_cache) or (os.environ.get("TRIAD_USE_LIVE_LLM", "").lower() in ("1", "true", "yes"))
+        if use_live and self._has_live_llm_credentials():
             live_decision = self._call_live_llm(task_prompt, page_url, page_title, raw_page_text)
             if live_decision:
                 self._cache[cache_key] = live_decision.to_dict()
