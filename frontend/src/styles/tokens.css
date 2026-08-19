@@ -18,7 +18,7 @@
   --bg-surface-nested: #1F2347;      /* Secondary raised sub-panels, controls, section wells (Layer 3) */
   --bg-surface-overlay: #272D5A;     /* Foreground items, hover states, contrast chips (Layer 4) */
   --bg-surface-highlight: #32396E;   /* High-contrast focus states, modal popovers (Layer 5) */
-  --bg-surface-glass: rgba(20, 23, 50, 0.95); /* Opaque frosted surface protecting against text bleed on scroll */
+  --bg-surface-glass: #141732;       /* 100% Solid opaque surface preventing text/element bleed on scroll */
 
   /* Strict Alert Accent: Warm Amber (#F2A93B) — Strictly for Flagged / Alert / High-Risk / Blocked States */
   --accent-amber: #F2A93B;

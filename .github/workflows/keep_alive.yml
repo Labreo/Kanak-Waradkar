@@ -1,0 +1,24 @@
+name: Keep-Alive Cloud Warmup
+
+on:
+  schedule:
+    # Ping every 10 minutes to prevent Render free-tier cold starts
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  warmup:
+    name: Ping Health Endpoint
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Send Warmup Probe
+        run: |
+          echo "Sending keep-alive probe to Project TRIAD deployment..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}\nTIME_TOTAL:%{time_total}s" https://triad-crgd.onrender.com/api/health)
+          echo "$RESPONSE"
+          if echo "$RESPONSE" | grep -q "HTTP_STATUS:200"; then
+            echo "Deployment is warm and responsive."
+          else
+            echo "Warning: Non-200 response or instance waking up."
+          fi
