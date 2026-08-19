@@ -55,5 +55,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD curl -f http://127.0.0.1:8000/api/health || exit 1
 
-# Start unified FastAPI server
-CMD ["python", "-m", "backend.server", "--host", "0.0.0.0", "--port", "8000"]
+# Start unified FastAPI server (binds dynamically to $PORT or default 8000)
+CMD ["sh", "-c", "python -m backend.server --host 0.0.0.0 --port ${PORT:-8000}"]
