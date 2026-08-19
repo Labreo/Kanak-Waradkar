@@ -180,10 +180,12 @@ python scripts/reproduce_all.py
 python -m backend.server --host 127.0.0.1 --port 8000
 ```
 
-Open your browser to:
-- **Interactive UI Dashboard:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
-- **Interactive OpenAPI Swagger Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **Health Check API:** [http://127.0.0.1:8000/api/health](http://127.0.0.1:8000/api/health)
+- **Live 24/7 Cloud Deployment:** [https://triad-crgd.onrender.com](https://triad-crgd.onrender.com)
+- **Live OpenAPI Swagger Docs:** [https://triad-crgd.onrender.com/docs](https://triad-crgd.onrender.com/docs)
+- **Live Health Check API:** [https://triad-crgd.onrender.com/api/health](https://triad-crgd.onrender.com/api/health)
+- **Local Dashboard:** [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- **Local Swagger Docs:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- **Local Health Check:** [http://127.0.0.1:8000/api/health](http://127.0.0.1:8000/api/health)
 
 ### 6.3 Option B: Master Reproduction Script (Single Command)
 

@@ -5,7 +5,7 @@
 **Date:** `2026-08-17`  
 **Author:** Kanak Sanjay Waradkar (Solo Submission)
 **Repository:** [https://github.com/Labreo/TRIAD](https://github.com/Labreo/TRIAD)  
-**Live Prototype & Edge Endpoint:** [https://cycles-warned-participation-oliver.trycloudflare.com](https://cycles-warned-participation-oliver.trycloudflare.com)  
+**Live Prototype & Permanent Cloud Endpoint:** [https://triad-crgd.onrender.com](https://triad-crgd.onrender.com)  
 
 ---
 
