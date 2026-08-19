@@ -26,6 +26,8 @@ class VectorSummary(BaseModel):
     latest_loop_evasion_rate: Optional[float] = Field(None, description="Latest loop cycle evasion rate")
     loop_adversarial_gain: bool = Field(False, description="Whether evasion rate gains were verified")
     total_batch_samples: int = Field(..., description="Number of baseline generated samples")
+    macro_fidelity: Optional[float] = Field(None, description="Vector B Macro Fidelity score")
+    loss_prevented: Optional[str] = Field(None, description="Vector C loss prevented indicator")
 
 
 class VectorOverviewResponse(BaseModel):
@@ -40,6 +42,7 @@ class VectorOverviewResponse(BaseModel):
     baseline_metrics: Dict[str, Any]
     loop_summary: Dict[str, Any]
     verdict_breakdown: Dict[str, int]
+    burst_sequences: Optional[List[Dict[str, Any]]] = None
 
 
 class LoopTriggerRequest(BaseModel):

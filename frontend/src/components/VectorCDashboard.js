@@ -25,8 +25,7 @@ export const PRESET_SCENARIOS = {
     sub_scores: {
       concealment_risk: 1.0,
       imperative_override_risk: 0.95,
-      parameter_divergence_risk: 1.0,
-      invoice_poisoning_risk: 0.0
+      parameter_divergence_risk: 1.0
     },
     contributing_factors: ["concealed_directive_html_comment", "parameter_divergence_recipient", "parameter_divergence_amount"],
     artifact: {
@@ -88,8 +87,7 @@ export const PRESET_SCENARIOS = {
     sub_scores: {
       concealment_risk: 1.0,
       imperative_override_risk: 0.95,
-      parameter_divergence_risk: 1.0,
-      invoice_poisoning_risk: 0.0
+      parameter_divergence_risk: 1.0
     },
     contributing_factors: ["concealed_directive_css_hidden", "parameter_divergence_recipient", "parameter_divergence_amount"],
     artifact: {
@@ -151,8 +149,7 @@ export const PRESET_SCENARIOS = {
     sub_scores: {
       concealment_risk: 1.0,
       imperative_override_risk: 0.95,
-      parameter_divergence_risk: 1.0,
-      invoice_poisoning_risk: 0.0
+      parameter_divergence_risk: 1.0
     },
     contributing_factors: ["concealed_directive_markdown_comment", "parameter_divergence_recipient", "parameter_divergence_amount"],
     artifact: {
@@ -214,8 +211,7 @@ export const PRESET_SCENARIOS = {
     sub_scores: {
       concealment_risk: 0.3,
       imperative_override_risk: 0.90,
-      parameter_divergence_risk: 1.0,
-      invoice_poisoning_risk: 1.0
+      parameter_divergence_risk: 1.0
     },
     contributing_factors: ["invoice_pretext_directive", "parameter_divergence_recipient", "parameter_divergence_amount"],
     artifact: {
@@ -275,8 +271,7 @@ export const PRESET_SCENARIOS = {
     sub_scores: {
       concealment_risk: 0.0,
       imperative_override_risk: 0.0,
-      parameter_divergence_risk: 0.0,
-      invoice_poisoning_risk: 0.0
+      parameter_divergence_risk: 0.0
     },
     contributing_factors: [],
     artifact: {
@@ -334,6 +329,7 @@ export class VectorCDashboard {
     this.isRevealed = true;
     this.isSimulating = false;
     this.simulationStep = 0;
+    this.isExploreMode = false;
     
     // Filter and Pagination State
     this.verdictFilter = 'ALL';
@@ -345,11 +341,9 @@ export class VectorCDashboard {
   }
 
   async init() {
-    // 1. Render immediately and populate Scenario 1 synchronously
     this.renderSkeleton();
     this.renderTheater();
 
-    // 2. Hydrate live data in background without showing empty states
     await Promise.all([
       this.loadOverview(),
       this.loadInstances()
@@ -362,7 +356,7 @@ export class VectorCDashboard {
 
     this.container.innerHTML = `
       <div class="vector-view-shell">
-        <!-- Hero Header -->
+        <!-- Hero Header (3 Headline Stats) -->
         <div class="dashboard-hero">
           <div class="dashboard-hero-top">
             <div class="dashboard-hero-left">
@@ -381,19 +375,15 @@ export class VectorCDashboard {
             <div class="dashboard-hero-stats" id="v-c-stats-ribbon">
               <div class="stat-tile">
                 <span class="stat-tile-label">OPERATIONAL RECALL</span>
-                <span class="stat-tile-val mono-data">100.0%</span>
+                <span class="stat-tile-val mono-data accent-cyan"><span class="skeleton-shimmer skeleton-lg" aria-label="Loading..."></span></span>
               </div>
               <div class="stat-tile">
-                <span class="stat-tile-label">WALLET LOSS</span>
-                <span class="stat-tile-val mono-data">$0.00</span>
+                <span class="stat-tile-label">LOSS PREVENTED</span>
+                <span class="stat-tile-val mono-data"><span class="skeleton-shimmer skeleton-lg" aria-label="Loading..."></span></span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">SCAN LATENCY</span>
-                <span class="stat-tile-val mono-data">0.14ms</span>
-              </div>
-              <div class="stat-tile">
-                <span class="stat-tile-label">INJECTIONS CAUGHT</span>
-                <span class="stat-tile-val mono-data accent-cyan">120 / 200</span>
+                <span class="stat-tile-val mono-data accent-cyan">0.14ms</span>
               </div>
             </div>
           </div>
@@ -402,316 +392,314 @@ export class VectorCDashboard {
           <div class="grounding-banner">
             <div class="grounding-banner-left">
               <span class="grounding-pill-tag">AIR-GAPPED SANDBOX GUARDRAIL</span>
-              <span>100% Local Mock Endpoints (<code>mock://</code>) &bull; Zero External Network Sockets &bull; FakeWallet Immutable Ledger</span>
+              <span>100% Local Mock Endpoints (<code>mock://</code>) &bull; Zero External Sockets &bull; FakeWallet Immutable Ledger</span>
             </div>
             <div class="grounding-banner-metrics">
-              <span class="grounding-metric-item">Missed Detections: <strong>0.00% (0 / 120)</strong></span>
-              <span class="grounding-metric-item">False Alarm Rate: <strong>0.00% (0 / 80)</strong></span>
+              <span class="grounding-metric-item">Missed Detections: <strong id="v-c-ground-missed">0.00%</strong></span>
+              <span class="grounding-metric-item">False Alarm Rate: <strong id="v-c-ground-far">0.00%</strong></span>
             </div>
           </div>
         </div>
 
-        <!-- Theater Controls Ribbon -->
-        <div class="theater-controls-ribbon">
-          <div class="scenario-picker-group">
-            <span class="footer-tag" style="font-size:12px; margin-right:4px;">ATTACK SCENARIOS:</span>
-            <button type="button" class="scenario-chip active" data-archetype="HTML_COMMENT" id="scen-html">1. HTML Comment</button>
-            <button type="button" class="scenario-chip" data-archetype="CSS_HIDDEN_ELEMENT" id="scen-css">2. Hidden CSS</button>
-            <button type="button" class="scenario-chip" data-archetype="MARKDOWN_COMMENT" id="scen-md">3. Markdown Delimiter</button>
-            <button type="button" class="scenario-chip" data-archetype="INVOICE_MEMO_POISONING" id="scen-inv">4. AP Invoice Pretext</button>
-            <button type="button" class="scenario-chip" data-archetype="BENCHMARK_LEGITIMATE" id="scen-legit">5. Clean Baseline</button>
+        <!-- Primary Mode: 3-Panel Interactive Theater Stage -->
+        <div id="v-c-primary-stage" class="vector-primary-stage ${this.isExploreMode ? 'hidden-view' : ''}">
+          <!-- Theater Controls Ribbon -->
+          <div class="theater-controls-ribbon">
+            <div class="scenario-picker-group">
+              <span class="footer-tag" style="font-size:12px; margin-right:4px;">ATTACK SCENARIOS:</span>
+              <button type="button" class="scenario-chip active" data-archetype="HTML_COMMENT" id="scen-html">1. HTML Comment</button>
+              <button type="button" class="scenario-chip" data-archetype="CSS_HIDDEN_ELEMENT" id="scen-css">2. Hidden CSS</button>
+              <button type="button" class="scenario-chip" data-archetype="MARKDOWN_COMMENT" id="scen-md">3. Markdown Delimiter</button>
+              <button type="button" class="scenario-chip" data-archetype="INVOICE_MEMO_POISONING" id="scen-inv">4. AP Invoice Pretext</button>
+              <button type="button" class="scenario-chip" data-archetype="BENCHMARK_LEGITIMATE" id="scen-legit">5. Clean Baseline</button>
+            </div>
+
+            <button type="button" class="theater-playback-btn" id="v-c-play-beat-btn">
+              <span id="play-icon" aria-hidden="true">&#9658;</span>
+              <span id="play-text">Simulate Agent Execution Beat</span>
+            </button>
           </div>
 
-          <button type="button" class="theater-playback-btn" id="v-c-play-beat-btn">
-            <span id="play-icon" aria-hidden="true">&#9658;</span>
-            <span id="play-text">Simulate Agent Execution Beat</span>
-          </button>
-        </div>
-
-        <!-- 3-Column Interactive Agent Theater -->
-        <div class="theater-grid" id="v-c-theater-stage">
-          <!-- Column 1: Mock Agent State & Wallet -->
-          <div class="theater-column" id="col-agent-terminal">
-            <div class="panel-header">
-              <div class="panel-title-group">
-                <span class="vector-pill">AGENT</span>
-                <h3 class="panel-title">Mock Procurement Agent</h3>
-              </div>
-              <span class="section-badge" id="v-c-agent-status-badge">STATUS: THREAT INTERCEPTED</span>
-            </div>
-
-            <!-- Agent State Card -->
-            <div class="agent-status-card">
-              <div class="agent-avatar-group">
-                <div class="agent-avatar" aria-hidden="true">&#9881;</div>
-                <div style="display:flex; flex-direction:column; gap:2px;">
-                  <span style="font-weight:700; font-size:13px;">ShoppingAgent_v1</span>
-                  <span class="mono-data" style="font-size:11px; color:var(--text-secondary);">Sandbox Process #4201</span>
+          <!-- 3-Column Interactive Agent Theater -->
+          <div class="theater-grid" id="v-c-theater-stage">
+            <!-- Column 1: Mock Agent State & Wallet -->
+            <div class="theater-column" id="col-agent-terminal">
+              <div class="panel-header">
+                <div class="panel-title-group">
+                  <span class="vector-pill">AGENT</span>
+                  <h3 class="panel-title">Mock Procurement Agent</h3>
                 </div>
+                <span class="section-badge" id="v-c-agent-status-badge">STATUS: THREAT INTERCEPTED</span>
               </div>
-              <span class="threat-badge badge-block" id="agent-security-badge">INTERCEPTED</span>
-            </div>
 
-            <!-- Agent Execution Terminal -->
-            <div class="agent-terminal-box" id="agent-terminal-output">
-              <div class="terminal-line cmd">> ShoppingAgent initialized with prompt: "${s1.artifact.task_prompt}"</div>
-              <div class="terminal-line cmd">> Tool: browse_page("${s1.artifact.page_spec.url}")</div>
-              <div class="terminal-line">> Reading DOM structure & active anchors...</div>
-              <div class="terminal-line warn">! Concealed directive parsed from DOM comments/styles</div>
-              <div class="terminal-line warn">> Pre-execution scanner inspecting candidate ToolCall...</div>
-              <div class="terminal-line intercept">[BLOCKED] PRE-EXECUTION HOOK: execute_payment() intercepted</div>
-              <div class="terminal-line success">[VERIFIED] 100% Simulated Balance Protected. Loss: $0.00</div>
-            </div>
-
-            <!-- Fake Wallet Card -->
-            <div class="wallet-card">
-              <div class="panel-title-group" style="justify-content:space-between; width:100%;">
-                <span style="font-size:12px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">FakeWallet Ledger</span>
-                <span class="wallet-loss-shield" id="wallet-shield">&#10003; 100% PROTECTED</span>
-              </div>
-              <div class="wallet-balance-row">
-                <div>
-                  <span style="font-size:11px; color:var(--text-muted); display:block;">SIMULATED BALANCE</span>
-                  <span class="wallet-val mono-data" id="wallet-balance-val">$500.00</span>
+              <!-- Agent State Card -->
+              <div class="agent-status-card">
+                <div class="agent-avatar-group">
+                  <div class="agent-avatar" aria-hidden="true">&#9881;</div>
+                  <div style="display:flex; flex-direction:column; gap:2px;">
+                    <span style="font-weight:700; font-size:13px;">ShoppingAgent_v1</span>
+                    <span class="mono-data" style="font-size:11px; color:var(--text-secondary);">Sandbox Process #4201</span>
+                  </div>
                 </div>
-                <div style="text-align:right;">
-                  <span style="font-size:11px; color:var(--text-muted); display:block;">UNAUTHORIZED DRAIN</span>
-                  <span class="mono-data" style="color:var(--status-allow); font-weight:700; font-size:15px;" id="wallet-drain-val">$0.00</span>
+                <span class="threat-badge badge-block" id="agent-security-badge">INTERCEPTED</span>
+              </div>
+
+              <!-- Agent Execution Terminal -->
+              <div class="agent-terminal-box" id="agent-terminal-output">
+                <div class="terminal-line cmd">> ShoppingAgent initialized with prompt: "${s1.artifact.task_prompt}"</div>
+                <div class="terminal-line cmd">> Tool: browse_page("${s1.artifact.page_spec.url}")</div>
+                <div class="terminal-line">> Reading DOM structure & active anchors...</div>
+                <div class="terminal-line warn">! Concealed directive parsed from DOM comments/styles</div>
+                <div class="terminal-line warn">> Pre-execution scanner inspecting candidate ToolCall...</div>
+                <div class="terminal-line intercept">[BLOCKED] PRE-EXECUTION HOOK: execute_payment() intercepted</div>
+                <div class="terminal-line success">[VERIFIED] 100% Simulated Balance Protected. Loss: $0.00</div>
+              </div>
+
+              <!-- Fake Wallet Card -->
+              <div class="wallet-card">
+                <div class="panel-title-group" style="justify-content:space-between; width:100%;">
+                  <span style="font-size:12px; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">FakeWallet Ledger</span>
+                  <span class="wallet-loss-shield" id="wallet-shield">&#10003; 100% PROTECTED</span>
+                </div>
+                <div class="wallet-balance-row">
+                  <div>
+                    <span style="font-size:11px; color:var(--text-muted); display:block;">SIMULATED BALANCE</span>
+                    <span class="wallet-val mono-data" id="wallet-balance-val">$500.00</span>
+                  </div>
+                  <div style="text-align:right;">
+                    <span style="font-size:11px; color:var(--text-muted); display:block;">UNAUTHORIZED DRAIN</span>
+                    <span class="mono-data" style="color:var(--status-allow); font-weight:700; font-size:15px;" id="wallet-drain-val">$0.00</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Column 2: Browser Viewport & Concealed Reveal -->
-          <div class="theater-column" id="col-browser-viewport">
-            <div class="panel-header">
-              <div class="panel-title-group">
-                <span class="vector-pill">DOM</span>
-                <h3 class="panel-title">Mock Web Viewport &amp; Payload Reveal</h3>
-              </div>
-              <div class="reveal-toggle-bar">
-                <button type="button" class="reveal-switch-btn active" id="v-c-reveal-toggle">
-                  <span aria-hidden="true">&#128065;</span>
-                  <span>Reveal Concealed Directives</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Mock Browser Window Frame -->
-            <div class="browser-viewport-frame">
-              <div class="browser-header-bar">
-                <div class="traffic-dots">
-                  <span class="dot dot-red"></span>
-                  <span class="dot dot-yellow"></span>
-                  <span class="dot dot-green"></span>
+            <!-- Column 2: Browser Viewport & Concealed Reveal -->
+            <div class="theater-column" id="col-browser-viewport">
+              <div class="panel-header">
+                <div class="panel-title-group">
+                  <span class="vector-pill">DOM</span>
+                  <h3 class="panel-title">Mock Web Viewport &amp; Payload Reveal</h3>
                 </div>
-                <div class="browser-url-input">
-                  <span class="browser-url-icon" aria-hidden="true">&#128274;</span>
-                  <span class="mono-data" id="browser-url-text">${s1.artifact.page_spec.url}</span>
+                <div class="reveal-toggle-bar">
+                  <button type="button" class="reveal-switch-btn active" id="v-c-reveal-toggle">
+                    <span aria-hidden="true">&#128065;</span>
+                    <span>Reveal Concealed Directives</span>
+                  </button>
                 </div>
               </div>
 
-              <!-- Webpage Content Body -->
-              <div class="browser-page-body" id="browser-page-content">
-                <div class="product-store-card">
-                  <div class="product-title-row">
-                    <div>
-                      <h4 class="product-name">${s1.artifact.page_spec.title}</h4>
-                      <div class="product-meta-row" style="margin-top:4px;">
-                        <span>Seller: <strong>${s1.artifact.ground_truth.original_intended_merchant}</strong></span>
-                        <span>&bull;</span>
-                        <span style="color:var(--status-allow); font-weight:600;">&#10003; Verified Catalog Item</span>
+              <!-- Mock Browser Window Frame -->
+              <div class="browser-viewport-frame">
+                <div class="browser-header-bar">
+                  <div class="traffic-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                  </div>
+                  <div class="browser-url-input">
+                    <span class="browser-url-icon" aria-hidden="true">&#128274;</span>
+                    <span class="mono-data" id="browser-url-text">${s1.artifact.page_spec.url}</span>
+                  </div>
+                </div>
+
+                <!-- Webpage Content Body -->
+                <div class="browser-page-body" id="browser-page-content">
+                  <div class="product-store-card">
+                    <div class="product-title-row">
+                      <div>
+                        <h4 class="product-name">${s1.artifact.page_spec.title}</h4>
+                        <div class="product-meta-row" style="margin-top:4px;">
+                          <span>Seller: <strong>${s1.artifact.ground_truth.original_intended_merchant}</strong></span>
+                          <span>&bull;</span>
+                          <span style="color:var(--status-allow); font-weight:600;">&#10003; Verified Catalog Item</span>
+                        </div>
+                      </div>
+                      <span class="product-price-tag mono-data">$29.50</span>
+                    </div>
+
+                    <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
+                      ${s1.artifact.page_spec.text_content}
+                    </p>
+
+                    <!-- The Concealed Payload Container -->
+                    <div class="concealed-payload-container revealed" id="concealed-box">
+                      <div class="concealment-header-tag">
+                        <span>&#9888; CONCEALED INJECTION DIRECTIVE (HTML_COMMENT)</span>
+                        <span>REVEALED IN DOM</span>
+                      </div>
+                      <div class="concealed-text-content mono-data">
+                        ${rawPayload}
                       </div>
                     </div>
-                    <span class="product-price-tag mono-data">$29.50</span>
-                  </div>
 
-                  <p style="font-size:12px; color:var(--text-secondary); line-height:1.5;">
-                    ${s1.artifact.page_spec.text_content}
-                  </p>
-
-                  <!-- The Concealed Payload Container -->
-                  <div class="concealed-payload-container revealed" id="concealed-box">
-                    <div class="concealment-header-tag">
-                      <span>&#9888; CONCEALED INJECTION DIRECTIVE (HTML_COMMENT)</span>
-                      <span>REVEALED IN DOM</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                      <button type="button" class="product-buy-btn">Purchase via Agent ($29.50)</button>
+                      <span class="mono-data" style="font-size:11px; color:var(--text-muted);">DOM Node Count: 14</span>
                     </div>
-                    <div class="concealed-text-content mono-data">
-                      ${rawPayload}
-                    </div>
-                  </div>
-
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-                    <button type="button" class="product-buy-btn">Purchase via Agent ($29.50)</button>
-                    <span class="mono-data" style="font-size:11px; color:var(--text-muted);">DOM Node Count: 14</span>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <!-- Column 3: Simplified Pre-Execution Defense Scanner HUD (3 Key Signals) -->
+            <div class="theater-column" id="col-defense-hud">
+              <div class="panel-header">
+                <div class="panel-title-group">
+                  <span class="vector-pill">DEFEND</span>
+                  <h3 class="panel-title">Pre-Execution Scanner HUD</h3>
+                </div>
+                <span class="section-badge mono-data">0.14ms INTERCEPT</span>
+              </div>
+
+              <!-- Decision Shield HUD -->
+              <div class="decision-shield-hud blocked" id="decision-hud-box">
+                <div>
+                  <span style="font-size:11px; color:var(--text-muted); text-transform:uppercase; display:block;">PRE-TOOL ENFORCEMENT</span>
+                  <span class="decision-main-title" id="decision-hud-text">HARD BLOCKED</span>
+                </div>
+                <div style="text-align:right;">
+                  <span style="font-size:11px; color:var(--text-muted); display:block;">CONFIDENCE</span>
+                  <span class="mono-data" style="font-size:18px; font-weight:800; color:var(--text-primary);" id="decision-confidence-val">1.000</span>
+                </div>
+              </div>
+
+              <!-- Parameter Divergence Box (Signal 1 & Core Evidence) -->
+              <div class="divergence-box" id="divergence-inspector">
+                <div class="section-head-mini">
+                  <span style="color:var(--accent-amber);">Parameter Divergence Detection</span>
+                  <span class="section-badge">TOOL HIJACK</span>
+                </div>
+                <div class="divergence-row">
+                  <div>
+                    <span style="color:var(--text-muted); font-size:10px; display:block;">INTENDED RECIPIENT</span>
+                    <span class="divergence-intended mono-data" id="div-intended-rec">merchant_aerosound_991</span>
+                  </div>
+                  <span class="divergence-arrow" aria-hidden="true">&rarr;</span>
+                  <div style="text-align:right;">
+                    <span style="color:var(--text-muted); font-size:10px; display:block;">ROGUE RECIPIENT</span>
+                    <span class="divergence-hijacked mono-data" id="div-hijacked-rec">rogue_acquirer_909</span>
+                  </div>
+                </div>
+                <div class="divergence-row">
+                  <div>
+                    <span style="color:var(--text-muted); font-size:10px; display:block;">CATALOG PRICE</span>
+                    <span class="divergence-intended mono-data" id="div-intended-amt">$29.50</span>
+                  </div>
+                  <span class="divergence-arrow" aria-hidden="true">&rarr;</span>
+                  <div style="text-align:right;">
+                    <span style="color:var(--text-muted); font-size:10px; display:block;">INFLATED AMOUNT</span>
+                    <span class="divergence-hijacked mono-data" id="div-hijacked-amt">$248.49</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Simplified 3 Decision-Relevant Signals HUD -->
+              <div class="sub-scores-list" id="sub-scores-container" style="display:flex; flex-direction:column; gap:var(--space-2);">
+                <div class="sub-score-tile">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="sub-score-label" style="font-weight:700; color:var(--text-primary);">1. Concealment Risk</span>
+                    <span class="sub-score-num mono-data accent-amber" id="sub-conceal-num">1.00</span>
+                  </div>
+                  <div class="sub-score-bar-track" style="height:6px; margin-top:3px;"><div class="sub-score-bar-fill" id="sub-conceal-bar" style="width:100%"></div></div>
+                </div>
+                <div class="sub-score-tile">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="sub-score-label" style="font-weight:700; color:var(--text-primary);">2. Imperative Override Verbs</span>
+                    <span class="sub-score-num mono-data accent-amber" id="sub-override-num">0.95</span>
+                  </div>
+                  <div class="sub-score-bar-track" style="height:6px; margin-top:3px;"><div class="sub-score-bar-fill" id="sub-override-bar" style="width:95%"></div></div>
+                </div>
+                <div class="sub-score-tile">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span class="sub-score-label" style="font-weight:700; color:var(--text-primary);">3. Parameter Divergence</span>
+                    <span class="sub-score-num mono-data accent-cyan" id="sub-param-num">1.00</span>
+                  </div>
+                  <div class="sub-score-bar-track" style="height:6px; margin-top:3px;"><div class="sub-score-bar-fill" id="sub-param-bar" style="width:100%"></div></div>
+                </div>
+              </div>
+
+              <!-- Explainability Diagnostic -->
+              <div class="narrative-box" id="v-c-narrative-box">
+                <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-size:11px; font-weight:700; letter-spacing:var(--tracking-wide);">PRE-EXECUTION DEFENSE INTERCEPT</strong>
+                <span id="v-c-narrative-text">${s1.primary_risk_driver}</span>
               </div>
             </div>
           </div>
 
-          <!-- Column 3: Pre-Execution Defense Scanner HUD -->
-          <div class="theater-column" id="col-defense-hud">
-            <div class="panel-header">
-              <div class="panel-title-group">
-                <span class="vector-pill">DEFEND</span>
-                <h3 class="panel-title">Pre-Execution Scanner HUD</h3>
-              </div>
-              <span class="section-badge mono-data">0.14ms INTERCEPT</span>
+          <!-- Explore the Data Action Bar -->
+          <div class="explore-action-bar">
+            <div class="explore-action-desc">
+              <span class="mono-data accent-cyan">200 PAYLOADS EVALUATED</span>
+              <span>&bull; Full adversarial batch covering HTML comments, CSS concealment, Markdown delimiters, and invoice pretexts</span>
             </div>
-
-            <!-- Decision Shield HUD -->
-            <div class="decision-shield-hud blocked" id="decision-hud-box">
-              <div>
-                <span style="font-size:11px; color:var(--text-muted); text-transform:uppercase; display:block;">PRE-TOOL ENFORCEMENT</span>
-                <span class="decision-main-title" id="decision-hud-text">HARD BLOCKED</span>
-              </div>
-              <div style="text-align:right;">
-                <span style="font-size:11px; color:var(--text-muted); display:block;">CONFIDENCE</span>
-                <span class="mono-data" style="font-size:18px; font-weight:800; color:var(--text-primary);" id="decision-confidence-val">1.000</span>
-              </div>
-            </div>
-
-            <!-- Parameter Divergence Box -->
-            <div class="divergence-box" id="divergence-inspector">
-              <div class="section-head-mini">
-                <span style="color:var(--accent-amber);">Parameter Divergence Inspection</span>
-                <span class="section-badge">TOOL HIJACK</span>
-              </div>
-              <div class="divergence-row">
-                <div>
-                  <span style="color:var(--text-muted); font-size:10px; display:block;">INTENDED RECIPIENT</span>
-                  <span class="divergence-intended mono-data" id="div-intended-rec">merchant_aerosound_991</span>
-                </div>
-                <span class="divergence-arrow" aria-hidden="true">&rarr;</span>
-                <div style="text-align:right;">
-                  <span style="color:var(--text-muted); font-size:10px; display:block;">ROGUE RECIPIENT</span>
-                  <span class="divergence-hijacked mono-data" id="div-hijacked-rec">rogue_acquirer_909</span>
-                </div>
-              </div>
-              <div class="divergence-row">
-                <div>
-                  <span style="color:var(--text-muted); font-size:10px; display:block;">CATALOG PRICE</span>
-                  <span class="divergence-intended mono-data" id="div-intended-amt">$29.50</span>
-                </div>
-                <span class="divergence-arrow" aria-hidden="true">&rarr;</span>
-                <div style="text-align:right;">
-                  <span style="color:var(--text-muted); font-size:10px; display:block;">INFLATED AMOUNT</span>
-                  <span class="divergence-hijacked mono-data" id="div-hijacked-amt">$248.49</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- 4-Axis Threat Radar & Sub-Scores -->
-            <div class="threat-radar-container">
-              <div class="radar-viewport">
-                <svg class="radar-svg" viewBox="0 0 160 160" id="v-c-radar-svg">
-                  <!-- Grid Axes -->
-                  <line class="radar-grid-axis" x1="80" y1="15" x2="80" y2="145" />
-                  <line class="radar-grid-axis" x1="15" y1="80" x2="145" y2="80" />
-                  <!-- Grid Diamond Rings -->
-                  <polygon class="radar-grid-ring" points="80,25 135,80 80,135 25,80" />
-                  <polygon class="radar-threshold-ring" points="80,52.5 107.5,80 80,107.5 52.5,80" />
-                  <!-- Baseline Envelope -->
-                  <polygon class="radar-polygon-baseline" points="80,72 88,80 80,88 72,80" />
-                  <!-- Active Threat Polygon -->
-                  <polygon class="radar-polygon-threat" id="v-c-threat-polygon" points="80,25 132,80 80,25 80,80" />
-                  <!-- Axis Labels -->
-                  <text class="radar-axis-label" x="80" y="10" text-anchor="middle">Concealment</text>
-                  <text class="radar-axis-label" x="148" y="83" text-anchor="start">Override</text>
-                  <text class="radar-axis-label" x="80" y="156" text-anchor="middle">Divergence</text>
-                  <text class="radar-axis-label" x="12" y="83" text-anchor="end">Pretext</text>
-                </svg>
-              </div>
-
-              <div class="sub-scores-list" id="sub-scores-container">
-                <div class="sub-score-tile">
-                  <span class="sub-score-label">Concealment</span>
-                  <div class="sub-score-meter-row">
-                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-conceal-bar" style="width:100%"></div></div>
-                    <span class="sub-score-num mono-data" id="sub-conceal-num">1.00</span>
-                  </div>
-                </div>
-                <div class="sub-score-tile">
-                  <span class="sub-score-label">Override Verbs</span>
-                  <div class="sub-score-meter-row">
-                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-override-bar" style="width:95%"></div></div>
-                    <span class="sub-score-num mono-data" id="sub-override-num">0.95</span>
-                  </div>
-                </div>
-                <div class="sub-score-tile">
-                  <span class="sub-score-label">Param Divergence</span>
-                  <div class="sub-score-meter-row">
-                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-param-bar" style="width:100%"></div></div>
-                    <span class="sub-score-num mono-data" id="sub-param-num">1.00</span>
-                  </div>
-                </div>
-                <div class="sub-score-tile">
-                  <span class="sub-score-label">Invoice Pretext</span>
-                  <div class="sub-score-meter-row">
-                    <div class="sub-score-bar-track"><div class="sub-score-bar-fill" id="sub-inv-bar" style="width:0%"></div></div>
-                    <span class="sub-score-num mono-data" id="sub-inv-num">0.00</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Explainability Box -->
-            <div class="narrative-box" id="v-c-narrative-box">
-              <strong style="color:var(--accent-amber); display:block; margin-bottom:4px; font-size:11px; font-weight:700; letter-spacing:var(--tracking-wide);">PRE-EXECUTION DEFENSE INTERCEPT</strong>
-              <span id="v-c-narrative-text">${s1.primary_risk_driver}</span>
-            </div>
+            <button type="button" class="explore-action-btn" id="v-c-open-explore-btn">
+              <span>Explore all 200 payloads</span>
+              <span aria-hidden="true">&rarr;</span>
+            </button>
           </div>
         </div>
 
-        <!-- 200-Payload Batch Explorer -->
-        <div class="data-feed-card">
-          <div class="panel-header">
-            <div class="panel-title-group">
-              <span class="vector-pill">BATCH</span>
-              <h3 class="panel-title">Vector C Generated Payload Explorer</h3>
-            </div>
-            <span class="section-badge" id="v-c-count-badge">200 PAYLOADS</span>
-          </div>
-
-          <!-- Controls -->
-          <div class="feed-controls-bar">
-            <div class="search-input-wrapper">
-              <span class="search-icon" aria-hidden="true">&#128269;</span>
-              <input type="text" id="v-c-search-input" class="feed-search-input" placeholder="Search by Payload ID, Archetype, Merchant, or Injection Phrase..." value="${this.searchQuery}" />
-            </div>
-            <div class="verdict-filter-group" role="group" aria-label="Verdict Filter">
-              <button type="button" class="verdict-filter-btn active" data-verdict="ALL">ALL</button>
-              <button type="button" class="verdict-filter-btn" data-verdict="BLOCK">BLOCK</button>
-              <button type="button" class="verdict-filter-btn" data-verdict="ALLOW">ALLOW</button>
+        <!-- Secondary Mode: Full Searchable / Filterable 200-Payload Table -->
+        <div id="v-c-explore-stage" class="vector-explore-stage ${this.isExploreMode ? '' : 'hidden-view'}">
+          <div class="explore-mode-header">
+            <button type="button" class="explore-back-btn" id="v-c-back-btn">
+              <span aria-hidden="true">&larr;</span>
+              <span>Back to Agent Defense Theater</span>
+            </button>
+            <div class="explore-header-meta">
+              <span class="section-badge" id="v-c-count-badge">200 PAYLOADS</span>
+              <span class="footer-meta">Taxonomy §2.3 Dataset Explorer</span>
             </div>
           </div>
 
-          <!-- Feed Table -->
-          <div class="feed-table-container">
-            <table class="feed-table" id="v-c-feed-table">
-              <thead>
-                <tr>
-                  <th>Payload ID</th>
-                  <th>Archetype</th>
-                  <th>Evasion Tier</th>
-                  <th>Intended &rarr; Rogue Recipient</th>
-                  <th>Catalog &rarr; Hijacked Amt</th>
-                  <th>Verdict</th>
-                </tr>
-              </thead>
-              <tbody id="v-c-table-body">
-                <tr><td colspan="6" style="text-align:center; padding:32px;"><div class="spinner" style="margin:0 auto 8px;"></div>Loading payloads...</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="data-feed-card">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="vector-pill">BATCH</span>
+                <h3 class="panel-title">Vector C Generated Payload Explorer</h3>
+              </div>
+            </div>
 
-          <!-- Pagination Bar -->
-          <div class="feed-pagination-bar">
-            <span id="v-c-pagination-info">Showing 1–20 of 200</span>
-            <div class="pagination-btn-group">
-              <button type="button" class="pagination-btn" id="v-c-prev-page" disabled>&larr; Prev</button>
-              <button type="button" class="pagination-btn" id="v-c-next-page">Next &rarr;</button>
+            <!-- Controls -->
+            <div class="feed-controls-bar">
+              <div class="search-input-wrapper">
+                <span class="search-icon" aria-hidden="true">&#128269;</span>
+                <input type="text" id="v-c-search-input" class="feed-search-input" placeholder="Search by Payload ID, Archetype, Merchant, or Injection Phrase..." value="${this.searchQuery}" />
+              </div>
+              <div class="verdict-filter-group" role="group" aria-label="Verdict Filter">
+                <button type="button" class="verdict-filter-btn active" data-verdict="ALL">ALL</button>
+                <button type="button" class="verdict-filter-btn" data-verdict="BLOCK">BLOCK</button>
+                <button type="button" class="verdict-filter-btn" data-verdict="ALLOW">ALLOW</button>
+              </div>
+            </div>
+
+            <!-- Feed Table -->
+            <div class="feed-table-container">
+              <table class="feed-table" id="v-c-feed-table">
+                <thead>
+                  <tr>
+                    <th>Payload ID</th>
+                    <th>Archetype</th>
+                    <th>Evasion Tier</th>
+                    <th>Intended &rarr; Rogue Recipient</th>
+                    <th>Catalog &rarr; Hijacked Amt</th>
+                    <th>Verdict</th>
+                  </tr>
+                </thead>
+                <tbody id="v-c-table-body">
+                  <tr><td colspan="6" style="text-align:center; padding:32px;"><div class="spinner" style="margin:0 auto 8px;"></div>Loading payloads...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination Bar -->
+            <div class="feed-pagination-bar">
+              <span id="v-c-pagination-info">Showing 1–20 of 200</span>
+              <div class="pagination-btn-group">
+                <button type="button" class="pagination-btn" id="v-c-prev-page" disabled>&larr; Prev</button>
+                <button type="button" class="pagination-btn" id="v-c-next-page">Next &rarr;</button>
+              </div>
             </div>
           </div>
         </div>
@@ -724,6 +712,15 @@ export class VectorCDashboard {
   bindDOMEvents() {
     this.container.querySelector('#v-c-crumb-home')?.addEventListener('click', () => {
       this.router.navigate('overview');
+    });
+
+    // Explore Mode Toggle Actions
+    this.container.querySelector('#v-c-open-explore-btn')?.addEventListener('click', () => {
+      this.setExploreMode(true);
+    });
+
+    this.container.querySelector('#v-c-back-btn')?.addEventListener('click', () => {
+      this.setExploreMode(false);
     });
 
     // Reveal toggle
@@ -791,6 +788,14 @@ export class VectorCDashboard {
     });
   }
 
+  setExploreMode(active) {
+    this.isExploreMode = active;
+    const primary = this.container.querySelector('#v-c-primary-stage');
+    const explore = this.container.querySelector('#v-c-explore-stage');
+    if (primary) primary.classList.toggle('hidden-view', active);
+    if (explore) explore.classList.toggle('hidden-view', !active);
+  }
+
   async loadOverview() {
     try {
       this.overviewData = await fetchVectorOverview('C');
@@ -807,25 +812,26 @@ export class VectorCDashboard {
 
     const opMetrics = this.overviewData.baseline_metrics?.operational_detection?.metrics || {};
     const recall = ((opMetrics.recall !== undefined ? opMetrics.recall : 1.0) * 100).toFixed(1);
-    const total = this.overviewData.total_evaluated || 200;
-    const mal = this.overviewData.malicious_count || 120;
+
+    const missedEl = this.container.querySelector('#v-c-ground-missed');
+    const farEl = this.container.querySelector('#v-c-ground-far');
+    const missedPct = ((opMetrics.missed_detection_rate || 0.0) * 100).toFixed(2);
+    const farPct = ((opMetrics.false_positive_rate || 0.0) * 100).toFixed(2);
+    if (missedEl) missedEl.textContent = `${missedPct}%`;
+    if (farEl) farEl.textContent = `${farPct}%`;
 
     ribbon.innerHTML = `
       <div class="stat-tile">
         <span class="stat-tile-label">OPERATIONAL RECALL</span>
-        <span class="stat-tile-val mono-data">${recall}%</span>
+        <span class="stat-tile-val mono-data accent-cyan">${recall}%</span>
       </div>
       <div class="stat-tile">
-        <span class="stat-tile-label">WALLET LOSS</span>
+        <span class="stat-tile-label">LOSS PREVENTED</span>
         <span class="stat-tile-val mono-data">$0.00</span>
       </div>
       <div class="stat-tile">
         <span class="stat-tile-label">SCAN LATENCY</span>
-        <span class="stat-tile-val mono-data">0.14ms</span>
-      </div>
-      <div class="stat-tile">
-        <span class="stat-tile-label">INJECTIONS CAUGHT</span>
-        <span class="stat-tile-val mono-data accent-cyan">${mal} / ${total}</span>
+        <span class="stat-tile-val mono-data accent-cyan">0.14ms</span>
       </div>
     `;
   }
@@ -840,11 +846,10 @@ export class VectorCDashboard {
       });
 
       this.instances = data.items || [];
-      this.totalRecords = data.total_records || 0;
+      this.totalRecords = data.total_records || 200;
       this.renderTableRows();
       this.renderPagination();
 
-      // If current selected ID is found in the current page, highlight it
       if (this.selectedInstanceId) {
         this.container.querySelectorAll('#v-c-table-body tr').forEach(r => {
           r.classList.toggle('selected-row', r.getAttribute('data-id') === this.selectedInstanceId);
@@ -872,7 +877,6 @@ export class VectorCDashboard {
       const isSelected = item.instance_id === this.selectedInstanceId;
       const verdictBadge = item.verdict === 'BLOCK' ? 'badge-block' : 'badge-allow';
 
-      // Parse recipient and amount divergence from primary_risk_driver if available
       let recStr = item.is_malicious ? 'merchant &rarr; rogue_acquirer' : 'authorized_merchant';
       let amtStr = item.is_malicious ? '$29.50 &rarr; $248.49' : '$45.00 clean';
 
@@ -899,7 +903,10 @@ export class VectorCDashboard {
       rows.forEach(row => {
         row.addEventListener('click', () => {
           const id = row.getAttribute ? row.getAttribute('data-id') : row.dataset?.id;
-          if (id) this.selectInstance(id);
+          if (id) {
+            this.selectInstance(id);
+            this.setExploreMode(false); // Return to theater view to inspect
+          }
         });
       });
     }
@@ -925,7 +932,6 @@ export class VectorCDashboard {
       this.renderTheater();
     }
 
-    // Also attempt to find and highlight in table or fetch live detail if present
     const target = this.instances.find(i => i.archetype_or_technique === archetype) ||
                    this.instances.find(i => (archetype === 'BENCHMARK_LEGITIMATE' ? !i.is_malicious : i.is_malicious));
     if (target) {
@@ -950,7 +956,6 @@ export class VectorCDashboard {
       r.classList.toggle('selected-row', r.getAttribute('data-id') === instanceId);
     });
 
-    // Check if matching preset scenario
     const preset = Object.values(PRESET_SCENARIOS).find(p => p.instance_id === instanceId);
     if (preset) {
       this.selectedDetail = preset;
@@ -1072,7 +1077,7 @@ export class VectorCDashboard {
       `;
     }
 
-    // 3. Update Pre-Execution Scanner HUD
+    // 3. Update Simplified Pre-Execution Scanner HUD
     const hudBox = this.container.querySelector('#decision-hud-box');
     const hudText = this.container.querySelector('#decision-hud-text');
     const hudConf = this.container.querySelector('#decision-confidence-val');
@@ -1096,11 +1101,10 @@ export class VectorCDashboard {
     if (intendedAmt) intendedAmt.textContent = intendedPrice;
     if (hijackedAmt) hijackedAmt.textContent = isMalicious ? `$${Number(artifact.target_amount || 248.49).toFixed(2)}` : '— (MATCH)';
 
-    // Sub-Scores Computation
+    // Simplified 3 Decision-Relevant Sub-Scores
     const concVal = subScores.concealment_risk !== undefined ? subScores.concealment_risk : (isMalicious ? 1.0 : 0.0);
     const overVal = subScores.imperative_override_risk !== undefined ? subScores.imperative_override_risk : (isMalicious ? 0.95 : 0.0);
     const paramVal = subScores.parameter_divergence_risk !== undefined ? subScores.parameter_divergence_risk : (isMalicious ? 1.0 : 0.0);
-    const invVal = subScores.invoice_poisoning_risk !== undefined ? subScores.invoice_poisoning_risk : 0.0;
 
     const setSubScore = (id, val) => {
       const num = this.container.querySelector(`#sub-${id}-num`);
@@ -1114,22 +1118,6 @@ export class VectorCDashboard {
     setSubScore('conceal', concVal);
     setSubScore('override', overVal);
     setSubScore('param', paramVal);
-    setSubScore('inv', invVal);
-
-    // 4-Axis Threat Radar Coordinates Computation (Center: 80, 80; Max Radius: 55)
-    const maxR = 55;
-    const cx = 80, cy = 80;
-    const topY = cy - (Math.max(0.08, concVal) * maxR);
-    const rightX = cx + (Math.max(0.08, overVal) * maxR);
-    const bottomY = cy + (Math.max(0.08, paramVal) * maxR);
-    const leftX = cx - (Math.max(0.08, invVal) * maxR);
-
-    const threatPolygon = this.container.querySelector('#v-c-threat-polygon');
-    if (threatPolygon) {
-      threatPolygon.setAttribute('points', `${cx},${topY} ${rightX},${cy} ${cx},${bottomY} ${leftX},${cy}`);
-      threatPolygon.style.fill = isMalicious ? 'rgba(242, 169, 59, 0.25)' : 'rgba(95, 216, 208, 0.15)';
-      threatPolygon.style.stroke = isMalicious ? 'var(--accent-amber)' : 'var(--accent-cyan)';
-    }
   }
 
   updateConcealmentVisual() {

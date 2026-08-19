@@ -1,7 +1,7 @@
 """
 Vector C — Agentic Payment Hijacking Module Package.
 
-Sandboxed mock shopping agent, fake wallet harness, and security boundaries
+Sandboxed mock shopping agent, fake wallet harness, LLM decision engine, and security boundaries
 for safe simulation and defense of prompt-injection payment hijacking.
 """
 
@@ -14,6 +14,7 @@ from generate.agentic.generator import (
     PageSpec,
     VectorCGenerator,
 )
+from generate.agentic.llm_engine import LLMDecision, LLMDecisionEngine
 from generate.agentic.sandbox import (
     AgentStep,
     ExecutionTrace,
@@ -28,6 +29,8 @@ from generate.agentic.sandbox import (
 
 __all__ = [
     "MockShoppingAgent",
+    "LLMDecisionEngine",
+    "LLMDecision",
     "FakeWallet",
     "LocalPageEnvironment",
     "PageContent",

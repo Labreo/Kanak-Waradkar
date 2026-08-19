@@ -8,9 +8,10 @@
  * - Single continuous circular ring (radius R = 110, circumference C = 2 * PI * R ≈ 691.15).
  * - Arc fill length is computed directly and proportionally from current evasion rate:
  *   stroke-dashoffset = C * (1.0 - evasionRate)
- * - Cycle markers (C0, C1, C2, C3) sit as labeled points along that single continuous ring
+ * - Cycle markers sit as labeled points along that single continuous ring
  *   at their exact proportional angular positions (angle = evasionRate * 360°).
  * - Smooth CSS transitions animate the ring filling/emptying when switching cycles.
+ * - Initial state renders pure content-free skeleton shimmer blocks with zero hardcoded digits.
  * - Color Palette: Cool Cyan (#5FD8D0) & Warm Amber (#F2A93B).
  */
 
@@ -18,59 +19,22 @@ export class ClosingLoopGauge {
   constructor(containerElement, options = {}) {
     this.container = containerElement;
     this.onCycleSelect = options.onCycleSelect || (() => {});
-    this.currentCycle = options.initialCycle !== undefined ? options.initialCycle : 2;
+    this.currentCycle = options.initialCycle !== undefined ? options.initialCycle : 0;
     this.radius = 110;
     this.circumference = +(2 * Math.PI * this.radius).toFixed(2); // ~691.15
 
-    // Default 4-cycle progression representative of TRIAD telemetry
-    this.cycleData = [
-      {
-        id: 'C0',
-        label: 'Cycle 0 // Baseline',
-        evasionRate: 0.0,
-        detectionRate: 1.0,
-        tier: 'Tier 1: Direct Probes',
-        mutation: 'Naive Attack Signatures (Baseline Generation)',
-        delta: '0.0%',
-        deltaType: 'neutral'
-      },
-      {
-        id: 'C1',
-        label: 'Cycle 1 // Mutated',
-        evasionRate: 0.29,
-        detectionRate: 0.71,
-        tier: 'Tier 2: Structural Camouflage',
-        mutation: 'Repaired Barcodes, Session Dilation & CSS Cloaking',
-        delta: '+29.0%',
-        deltaType: 'positive'
-      },
-      {
-        id: 'C2',
-        label: 'Cycle 2 // Evolved',
-        evasionRate: 0.83,
-        detectionRate: 0.17,
-        tier: 'Tier 3: Semantic Pretexting',
-        mutation: 'Native EXIF, Organic Basket Sizes & AP Invoice Pretexts',
-        delta: '+83.0%',
-        deltaType: 'positive'
-      },
-      {
-        id: 'C3',
-        label: 'Cycle 3 // Retrained',
-        evasionRate: 0.04,
-        detectionRate: 0.96,
-        tier: 'Tier 3: Retrained Defense',
-        mutation: 'Closed-Loop Defense Retraining & Parameter Surface Adaptation',
-        delta: '-79.0% RECOVERY',
-        deltaType: 'positive'
-      }
-    ];
-
-    this.render();
+    // Initialize with provided cycle data if passed, otherwise empty array for shimmer loading state
+    const initialCycles = options.cycleData || options.cycles || [];
+    this.cycleData = [];
+    if (Array.isArray(initialCycles) && initialCycles.length > 0) {
+      this.updateData(initialCycles, false);
+    } else {
+      this.render();
+    }
   }
 
   setCycle(cycleIndex) {
-    if (cycleIndex >= 0 && cycleIndex < this.cycleData.length) {
+    if (this.cycleData && this.cycleData.length > 0 && cycleIndex >= 0 && cycleIndex < this.cycleData.length) {
       this.currentCycle = cycleIndex;
       this.updateHUD();
       this.updateArc();
@@ -79,7 +43,7 @@ export class ClosingLoopGauge {
     }
   }
 
-  updateData(cycles) {
+  updateData(cycles, triggerSelect = true) {
     if (Array.isArray(cycles) && cycles.length > 0) {
       this.cycleData = cycles.map((c, i) => {
         const evas = c.evasion_rate !== undefined ? c.evasion_rate : (c.evasionRate || 0);
@@ -89,7 +53,7 @@ export class ClosingLoopGauge {
         let deltaVal = '0.0%';
         let deltaType = 'neutral';
         if (i > 0) {
-          const prevEvas = cycles[i - 1].evasion_rate !== undefined ? cycles[i - 1].evasion_rate : 0;
+          const prevEvas = cycles[i - 1].evasion_rate !== undefined ? cycles[i - 1].evasion_rate : (cycles[i - 1].evasionRate || 0);
           const diff = evas - prevEvas;
           if (diff < -0.05) {
             deltaVal = `-${(Math.abs(diff) * 100).toFixed(1)}% RECOV`;
@@ -103,24 +67,32 @@ export class ClosingLoopGauge {
         }
 
         return {
-          id: `C${c.cycle_index !== undefined ? c.cycle_index : i}`,
-          label: `Cycle ${c.cycle_index !== undefined ? c.cycle_index : i} // ${c.mutation_tier || 'MUTATED'}`,
+          id: c.id || `C${c.cycle_index !== undefined ? c.cycle_index : i}`,
+          label: c.label || `Cycle ${c.cycle_index !== undefined ? c.cycle_index : i} // ${c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : 'MUTATED'}`,
           evasionRate: evas,
           detectionRate: 1.0 - evas,
-          tier: c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : `Cycle ${i}`,
+          tier: c.tier || (c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : `Cycle ${i}`),
           mutation: mutText,
-          delta: deltaVal,
-          deltaType: deltaType
+          delta: c.delta || deltaVal,
+          deltaType: c.deltaType || deltaType
         };
       });
 
-      this.currentCycle = Math.min(this.currentCycle, this.cycleData.length - 1);
+      if (this.currentCycle >= this.cycleData.length || this.currentCycle < 0) {
+        this.currentCycle = Math.min(2, this.cycleData.length - 1);
+      }
       this.render();
-      this.onCycleSelect(this.cycleData[this.currentCycle]);
+      if (triggerSelect && this.cycleData[this.currentCycle]) {
+        this.onCycleSelect(this.cycleData[this.currentCycle]);
+      }
+    } else {
+      this.cycleData = [];
+      this.render();
     }
   }
 
   nextCycle() {
+    if (!this.cycleData || this.cycleData.length === 0) return;
     const next = (this.currentCycle + 1) % this.cycleData.length;
     this.setCycle(next);
   }
@@ -162,8 +134,14 @@ export class ClosingLoopGauge {
   }
 
   render() {
+    if (!this.cycleData || this.cycleData.length === 0) {
+      this.renderLoadingState();
+      return;
+    }
+
     const current = this.cycleData[this.currentCycle] || this.cycleData[0];
     const initialDashOffset = this.calculateDashOffset(current.evasionRate);
+    const headPos = this.calculateRingCoordinates(current.evasionRate);
 
     this.container.innerHTML = `
       <div class="loop-gauge-container">
@@ -211,10 +189,10 @@ export class ClosingLoopGauge {
             <!-- Leading Edge Indicator Head -->
             <circle
               id="gauge-indicator-head"
-              cx="${this.calculateRingCoordinates(current.evasionRate).x}"
-              cy="${this.calculateRingCoordinates(current.evasionRate).y}"
+              cx="${headPos.x}"
+              cy="${headPos.y}"
               r="4.5"
-              class="gauge-indicator-head"
+              class="gauge-indicator-head ${current.evasionRate > 0 ? 'active' : ''}"
             />
 
             <!-- Cycle Marker Nodes positioned proportionally along the single continuous ring -->
@@ -223,7 +201,7 @@ export class ClosingLoopGauge {
 
           <!-- Center Information HUD -->
           <div class="gauge-center-hud">
-            <span class="gauge-cycle-tag" id="hud-cycle-tag">${current.id} // ${current.tier.split(':')[0]}</span>
+            <span class="gauge-cycle-tag" id="hud-cycle-tag">${current.id} // ${(current.tier || '').split(':')[0]}</span>
             <span class="gauge-rate-number mono-data" id="hud-rate-number">${(current.evasionRate * 100).toFixed(0)}%</span>
             <span class="gauge-rate-label">EVASION RATE</span>
             <span class="gauge-delta-pill ${current.deltaType}" id="hud-delta-pill">${current.delta}</span>
@@ -249,6 +227,72 @@ export class ClosingLoopGauge {
 
     this.bindEvents();
     this.updateHUD();
+  }
+
+  renderLoadingState() {
+    this.container.innerHTML = `
+      <div class="loop-gauge-container">
+        <div class="loop-gauge-viewport">
+          <svg class="loop-svg" viewBox="-160 -160 320 320" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gaugeArcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#5FD8D0" />
+                <stop offset="45%" stop-color="#7CE3DC" />
+                <stop offset="80%" stop-color="#F2A93B" />
+                <stop offset="100%" stop-color="#FF9E1B" />
+              </linearGradient>
+              <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(95, 216, 208, 0.14)" />
+                <stop offset="70%" stop-color="rgba(242, 169, 59, 0.04)" />
+                <stop offset="100%" stop-color="transparent" />
+              </radialGradient>
+            </defs>
+
+            <!-- Center ambient glow -->
+            <circle cx="0" cy="0" r="135" fill="url(#centerGlow)" />
+
+            <!-- Calibrated Radial Scale Ticks -->
+            ${this.renderScaleTicks()}
+
+            <!-- Background Continuous Track Ring -->
+            <circle cx="0" cy="0" r="${this.radius}" class="gauge-track-bg" />
+
+            <!-- Empty Progress Ring -->
+            <circle
+              id="gauge-progress-arc"
+              cx="0"
+              cy="0"
+              r="${this.radius}"
+              class="gauge-progress-arc"
+              stroke-dasharray="${this.circumference}"
+              stroke-dashoffset="${this.circumference}"
+              transform="rotate(-90)"
+            />
+          </svg>
+
+          <!-- Center Information HUD Shimmer -->
+          <div class="gauge-center-hud">
+            <span class="gauge-cycle-tag" id="hud-cycle-tag"><span class="skeleton-shimmer" style="width:72px; height:18px; border-radius:var(--radius-xs); display:inline-block;" aria-label="Loading cycle..."></span></span>
+            <span class="gauge-rate-number mono-data" id="hud-rate-number"><span class="skeleton-shimmer skeleton-lg" style="width:80px; height:38px; border-radius:var(--radius-sm); display:inline-block;" aria-label="Loading evasion rate..."></span></span>
+            <span class="gauge-rate-label">EVASION RATE</span>
+            <span class="gauge-delta-pill neutral" id="hud-delta-pill"><span class="skeleton-shimmer" style="width:56px; height:18px; border-radius:9999px; display:inline-block;" aria-label="Loading delta..."></span></span>
+          </div>
+        </div>
+
+        <!-- Interactive Cycle Selector Shimmer Controls -->
+        <div class="loop-controls-bar" role="group" aria-label="Closed Loop Cycle Selector">
+          <span class="skeleton-shimmer" style="width:84px; height:42px; border-radius:var(--radius-md); display:inline-block;" aria-label="Loading cycle controls..."></span>
+          <span class="skeleton-shimmer" style="width:84px; height:42px; border-radius:var(--radius-md); display:inline-block;" aria-label="Loading cycle controls..."></span>
+          <span class="skeleton-shimmer" style="width:84px; height:42px; border-radius:var(--radius-md); display:inline-block;" aria-label="Loading cycle controls..."></span>
+          <span class="skeleton-shimmer" style="width:84px; height:42px; border-radius:var(--radius-md); display:inline-block;" aria-label="Loading cycle controls..."></span>
+        </div>
+
+        <!-- Loop Evolution Summary Shimmer -->
+        <div class="loop-summary-text" id="loop-summary-text">
+          <span class="skeleton-shimmer skeleton-text" style="width:240px; height:14px; border-radius:var(--radius-xs); display:inline-block;" aria-label="Loading summary..."></span>
+        </div>
+      </div>
+    `;
   }
 
   /**
@@ -293,6 +337,8 @@ export class ClosingLoopGauge {
    * Renders cycle markers positioned along the single continuous ring at their exact proportional angle.
    */
   renderCycleMarkers() {
+    if (!this.cycleData || this.cycleData.length === 0) return '';
+
     return this.cycleData.map((c, i) => {
       const pos = this.calculateRingCoordinates(c.evasionRate, this.radius);
       const isSelected = i === this.currentCycle;
@@ -373,6 +419,7 @@ export class ClosingLoopGauge {
    * with smooth transition animations.
    */
   updateArc() {
+    if (!this.cycleData || this.cycleData.length === 0) return;
     const current = this.cycleData[this.currentCycle];
     if (!current) return;
 
@@ -392,6 +439,7 @@ export class ClosingLoopGauge {
   }
 
   updateHUD() {
+    if (!this.cycleData || this.cycleData.length === 0) return;
     const current = this.cycleData[this.currentCycle];
     if (!current) return;
 
@@ -400,7 +448,7 @@ export class ClosingLoopGauge {
     const hudDelta = this.container.querySelector('#hud-delta-pill');
     const summaryText = this.container.querySelector('#loop-summary-text');
 
-    if (hudTag) hudTag.textContent = `${current.id} // ${current.tier.split(':')[0]}`;
+    if (hudTag) hudTag.textContent = `${current.id} // ${(current.tier || '').split(':')[0]}`;
     if (hudNumber) hudNumber.textContent = `${(current.evasionRate * 100).toFixed(0)}%`;
     if (hudDelta) {
       hudDelta.textContent = current.delta;
@@ -412,6 +460,7 @@ export class ClosingLoopGauge {
   }
 
   updateActiveClasses() {
+    if (!this.cycleData || this.cycleData.length === 0) return;
     this.cycleData.forEach((_, i) => {
       const isCurrent = i === this.currentCycle;
       const btn = this.container.querySelector(`#cycle-btn-${i}`);

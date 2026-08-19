@@ -95,6 +95,7 @@ class AgentStep:
     defense_intercepted: bool = False
     defense_verdict: Optional[str] = None
     defense_reason: Optional[str] = None
+    llm_provider: Optional[str] = None  # "cached" | "live" | "heuristic"
 
     def to_dict(self) -> Dict[str, Any]:
         res = {
@@ -105,6 +106,7 @@ class AgentStep:
             "defense_intercepted": self.defense_intercepted,
             "defense_verdict": self.defense_verdict,
             "defense_reason": self.defense_reason,
+            "llm_provider": self.llm_provider,
         }
         return res
 
@@ -122,6 +124,7 @@ class ExecutionTrace:
     total_amount_debited: float = 0.0
     final_status: str = "PENDING"  # COMPLETED | HIJACKED | DEFENDED | FAILED
     audit_log: List[Dict[str, Any]] = field(default_factory=list)
+    decision_provider: Optional[str] = None  # "cached" | "live" | "heuristic"
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -135,6 +138,7 @@ class ExecutionTrace:
             "total_amount_debited": self.total_amount_debited,
             "final_status": self.final_status,
             "audit_log": self.audit_log,
+            "decision_provider": self.decision_provider,
         }
 
 

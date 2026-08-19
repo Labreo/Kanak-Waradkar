@@ -2,58 +2,58 @@
   "vector_id": "B",
   "vector_name": "Behavioral & Transaction Fraud",
   "total_cycles_completed": 3,
-  "base_seed": 42,
+  "base_seed": 1042,
   "batch_size": 50,
-  "orchestration_started_at": "2026-08-18T14:03:54.893182+00:00",
-  "orchestration_completed_at": "2026-08-18T14:03:54.961541+00:00",
+  "orchestration_started_at": "2026-08-18T23:21:11.624295+00:00",
+  "orchestration_completed_at": "2026-08-18T23:21:11.697930+00:00",
   "summary_trend": {
     "initial_evasion_rate": 0.0,
-    "final_evasion_rate": 0.8824,
-    "evasion_delta": 0.8824,
+    "final_evasion_rate": 0.9167,
+    "evasion_delta": 0.9167,
     "initial_detection_rate": 1.0,
-    "final_detection_rate": 0.1176,
+    "final_detection_rate": 0.0833,
     "is_adversarial_gain_verified": true,
-    "peak_evasion_rate": 0.8824,
+    "peak_evasion_rate": 0.9167,
     "peak_cycle_index": 2
   },
   "cycles": [
     {
       "cycle_index": 0,
       "cycle_id": "cycle_b_0",
-      "generation_seed": 42,
+      "generation_seed": 1042,
       "mutation_tier": "TIER_1_BASIC_VELOCITY",
       "batch_size": 50,
-      "total_malicious": 17,
-      "total_legitimate": 33,
+      "total_malicious": 18,
+      "total_legitimate": 32,
       "evading_count": 0,
-      "caught_count": 17,
+      "caught_count": 18,
       "false_positive_count": 0,
       "evasion_rate": 0.0,
       "detection_rate": 1.0,
       "precision": 1.0,
       "false_positive_rate": 0.0,
-      "mean_fraud_score": 0.9727,
+      "mean_fraud_score": 0.9708,
       "mutations_applied": [],
       "evading_sample_ids": [],
       "cycle_summary": "High-velocity micro-auth bursts intercepted by velocity counters (C14) and headless device telemetry.",
-      "executed_at": "2026-08-18T14:03:54.917501+00:00"
+      "executed_at": "2026-08-18T23:21:11.643640+00:00"
     },
     {
       "cycle_index": 1,
       "cycle_id": "cycle_b_1",
-      "generation_seed": 1042,
+      "generation_seed": 2042,
       "mutation_tier": "TIER_2_DISTRIBUTED_IP_BIN",
       "batch_size": 50,
-      "total_malicious": 18,
-      "total_legitimate": 32,
-      "evading_count": 4,
-      "caught_count": 14,
+      "total_malicious": 17,
+      "total_legitimate": 33,
+      "evading_count": 10,
+      "caught_count": 7,
       "false_positive_count": 0,
-      "evasion_rate": 0.2222,
-      "detection_rate": 0.7778,
+      "evasion_rate": 0.5882,
+      "detection_rate": 0.4118,
       "precision": 1.0,
       "false_positive_rate": 0.0,
-      "mean_fraud_score": 0.7405,
+      "mean_fraud_score": 0.374,
       "mutations_applied": [
         {
           "parameter": "inter_arrival_seconds",
@@ -69,30 +69,36 @@
         }
       ],
       "evading_sample_ids": [
-        "TXN-01000003",
-        "TXN-01000005",
+        "TXN-01000004",
         "TXN-01000008",
-        "TXN-01000011"
+        "TXN-01000010",
+        "TXN-01000011",
+        "TXN-01000012",
+        "TXN-01000013",
+        "TXN-01000014",
+        "TXN-01000015",
+        "TXN-01000017",
+        "TXN-01000018"
       ],
       "cycle_summary": "Timing dilation and mobile browser spoofing suppressed velocity counters, increasing evasion.",
-      "executed_at": "2026-08-18T14:03:54.936012+00:00"
+      "executed_at": "2026-08-18T23:21:11.668181+00:00"
     },
     {
       "cycle_index": 2,
       "cycle_id": "cycle_b_2",
-      "generation_seed": 2042,
+      "generation_seed": 3042,
       "mutation_tier": "TIER_3_STEALTH_MIMICRY",
       "batch_size": 50,
-      "total_malicious": 17,
-      "total_legitimate": 33,
-      "evading_count": 15,
+      "total_malicious": 24,
+      "total_legitimate": 26,
+      "evading_count": 22,
       "caught_count": 2,
       "false_positive_count": 0,
-      "evasion_rate": 0.8824,
-      "detection_rate": 0.1176,
+      "evasion_rate": 0.9167,
+      "detection_rate": 0.0833,
       "precision": 1.0,
       "false_positive_rate": 0.0,
-      "mean_fraud_score": 0.1398,
+      "mean_fraud_score": 0.1396,
       "mutations_applied": [
         {
           "parameter": "financial_features.amount",
@@ -120,7 +126,7 @@
         "TXN-01000013"
       ],
       "cycle_summary": "Organic basket sizing and local IP routing blended attacks into empirical e-commerce patterns.",
-      "executed_at": "2026-08-18T14:03:54.955905+00:00"
+      "executed_at": "2026-08-18T23:21:11.692307+00:00"
     }
   ]
 }

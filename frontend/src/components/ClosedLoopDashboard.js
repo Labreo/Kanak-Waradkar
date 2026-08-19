@@ -19,6 +19,7 @@ export class ClosedLoopDashboard {
     this.loopHistory = null;
     this.isRunningWave = false;
     this.gaugeInstance = null;
+    this.isRegistryExpanded = false;
     
     // Trigger Form State
     this.batchSize = 100;
@@ -36,7 +37,7 @@ export class ClosedLoopDashboard {
   renderSkeleton() {
     this.container.innerHTML = `
       <div class="vector-view-shell">
-        <!-- Hero Header -->
+        <!-- Hero Header (3 Headline Stats) -->
         <div class="dashboard-hero">
           <div class="dashboard-hero-top">
             <div class="dashboard-hero-left">
@@ -45,7 +46,7 @@ export class ClosedLoopDashboard {
                 <span class="footer-sep">/</span>
                 <span>CLOSED LOOP</span>
                 <span class="footer-sep">/</span>
-                <span class="accent-cyan">ADVERSARIAL CO-EVOLUTION ENGINE</span>
+                <span class="accent-cyan">ADVERSARIAL CO-EVOLUTION FINALE</span>
               </div>
               <h1 class="view-hero-title">Closed-Loop Adversarial Feedback &amp; Wave Trigger</h1>
               <p class="hub-description">
@@ -54,12 +55,12 @@ export class ClosedLoopDashboard {
             </div>
             <div class="dashboard-hero-stats" id="v-l-stats-ribbon">
               <div class="stat-tile">
-                <span class="stat-tile-label">COMPLETED CYCLES</span>
-                <span class="stat-tile-val mono-data accent-cyan" id="v-l-completed-cycles">4 CYCLES / VECTOR</span>
+                <span class="stat-tile-label">CYCLES EVALUATED</span>
+                <span class="stat-tile-val mono-data accent-cyan" id="v-l-completed-cycles"><span class="skeleton-shimmer skeleton-lg" aria-label="Loading..."></span></span>
               </div>
               <div class="stat-tile">
-                <span class="stat-tile-label">ADVERSARIAL GAIN</span>
-                <span class="stat-tile-val mono-data accent-cyan" id="v-l-gain-val">+83.0%</span>
+                <span class="stat-tile-label">PEAK EVASION</span>
+                <span class="stat-tile-val mono-data accent-amber" id="v-l-gain-val"><span class="skeleton-shimmer skeleton-lg" aria-label="Loading..."></span></span>
               </div>
               <div class="stat-tile">
                 <span class="stat-tile-label">STATE MACHINE</span>
@@ -81,12 +82,12 @@ export class ClosedLoopDashboard {
           </div>
         </div>
 
-        <!-- Live Wave Trigger Control Panel -->
+        <!-- Live Wave Trigger Orchestrator Rail (Always Visible) -->
         <div class="trigger-control-panel">
           <div class="trigger-header-row">
             <div class="panel-title-group">
-              <span class="vector-pill">CO-EVOLUTION</span>
-              <h3 class="panel-title">Live Attack Wave Orchestrator</h3>
+              <span class="vector-pill">ORCHESTRATE</span>
+              <h3 class="panel-title">Live Attack Wave Trigger</h3>
             </div>
 
             <!-- Vector Switcher Rail -->
@@ -106,7 +107,6 @@ export class ClosedLoopDashboard {
                   <option value="50">50 samples</option>
                   <option value="100" selected>100 samples</option>
                   <option value="200">200 samples</option>
-                  <option value="500">500 samples</option>
                 </select>
               </div>
 
@@ -114,102 +114,112 @@ export class ClosedLoopDashboard {
                 <label for="v-l-cycles-count" class="trigger-input-label">Cycles</label>
                 <select id="v-l-cycles-count" class="trigger-select">
                   <option value="3">3 Iterations (C0 &rarr; C1 &rarr; C2)</option>
-                  <option value="4" selected>4 Iterations (C0 &rarr; C1 &rarr; C2 &rarr; C3 [Retrain])</option>
+                  <option value="4" selected>4 Iterations (C0 &rarr; C1 &rarr; C2 &rarr; C3)</option>
                 </select>
               </div>
 
               <div class="trigger-input-item">
-                <label for="v-l-seed-input" class="trigger-input-label">PRNG Seed</label>
-                <div style="display:flex; align-items:center; gap:4px;">
-                  <input type="number" id="v-l-seed-input" class="trigger-input-num" style="width:80px;" value="42" />
-                  <button type="button" class="scenario-chip" id="v-l-rand-seed" style="padding:4px 8px; font-size:10px;">🎲 Rand</button>
-                </div>
+                <label for="v-l-evasion-tier" class="trigger-input-label">Evasion Strategy</label>
+                <select id="v-l-evasion-tier" class="trigger-select">
+                  <option value="TIER_1_DIRECT_OVERRIDE">Tier 1: Direct Override / Synthesized Anchor</option>
+                  <option value="TIER_2_CONCEALED_STRUCTURAL">Tier 2: Concealed Structural / Burst Cluster</option>
+                  <option value="TIER_3_SEMANTIC_PRETEXT" selected>Tier 3: Semantic Pretext / Dilated Cascade</option>
+                </select>
               </div>
             </div>
 
-            <button type="button" class="run-wave-action-btn" id="v-l-run-wave-btn">
-              <span id="v-l-btn-icon">&#9658;</span>
-              <span id="v-l-btn-label">Run Live Attack Wave</span>
-            </button>
+            <!-- Action Button Group -->
+            <div class="trigger-actions-group">
+              <button type="button" class="trigger-execute-btn" id="v-l-execute-btn">
+                <span class="btn-icon" aria-hidden="true">&#9654;</span>
+                <span class="btn-label" id="v-l-execute-label">Run Live Attack Wave</span>
+              </button>
+            </div>
           </div>
 
-          <!-- 5-Phase Transition Stepper -->
-          <div class="phase-stepper-bar" id="v-l-phase-stepper">
-            <div class="stepper-step active" id="phase-1"><span class="step-num">1</span> <span>GENERATE</span></div>
-            <span class="stepper-arrow">&rarr;</span>
-            <div class="stepper-step" id="phase-2"><span class="step-num">2</span> <span>DEFEND</span></div>
-            <span class="stepper-arrow">&rarr;</span>
-            <div class="stepper-step" id="phase-3"><span class="step-num">3</span> <span>EVALUATE</span></div>
-            <span class="stepper-arrow">&rarr;</span>
-            <div class="stepper-step" id="phase-4"><span class="step-num">4</span> <span>MUTATE</span></div>
-            <span class="stepper-arrow">&rarr;</span>
-            <div class="stepper-step" id="phase-5"><span class="step-num">5</span> <span>LOG</span></div>
-          </div>
-        </div>
-
-        <!-- Dual Real-Time Visualizations Grid -->
-        <div class="loop-visuals-grid">
-          <!-- Left: Signature Concentric Closing Loop Gauge -->
-          <div class="loop-visual-card">
-            <div class="panel-header">
-              <div class="panel-title-group">
-                <span class="vector-pill">GEOMETRY</span>
-                <h3 class="panel-title">Signature Closed-Loop Radial Progress Gauge</h3>
-              </div>
-              <span class="section-badge" id="v-l-gauge-badge">CYCLE 2 ACTIVE</span>
-            </div>
-            <div id="v-l-gauge-container" style="display:flex; justify-content:center; align-items:center; min-height:420px;"></div>
-          </div>
-
-          <!-- Right: Multi-Cycle Cumulative Evasion & Detection Area/Line Chart -->
-          <div class="loop-visual-card">
-            <div class="panel-header">
-              <div class="panel-title-group">
-                <span class="vector-pill">TELEMETRY</span>
-                <h3 class="panel-title">Multi-Cycle Cumulative Evasion Trajectory</h3>
-              </div>
-              <div class="chart-legend-bar">
-                <div class="legend-item">
-                  <span class="legend-color-dot amber"></span>
-                  <span>Evasion Rate</span>
-                </div>
-                <div class="legend-item">
-                  <span class="legend-color-dot cyan"></span>
-                  <span>Detection Recall</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="chart-container-box" id="v-l-chart-container">
-              <!-- SVG chart will be rendered here dynamically -->
-              <div class="drawer-empty-state">
-                <div class="spinner"></div>
-                <span>Rendering trajectory curves...</span>
-              </div>
-            </div>
-
-            <!-- Dynamic Telemetry Summary Tile -->
-            <div class="grounding-banner" style="margin-top:auto;" id="v-l-chart-hud-banner">
-              <div class="grounding-banner-left">
-                <span class="grounding-pill-tag" id="v-l-hud-tier-tag">TIER 3: STEALTH MUTATIONS</span>
-                <span id="v-l-hud-summary-text">Cumulative adversarial gain verified across 3 iterative feedback loops.</span>
-              </div>
-              <div class="grounding-banner-metrics">
-                <span class="grounding-metric-item">Evasion: <strong class="accent-amber" id="v-l-hud-evasion-stat">83.0%</strong></span>
-                <span class="grounding-metric-item">Defense Recall: <strong class="accent-cyan" id="v-l-hud-recall-stat">17.0%</strong></span>
-              </div>
+          <!-- Execution Stepper (Revealed during live wave simulation) -->
+          <div class="trigger-progress-container" id="v-l-progress-row" style="display:none;">
+            <div class="loop-stepper" style="display:flex; justify-content:space-between; margin-top:8px;">
+              <span class="stepper-step" id="phase-1">1. GENERATE</span>
+              <span class="stepper-step" id="phase-2">2. DEFEND</span>
+              <span class="stepper-step" id="phase-3">3. EVALUATE</span>
+              <span class="stepper-step" id="phase-4">4. MUTATE</span>
+              <span class="stepper-step" id="phase-5">5. LOG &amp; RETRAIN</span>
             </div>
           </div>
         </div>
 
-        <!-- Adversarial Mutation Audit Log -->
-        <div class="mutation-audit-card">
-          <div class="panel-header">
+        <!-- Above Fold: Two Hero Visuals Side-by-Side Full Width -->
+        <div class="coevolution-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:var(--space-4); margin-top:var(--space-4);">
+          <!-- Left: Closing Loop Radial Gauge Hero Visual -->
+          <div class="chart-panel-card" style="display:flex; flex-direction:column;">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="vector-pill">GAUGE</span>
+                <h3 class="panel-title">Closing Loop Radial Progress Gauge</h3>
+              </div>
+            </div>
+            <div class="gauge-mount-point" id="v-l-gauge-container" style="flex:1; display:flex; align-items:center; justify-content:center; min-height:280px;">
+              <div class="spinner"></div>
+            </div>
+          </div>
+
+          <!-- Right: Live Trajectory Line Chart Hero Visual -->
+          <div class="chart-panel-card" style="display:flex; flex-direction:column;">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <span class="vector-pill">TRAJECTORY</span>
+                <h3 class="panel-title">Multi-Cycle Red vs. Blue Co-Evolution Curve</h3>
+              </div>
+              <div class="chart-legend-group">
+                <span class="legend-item"><span class="legend-dot dot-amber"></span> Red Evasion</span>
+                <span class="legend-item"><span class="legend-dot dot-cyan"></span> Blue Recall</span>
+              </div>
+            </div>
+
+            <!-- SVG Chart Viewport -->
+            <div class="svg-chart-viewport" id="v-l-chart-container" style="flex:1; min-height:280px; display:flex; align-items:center; justify-content:center;">
+              <div class="spinner"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Below Fold: Single-Line Cycle Summaries -->
+        <div class="cycle-summary-strip" style="margin-top:var(--space-4);">
+          <div class="panel-header" style="border-bottom:none; margin-bottom:var(--space-2);">
             <div class="panel-title-group">
-              <span class="vector-pill">AUDIT</span>
-              <h3 class="panel-title">Cycle-by-Cycle Adversarial Mutation Registry</h3>
+              <span class="vector-pill">SUMMARY</span>
+              <h3 class="panel-title">Cycle Progression Summary</h3>
             </div>
-            <span class="section-badge" id="v-l-audit-count">3 CYCLES RECORDED</span>
+          </div>
+          <div class="cycle-lines-list" id="v-l-cycle-lines-container">
+            <div class="drawer-empty-state"><div class="spinner"></div><span>Loading cycle summaries...</span></div>
+          </div>
+        </div>
+
+        <!-- Secondary Mode: Mutation Registry Action Bar & Deep Inspector -->
+        <div class="explore-action-bar" style="margin-top:var(--space-4);">
+          <div class="explore-action-desc">
+            <span class="mono-data accent-cyan">MUTATION AUDIT REGISTRY</span>
+            <span>&bull; Full cycle-by-cycle parameter transition tables, mutation rationales, and evading sample IDs</span>
+          </div>
+          <button type="button" class="explore-action-btn" id="v-l-open-registry-btn">
+            <span>Explore the mutation registry</span>
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+        </div>
+
+        <!-- Collapsible Mutation Registry Detail -->
+        <div class="mutation-audit-card ${this.isRegistryExpanded ? '' : 'hidden-view'}" id="v-l-mutation-registry-panel" style="margin-top:var(--space-3);">
+          <div class="explore-mode-header" style="margin-bottom:var(--space-3);">
+            <button type="button" class="explore-back-btn" id="v-l-close-registry-btn">
+              <span aria-hidden="true">&larr;</span>
+              <span>Collapse Mutation Registry</span>
+            </button>
+            <div class="explore-header-meta">
+              <span class="section-badge" id="v-l-audit-count">4 CYCLES RECORDED</span>
+              <span class="footer-meta">Taxonomy §3.4 Co-Evolution Registry</span>
+            </div>
           </div>
 
           <div class="mutation-cycle-accordion" id="v-l-mutation-log-container">
@@ -219,8 +229,19 @@ export class ClosedLoopDashboard {
       </div>
     `;
 
+    const gaugeContainer = this.container.querySelector('#v-l-gauge-container');
+    if (gaugeContainer) {
+      gaugeContainer.innerHTML = '';
+      this.gaugeInstance = new ClosingLoopGauge(gaugeContainer, {
+        onCycleSelect: (cycle) => {
+          this.updateHUDFromCycle(cycle);
+        }
+      });
+    }
+
     this.bindDOMEvents();
   }
+
 
   bindDOMEvents() {
     this.container.querySelector('#v-l-crumb-home')?.addEventListener('click', () => {
@@ -238,14 +259,13 @@ export class ClosedLoopDashboard {
       });
     });
 
-    // Randomize seed button
-    this.container.querySelector('#v-l-rand-seed')?.addEventListener('click', () => {
-      const seedInput = this.container.querySelector('#v-l-seed-input');
-      if (seedInput) {
-        const randSeed = Math.floor(Math.random() * 9000) + 1000;
-        seedInput.value = randSeed;
-        this.seed = randSeed;
-      }
+    // Registry explore toggle actions
+    this.container.querySelector('#v-l-open-registry-btn')?.addEventListener('click', () => {
+      this.setRegistryExpanded(true);
+    });
+
+    this.container.querySelector('#v-l-close-registry-btn')?.addEventListener('click', () => {
+      this.setRegistryExpanded(false);
     });
 
     // Form inputs
@@ -255,14 +275,23 @@ export class ClosedLoopDashboard {
     this.container.querySelector('#v-l-cycles-count')?.addEventListener('change', (e) => {
       this.cyclesCount = Number(e.target.value);
     });
-    this.container.querySelector('#v-l-seed-input')?.addEventListener('input', (e) => {
-      this.seed = Number(e.target.value) || 42;
-    });
 
     // Run wave action button
-    this.container.querySelector('#v-l-run-wave-btn')?.addEventListener('click', () => {
+    const runBtn = this.container.querySelector('#v-l-execute-btn');
+    runBtn?.addEventListener('click', () => {
       this.executeLiveWave();
     });
+  }
+
+  setRegistryExpanded(expanded) {
+    this.isRegistryExpanded = expanded;
+    const panel = this.container.querySelector('#v-l-mutation-registry-panel');
+    if (panel) {
+      panel.classList.toggle('hidden-view', !expanded);
+      if (expanded) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
   }
 
   async loadLoopHistory() {
@@ -279,6 +308,7 @@ export class ClosedLoopDashboard {
     this.renderHeaderStats();
     this.renderGauge();
     this.renderTrajectoryChart();
+    this.renderCycleSummaries();
     this.renderMutationAudit();
   }
 
@@ -291,10 +321,10 @@ export class ClosedLoopDashboard {
 
     if (gainVal) {
       const peakEvas = trend.peak_evasion_rate !== undefined ? trend.peak_evasion_rate : (trend.final_evasion_rate || 0.83);
-      gainVal.textContent = `+${(peakEvas * 100).toFixed(1)}% PEAK`;
+      gainVal.textContent = `${(peakEvas * 100).toFixed(1)}%`;
     }
     if (completedCycles) {
-      completedCycles.textContent = `${totalCycles} CYCLES / VECTOR`;
+      completedCycles.textContent = `${totalCycles} CYCLES`;
     }
     if (auditCount) {
       auditCount.textContent = `${totalCycles} CYCLES RECORDED`;
@@ -321,17 +351,6 @@ export class ClosedLoopDashboard {
   }
 
   updateHUDFromCycle(cycle) {
-    const tierTag = this.container.querySelector('#v-l-hud-tier-tag');
-    const summaryText = this.container.querySelector('#v-l-hud-summary-text');
-    const evasStat = this.container.querySelector('#v-l-hud-evasion-stat');
-    const recallStat = this.container.querySelector('#v-l-hud-recall-stat');
-
-    if (tierTag) tierTag.textContent = (cycle.tier || 'TIER 3').toUpperCase();
-    if (summaryText) summaryText.textContent = cycle.mutation || 'Cycle mutations applied.';
-    if (evasStat) evasStat.textContent = `${((cycle.evasionRate || 0) * 100).toFixed(1)}%`;
-    if (recallStat) recallStat.textContent = `${((cycle.detectionRate || 0) * 100).toFixed(1)}%`;
-
-    // Wire global header cycle telemetry to match selected cycle
     if (typeof document !== 'undefined') {
       const headerCycle = document.querySelector('#header-cycle-val');
       if (headerCycle) {
@@ -349,8 +368,8 @@ export class ClosedLoopDashboard {
 
     const cycles = this.loopHistory.cycles;
     const width = 540;
-    const height = 240;
-    const padding = { top: 20, right: 30, bottom: 40, left: 45 };
+    const height = 260;
+    const padding = { top: 25, right: 30, bottom: 40, left: 45 };
 
     const chartW = width - padding.left - padding.right;
     const chartH = height - padding.top - padding.bottom;
@@ -373,14 +392,14 @@ export class ClosedLoopDashboard {
     const detectAreaD = `${detectLineD} L ${points[points.length - 1].x} ${padding.top + chartH} L ${points[0].x} ${padding.top + chartH} Z`;
 
     chartBox.innerHTML = `
-      <svg class="trajectory-svg" viewBox="0 0 ${width} ${height}">
+      <svg class="trajectory-svg" viewBox="0 0 ${width} ${height}" style="width:100%; height:100%;">
         <defs>
           <linearGradient id="evasionAreaGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#F2A93B" stop-opacity="0.6"/>
+            <stop offset="0%" stop-color="#F2A93B" stop-opacity="0.45"/>
             <stop offset="100%" stop-color="#F2A93B" stop-opacity="0.0"/>
           </linearGradient>
           <linearGradient id="detectionAreaGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#5FD8D0" stop-opacity="0.4"/>
+            <stop offset="0%" stop-color="#5FD8D0" stop-opacity="0.35"/>
             <stop offset="100%" stop-color="#5FD8D0" stop-opacity="0.0"/>
           </linearGradient>
         </defs>
@@ -389,28 +408,28 @@ export class ClosedLoopDashboard {
         ${[0, 0.25, 0.5, 0.75, 1.0].map(val => {
           const y = padding.top + (1.0 - val) * chartH;
           return `
-            <line class="chart-grid-line" x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}"/>
-            <text class="chart-axis-label" x="${padding.left - 8}" y="${y + 3}" text-anchor="end">${Math.round(val * 100)}%</text>
+            <line class="chart-grid-line" x1="${padding.left}" y1="${y}" x2="${width - padding.right}" y2="${y}" stroke="rgba(255,255,255,0.06)" />
+            <text class="chart-axis-label" x="${padding.left - 8}" y="${y + 3}" text-anchor="end" fill="var(--text-muted)" font-size="10px">${Math.round(val * 100)}%</text>
           `;
         }).join('')}
 
         <!-- X-Axis Labels -->
         ${points.map(p => `
-          <line class="chart-grid-line" x1="${p.x}" y1="${padding.top}" x2="${p.x}" y2="${padding.top + chartH}"/>
-          <text class="chart-axis-label" x="${p.x}" y="${padding.top + chartH + 20}" text-anchor="middle" font-weight="bold">C${p.index} (${p.cycle.mutation_tier ? p.cycle.mutation_tier.replace(/TIER_[0-9]_/, '') : ''})</text>
+          <line class="chart-grid-line" x1="${p.x}" y1="${padding.top}" x2="${p.x}" y2="${padding.top + chartH}" stroke="rgba(255,255,255,0.06)" />
+          <text class="chart-axis-label" x="${p.x}" y="${padding.top + chartH + 20}" text-anchor="middle" font-weight="bold" fill="var(--text-secondary)" font-size="11px">C${p.index}</text>
         `).join('')}
 
         <!-- Area Fills -->
-        <path class="chart-area-evasion" d="${evasAreaD}"/>
-        <path class="chart-area-detection" d="${detectAreaD}"/>
+        <path d="${evasAreaD}" fill="url(#evasionAreaGradient)"/>
+        <path d="${detectAreaD}" fill="url(#detectionAreaGradient)"/>
 
         <!-- Lines -->
-        <path class="chart-line-detection" d="${detectLineD}"/>
-        <path class="chart-line-evasion" d="${evasLineD}"/>
+        <path d="${detectLineD}" fill="none" stroke="#5FD8D0" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="${evasLineD}" fill="none" stroke="#F2A93B" stroke-width="2.5" stroke-linecap="round"/>
 
         <!-- Node Points -->
         ${points.map(p => `
-          <g class="chart-node-point" data-index="${p.index}">
+          <g class="chart-node-point" data-index="${p.index}" style="cursor:pointer;">
             <circle cx="${p.x}" cy="${p.yEvas}" r="5" fill="#F2A93B" stroke="#0C0E1E" stroke-width="2"/>
             <text class="mono-data" x="${p.x}" y="${p.yEvas - 10}" text-anchor="middle" fill="#F2A93B" font-size="11px" font-weight="bold">${(p.evas * 100).toFixed(1)}%</text>
             <circle cx="${p.x}" cy="${p.yDetect}" r="4" fill="#5FD8D0" stroke="#0C0E1E" stroke-width="1.5"/>
@@ -429,6 +448,36 @@ export class ClosedLoopDashboard {
     });
   }
 
+  renderCycleSummaries() {
+    const container = this.container.querySelector('#v-l-cycle-lines-container');
+    if (!container || !this.loopHistory || !this.loopHistory.cycles) return;
+
+    const cycles = this.loopHistory.cycles;
+    container.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:var(--space-2);">
+        ${cycles.map((c, i) => {
+          const evasPct = ((c.evasion_rate || 0) * 100).toFixed(1);
+          const detectPct = ((c.detection_rate !== undefined ? c.detection_rate : (1 - (c.evasion_rate || 0))) * 100).toFixed(1);
+          const tierName = c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : `CYCLE ${i}`;
+          
+          return `
+            <div class="cycle-summary-line" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:6px;">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span class="threat-badge badge-allow" style="font-weight:700;">CYCLE ${c.cycle_index !== undefined ? c.cycle_index : i}</span>
+                <span style="font-size:13px; font-weight:600; color:var(--text-primary);">${tierName}</span>
+                <span style="font-size:12px; color:var(--text-secondary);">&bull; ${c.cycle_summary || 'Feedback mutation step'}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:16px;">
+                <span class="mono-data" style="font-size:12px; color:var(--accent-amber); font-weight:700;">Evasion: ${evasPct}%</span>
+                <span class="mono-data" style="font-size:12px; color:var(--accent-cyan); font-weight:700;">Recall: ${detectPct}%</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
   renderMutationAudit() {
     const container = this.container.querySelector('#v-l-mutation-log-container');
     if (!container || !this.loopHistory || !this.loopHistory.cycles) return;
@@ -439,11 +488,11 @@ export class ClosedLoopDashboard {
       const evadingIds = c.evading_sample_ids || [];
 
       return `
-        <div class="mutation-cycle-item">
-          <div class="mutation-cycle-head">
-            <div class="mutation-cycle-title">
+        <div class="mutation-cycle-item" style="margin-bottom:var(--space-3); padding:var(--space-3); background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:6px;">
+          <div class="mutation-cycle-head" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div class="mutation-cycle-title" style="display:flex; align-items:center; gap:8px;">
               <span class="threat-badge badge-allow">CYCLE ${c.cycle_index}</span>
-              <span>${c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : 'TIER BASELINE'}</span>
+              <span style="font-weight:700;">${c.mutation_tier ? c.mutation_tier.replace(/_/g, ' ') : 'TIER BASELINE'}</span>
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
               <span class="mono-data" style="font-size:11px; color:var(--text-secondary);">Seed: ${c.generation_seed}</span>
@@ -453,31 +502,31 @@ export class ClosedLoopDashboard {
             </div>
           </div>
 
-          <p style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin:0;">
+          <p style="font-size:12px; color:var(--text-secondary); line-height:1.5; margin-bottom:8px;">
             ${c.cycle_summary || 'Baseline generation cycle.'}
           </p>
 
           ${muts.length > 0 ? `
-            <table class="mutations-table">
+            <table class="mutations-table" style="width:100%; border-collapse:collapse; font-size:12px;">
               <thead>
-                <tr>
-                  <th style="width:24%">Parameter Mutated</th>
-                  <th style="width:38%">Transition</th>
-                  <th style="width:38%">Adversarial Rationale</th>
+                <tr style="text-align:left; border-bottom:1px solid var(--border-subtle);">
+                  <th style="padding:6px 8px; width:25%;">Parameter Mutated</th>
+                  <th style="padding:6px 8px; width:35%;">Transition</th>
+                  <th style="padding:6px 8px; width:40%;">Adversarial Rationale</th>
                 </tr>
               </thead>
               <tbody>
                 ${muts.map(m => `
-                  <tr>
-                    <td class="mono-data" style="color:var(--accent-cyan); font-size:11px; word-break:break-word;">${m.parameter}</td>
-                    <td class="mono-data">
-                      <div class="transition-flow">
-                        <span class="transition-prev">${String(m.previous_value)}</span>
-                        <span class="transition-arrow">&rarr;</span>
-                        <strong class="transition-mut">${String(m.mutated_value)}</strong>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+                    <td class="mono-data" style="padding:6px 8px; color:var(--accent-cyan); font-size:11px;">${m.parameter}</td>
+                    <td class="mono-data" style="padding:6px 8px;">
+                      <div class="transition-flow" style="display:flex; align-items:center; gap:6px;">
+                        <span style="color:var(--text-muted);">${String(m.previous_value)}</span>
+                        <span style="color:var(--text-secondary);">&rarr;</span>
+                        <strong style="color:var(--accent-amber);">${String(m.mutated_value)}</strong>
                       </div>
                     </td>
-                    <td style="color:var(--text-secondary); font-size:11px; line-height:1.45; word-break:break-word;">${m.rationale}</td>
+                    <td style="padding:6px 8px; color:var(--text-secondary); font-size:11px; line-height:1.45;">${m.rationale}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -489,11 +538,11 @@ export class ClosedLoopDashboard {
           `}
 
           ${evadingIds.length > 0 ? `
-            <div style="margin-top:6px;">
+            <div style="margin-top:8px;">
               <span style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:600; letter-spacing:var(--tracking-wider); display:block; margin-bottom:4px;">Evading Sample IDs:</span>
-              <div class="evading-samples-wrap">
-                ${evadingIds.slice(0, 10).map(id => `<span class="sample-id-chip">${id}</span>`).join('')}
-                ${evadingIds.length > 10 ? `<span class="footer-tag">+${evadingIds.length - 10} more</span>` : ''}
+              <div class="evading-samples-wrap" style="display:flex; flex-wrap:wrap; gap:4px;">
+                ${evadingIds.slice(0, 10).map(id => `<span class="sample-id-chip" style="font-size:10px; padding:2px 6px; background:var(--bg-inset); border:1px solid var(--border-subtle); border-radius:3px;">${id}</span>`).join('')}
+                ${evadingIds.length > 10 ? `<span class="footer-tag" style="font-size:10px;">+${evadingIds.length - 10} more</span>` : ''}
               </div>
             </div>
           ` : ''}
@@ -506,18 +555,17 @@ export class ClosedLoopDashboard {
     if (this.isRunningWave) return;
     this.isRunningWave = true;
 
-    const runBtn = this.container.querySelector('#v-l-run-wave-btn');
-    const btnLabel = this.container.querySelector('#v-l-btn-label');
-    const btnIcon = this.container.querySelector('#v-l-btn-icon');
+    const runBtn = this.container.querySelector('#v-l-execute-btn');
+    const btnLabel = this.container.querySelector('#v-l-execute-label');
+    const progressRow = this.container.querySelector('#v-l-progress-row');
 
     if (runBtn) {
       runBtn.classList.add('running');
       runBtn.disabled = true;
     }
     if (btnLabel) btnLabel.textContent = 'Running Attack Wave...';
-    if (btnIcon) btnIcon.innerHTML = '&#9203;';
+    if (progressRow) progressRow.style.display = 'block';
 
-    // Step through stepper
     const setStep = (num) => {
       for (let i = 1; i <= 5; i++) {
         const el = this.container.querySelector(`#phase-${i}`);
@@ -528,9 +576,9 @@ export class ClosedLoopDashboard {
     };
 
     setStep(1); // GENERATE
-    setTimeout(() => setStep(2), 80); // DEFEND
-    setTimeout(() => setStep(3), 160); // EVALUATE
-    setTimeout(() => setStep(4), 240); // MUTATE
+    setTimeout(() => setStep(2), 60); // DEFEND
+    setTimeout(() => setStep(3), 120); // EVALUATE
+    setTimeout(() => setStep(4), 180); // MUTATE
 
     try {
       const response = await triggerLoopWave(this.activeVector, {
@@ -543,7 +591,6 @@ export class ClosedLoopDashboard {
       this.loopHistory = response;
       this.renderAllViews();
 
-      // Update global header status indicator if present
       if (typeof document !== 'undefined') {
         const headerCycle = document.querySelector('#header-cycle-val');
         if (headerCycle) {
@@ -562,8 +609,8 @@ export class ClosedLoopDashboard {
           runBtn.disabled = false;
         }
         if (btnLabel) btnLabel.textContent = 'Run Live Attack Wave';
-        if (btnIcon) btnIcon.innerHTML = '&#9658;';
-      }, 400);
+        if (progressRow) progressRow.style.display = 'none';
+      }, 350);
     }
   }
 }

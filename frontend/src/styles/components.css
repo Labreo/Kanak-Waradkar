@@ -536,3 +536,50 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* -------------------------------------------------------------------------
+   6. CONTENT-FREE SKELETON SHIMMER LOADING STATES
+   ------------------------------------------------------------------------- */
+.skeleton-shimmer {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 52px;
+  height: 1.1em;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    rgba(86, 90, 120, 0.16) 0%,
+    rgba(95, 216, 208, 0.18) 50%,
+    rgba(86, 90, 120, 0.16) 100%
+  );
+  background-size: 200% 100%;
+  animation: triad-skeleton-pulse 1.6s ease-in-out infinite;
+  color: transparent !important;
+  user-select: none;
+  pointer-events: none;
+}
+
+.skeleton-shimmer.skeleton-sm {
+  min-width: 38px;
+  height: 0.85em;
+}
+
+.skeleton-shimmer.skeleton-lg {
+  min-width: 68px;
+  height: 1.25em;
+}
+
+.skeleton-shimmer.skeleton-text {
+  min-width: 110px;
+  height: 0.9em;
+}
+
+@keyframes triad-skeleton-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+

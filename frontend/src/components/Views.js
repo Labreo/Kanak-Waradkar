@@ -24,7 +24,7 @@ export function renderOverviewView(router) {
   const shell = document.createElement('div');
   shell.className = 'vector-view-shell overview-view';
 
-  // 1. Command Hub Hero
+  // 1. Command Hub Hero (Eyebrow, Title, One-sentence subhead)
   const hero = document.createElement('div');
   hero.className = 'dashboard-hero command-hub-header';
   hero.innerHTML = `
@@ -39,25 +39,11 @@ export function renderOverviewView(router) {
           Continuous adversarial feedback loop generating sophisticated synthetic fraud vectors, evaluating multi-tier defense scanners, and mutating evasive attack parameters across three mission-critical payment rails.
         </p>
       </div>
-      <div class="dashboard-hero-stats">
-        <div class="stat-tile">
-          <span class="stat-tile-label">Total Vectors</span>
-          <span class="stat-tile-val mono-data">03</span>
-        </div>
-        <div class="stat-tile">
-          <span class="stat-tile-label">Avg Recall</span>
-          <span class="stat-tile-val mono-data" id="hub-avg-recall">96.6%</span>
-        </div>
-        <div class="stat-tile">
-          <span class="stat-tile-label">Max Evasion</span>
-          <span class="stat-tile-val mono-data accent-cyan" id="hub-max-evasion">87.0%</span>
-        </div>
-      </div>
     </div>
   `;
   shell.appendChild(hero);
 
-  // 2. Three Vector Cards (Equal Visual Weight)
+  // 2. Three Vector Cards (Equal Visual Weight, 2 headline stats each)
   const cardsSection = document.createElement('section');
   cardsSection.className = 'cards-section';
   cardsSection.innerHTML = `
@@ -68,115 +54,16 @@ export function renderOverviewView(router) {
       </h2>
     </div>
   `;
-  cardsSection.appendChild(renderVectorCards((target) => router.navigate(target)));
+  const cardsContainer = renderVectorCards((target) => router.navigate(target));
+  cardsSection.appendChild(cardsContainer);
   shell.appendChild(cardsSection);
 
-  // 3. Lower Command Hub Grid (Signature Closing Loop + Threat Matrix Feed)
-  const lowerGrid = document.createElement('section');
-  lowerGrid.className = 'command-hub-lower-grid';
-  lowerGrid.innerHTML = `
-    <!-- Left: Signature Closing Loop Gauge -->
-    <div class="hub-panel loop-gauge-panel">
-      <div class="panel-header">
-        <div class="panel-title-group">
-          <span class="vector-pill">LOOP</span>
-          <h3 class="panel-title">Closed-Loop Evasion &amp; Adaptation Trajectory</h3>
-        </div>
-        <span class="section-badge">RADIAL PROGRESS RING</span>
-      </div>
-      <div id="overview-loop-mount"></div>
-    </div>
-
-    <!-- Right: Real-time Threat Matrix & Attack Archetypes Feed -->
-    <div class="hub-panel threat-feed-panel">
-      <div class="panel-header">
-        <div class="panel-title-group">
-          <span class="vector-pill">SOC</span>
-          <h3 class="panel-title">Attack Matrix &amp; Evasion Archetypes</h3>
-        </div>
-        <span class="section-badge">TAXONOMY §2.1-§2.3</span>
-      </div>
-      <div class="threat-matrix-list">
-        <div class="threat-item">
-          <div class="threat-main">
-            <span class="threat-vector-tag">V_A</span>
-            <div class="threat-info">
-              <div class="threat-title">PDF417 Barcode Parity Tamper</div>
-              <div class="threat-sub">Frankenstein stolen anchor + AAMVA checksum repair</div>
-            </div>
-          </div>
-          <span class="threat-badge badge-block">BLOCKED (100%)</span>
-        </div>
-
-        <div class="threat-item">
-          <div class="threat-main">
-            <span class="threat-vector-tag">V_B</span>
-            <div class="threat-info">
-              <div class="threat-title">Sub-Second Velocity Burst Probes</div>
-              <div class="threat-sub">ISO 8583 decline cascade + BIN range enumeration</div>
-            </div>
-          </div>
-          <span class="threat-badge badge-block">BLOCKED (89.9%)</span>
-        </div>
-
-        <div class="threat-item">
-          <div class="threat-main">
-            <span class="threat-vector-tag">V_C</span>
-            <div class="threat-info">
-              <div class="threat-title">Hidden CSS / HTML Comment Injection</div>
-              <div class="threat-sub">Autonomous tool-call prompt override + AP invoice memo</div>
-            </div>
-          </div>
-          <span class="threat-badge badge-block">BLOCKED (100%)</span>
-        </div>
-
-        <div class="threat-item">
-          <div class="threat-main">
-            <span class="threat-vector-tag">LOOP</span>
-            <div class="threat-info">
-              <div class="threat-title">Tier 3 Semantic Mutation Evasion</div>
-              <div class="threat-sub">Organic amounts + native EXIF metadata camouflage</div>
-            </div>
-          </div>
-          <span class="threat-badge badge-review">MUTATED (83%)</span>
-        </div>
-      </div>
-    </div>
-  `;
-  shell.appendChild(lowerGrid);
-
-  // Mount ClosingLoopGauge in lower grid and fetch live vector summaries
+  // Fetch live vector summaries to populate cards
   setTimeout(async () => {
-    const mount = shell.querySelector('#overview-loop-mount');
-    if (mount) {
-      new ClosingLoopGauge(mount, {
-        initialCycle: 2,
-        onCycleSelect: (cycle) => {
-          const headerCycle = document.querySelector('#header-cycle-val');
-          if (headerCycle) headerCycle.textContent = `${cycle.id} // ${cycle.label.split('//')[1].trim()}`;
-        }
-      });
-    }
-
     try {
       const summaries = await fetchVectors();
       if (summaries && Array.isArray(summaries)) {
         updateVectorCardsData(cardsSection, summaries);
-
-        // Compute aggregate metrics
-        let totalRecall = 0;
-        let maxEvas = 0;
-        summaries.forEach(s => {
-          if (s.current_defense_recall !== undefined) totalRecall += s.current_defense_recall;
-          if (s.latest_loop_evasion_rate !== undefined && s.latest_loop_evasion_rate > maxEvas) {
-            maxEvas = s.latest_loop_evasion_rate;
-          }
-        });
-        const avgRecall = summaries.length > 0 ? (totalRecall / summaries.length) * 100 : 96.6;
-        const avgRecallEl = shell.querySelector('#hub-avg-recall');
-        const maxEvasEl = shell.querySelector('#hub-max-evasion');
-        if (avgRecallEl) avgRecallEl.textContent = `${avgRecall.toFixed(1)}%`;
-        if (maxEvasEl) maxEvasEl.textContent = `${(maxEvas * 100).toFixed(1)}%`;
       }
     } catch (err) {
       console.warn('Could not load live vector summaries for Command Hub:', err);

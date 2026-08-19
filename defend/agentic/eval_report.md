@@ -1,7 +1,7 @@
 # Vector C Evaluation Report — Agentic Payment Hijacking Defend Module
 
 **Evaluation Session:** S17 / Adversarial Hardening Pass  
-**Generated At:** `2026-08-18T01:09:49.451902+00:00`  
+**Generated At:** `2026-08-18T22:38:49.081763+00:00`  
 **Model Name:** `VectorCDetector` (v1.0.0)  
 **Baseline Dataset Split:** `held_out_test` (`data/generated/agentic_heldout_batch.json`, seed `2026`)  
 **Adversarial Dataset Split:** `deliberately_adversarial_held_out` (`data/generated/agentic_adversarial_heldout_batch.json`, seed `2027`)  

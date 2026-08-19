@@ -3,6 +3,7 @@
  * 
  * Renders the 3 vector overview cards side-by-side with equal visual priority,
  * adhering to the layout concept in Part I Frontend Design Brief.
+ * Initial metrics render content-free skeleton shimmer blocks until live fetch resolves.
  */
 
 export const VECTOR_DEFINITIONS = [
@@ -14,9 +15,8 @@ export const VECTOR_DEFINITIONS = [
     description: 'Frankenstein identities fusing authentic stolen anchor PII with synthesized demographic overlays and modified PDF417 barcodes.',
     grounding: 'Grounded in AAMVA 2020 Barcode Spec & SSA DMF',
     metrics: [
-      { label: 'Defense Recall', val: '100%', highlight: 'normal' },
-      { label: 'Max Evasion', val: '68%', highlight: 'normal' },
-      { label: 'Samples', val: '500', highlight: 'normal' }
+      { label: 'Defense Recall', key: 'recall', highlight: 'cyan' },
+      { label: 'Samples Evaluated', key: 'total', highlight: 'normal' }
     ]
   },
   {
@@ -27,9 +27,8 @@ export const VECTOR_DEFINITIONS = [
     description: 'Automated velocity burst probes, ISO 8583 decline cascades, and session-dilated card enumeration attacks.',
     grounding: 'Grounded in IEEE-CIS (590k) & PaySim (6.36M ops)',
     metrics: [
-      { label: 'Defense AUC', val: '0.934', highlight: 'normal' },
-      { label: 'Max Evasion', val: '87%', highlight: 'normal' },
-      { label: 'Evaluated', val: '24,000', highlight: 'normal' }
+      { label: 'Real IEEE-CIS AUC', key: 'auc', highlight: 'cyan' },
+      { label: 'Macro Fidelity', key: 'fidelity', highlight: 'amber' }
     ]
   },
   {
@@ -40,9 +39,8 @@ export const VECTOR_DEFINITIONS = [
     description: 'Indirect prompt injections concealed in web payloads and invoice memos redirecting autonomous agent wallet transfers.',
     grounding: 'Air-Gapped Local Sandbox + Pre-Execution Interception',
     metrics: [
-      { label: 'Defense Recall', val: '100%', highlight: 'normal' },
-      { label: 'Max Evasion', val: '83%', highlight: 'normal' },
-      { label: 'Loss Prevented', val: '$0.00', highlight: 'normal' }
+      { label: 'Operational Recall', key: 'recall', highlight: 'cyan' },
+      { label: 'Loss Prevented', key: 'loss', highlight: 'normal' }
     ]
   }
 ];
@@ -72,14 +70,14 @@ export function renderVectorCards(onNavigate) {
           ${vec.metrics.map(m => `
             <div class="card-metric-col">
               <span class="metric-label">${m.label}</span>
-              <span class="metric-number mono-data ${m.highlight === 'cyan' ? 'accent-cyan' : m.highlight === 'amber' ? 'accent-amber' : ''}">${m.val}</span>
+              <span class="metric-number mono-data ${m.highlight === 'cyan' ? 'accent-cyan' : m.highlight === 'amber' ? 'accent-amber' : ''}"><span class="skeleton-shimmer" aria-label="Loading ${m.label}..."></span></span>
             </div>
           `).join('')}
         </div>
 
         <button type="button" class="card-action-btn" data-target="${vec.viewId}">
-          <span>Inspect Vector Drill-Down</span>
-          <span aria-hidden="true">→</span>
+          <span>Inspect Vector</span>
+          <span aria-hidden="true">&rarr;</span>
         </button>
       </div>
     </article>
@@ -90,7 +88,7 @@ export function renderVectorCards(onNavigate) {
     const target = card.getAttribute('data-vector').toLowerCase();
     const viewId = `vector-${target}`;
     
-    card.addEventListener('click', (e) => {
+    card.addEventListener('click', () => {
       onNavigate(viewId);
     });
 
@@ -115,10 +113,13 @@ export function updateVectorCardsData(container, summaries) {
     const metricsGrid = card.querySelector('.card-metrics-grid');
     if (!metricsGrid) return;
 
-    const recallStr = s.current_defense_recall !== undefined ? `${(s.current_defense_recall * 100).toFixed(1)}%` : '100.0%';
-    const aucStr = s.current_defense_auc !== undefined ? s.current_defense_auc.toFixed(3) : '0.934';
-    const evasStr = s.latest_loop_evasion_rate !== undefined ? `${(s.latest_loop_evasion_rate * 100).toFixed(0)}%` : '83%';
-    const totalStr = s.total_batch_samples !== undefined ? s.total_batch_samples.toLocaleString() : '500';
+    const recallStr = (s.current_defense_recall !== undefined && s.current_defense_recall !== null)
+      ? `${(s.current_defense_recall * 100).toFixed(1)}%`
+      : '<span class="skeleton-shimmer" aria-label="Loading Recall..."></span>';
+
+    const totalStr = (s.total_batch_samples !== undefined && s.total_batch_samples !== null)
+      ? s.total_batch_samples.toLocaleString()
+      : '<span class="skeleton-shimmer" aria-label="Loading Samples..."></span>';
 
     if (s.vector_id === 'A') {
       metricsGrid.innerHTML = `
@@ -127,44 +128,45 @@ export function updateVectorCardsData(container, summaries) {
           <span class="metric-number mono-data accent-cyan">${recallStr}</span>
         </div>
         <div class="card-metric-col">
-          <span class="metric-label">Max Evasion</span>
-          <span class="metric-number mono-data accent-amber">${evasStr}</span>
-        </div>
-        <div class="card-metric-col">
-          <span class="metric-label">Profiles</span>
+          <span class="metric-label">Samples Evaluated</span>
           <span class="metric-number mono-data">${totalStr}</span>
         </div>
       `;
     } else if (s.vector_id === 'B') {
+      const realAucStr = (s.current_defense_auc !== undefined && s.current_defense_auc !== null)
+        ? s.current_defense_auc.toFixed(4)
+        : '<span class="skeleton-shimmer" aria-label="Loading AUC..."></span>';
+
+      const fidelityStr = (s.macro_fidelity !== undefined && s.macro_fidelity !== null)
+        ? (typeof s.macro_fidelity === 'number' ? s.macro_fidelity.toFixed(4) : String(s.macro_fidelity))
+        : '<span class="skeleton-shimmer" aria-label="Loading Fidelity..."></span>';
+
       metricsGrid.innerHTML = `
         <div class="card-metric-col">
-          <span class="metric-label">Defense AUC</span>
-          <span class="metric-number mono-data accent-cyan">${aucStr}</span>
+          <span class="metric-label">Real IEEE-CIS AUC</span>
+          <span class="metric-number mono-data accent-cyan">${realAucStr}</span>
         </div>
         <div class="card-metric-col">
-          <span class="metric-label">Max Evasion</span>
-          <span class="metric-number mono-data accent-amber">${evasStr}</span>
-        </div>
-        <div class="card-metric-col">
-          <span class="metric-label">Evaluated</span>
-          <span class="metric-number mono-data">24,000+</span>
+          <span class="metric-label">Macro Fidelity</span>
+          <span class="metric-number mono-data accent-amber">${fidelityStr}</span>
         </div>
       `;
     } else if (s.vector_id === 'C') {
+      const lossStr = (s.loss_prevented !== undefined && s.loss_prevented !== null)
+        ? s.loss_prevented
+        : '<span class="skeleton-shimmer" aria-label="Loading Loss Prevented..."></span>';
+
       metricsGrid.innerHTML = `
         <div class="card-metric-col">
-          <span class="metric-label">Defense Recall</span>
+          <span class="metric-label">Operational Recall</span>
           <span class="metric-number mono-data accent-cyan">${recallStr}</span>
         </div>
         <div class="card-metric-col">
-          <span class="metric-label">Max Evasion</span>
-          <span class="metric-number mono-data accent-amber">${evasStr}</span>
-        </div>
-        <div class="card-metric-col">
           <span class="metric-label">Loss Prevented</span>
-          <span class="metric-number mono-data">$0.00</span>
+          <span class="metric-number mono-data">${lossStr}</span>
         </div>
       `;
     }
   });
 }
+
