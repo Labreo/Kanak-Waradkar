@@ -4,7 +4,7 @@
 **Document Version:** `1.0.0`  
 **Date:** `2026-08-17`  
 **Author:** Kanak Sanjay Waradkar (Solo Submission)
-**Repository:** [https://github.com/Labreo/TRIAD](https://github.com/Labreo/TRIAD)  
+**Repository:** [https://github.com/Labreo/Kanak-Waradkar](https://github.com/Labreo/Kanak-Waradkar)  
 **Live Prototype & Permanent Cloud Endpoint:** [https://triad-crgd.onrender.com](https://triad-crgd.onrender.com)  
 
 ---

@@ -23,7 +23,7 @@ DEFAULT_INTERVAL_SECONDS = 600  # 10 minutes
 def ping_endpoint(url: str) -> bool:
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "Project-TRIAD-KeepAlive/1.0 (+https://github.com/Labreo/TRIAD)"}
+        headers={"User-Agent": "Project-TRIAD-KeepAlive/1.0 (+https://github.com/Labreo/Kanak-Waradkar)"}
     )
     start_time = time.perf_counter()
     try:

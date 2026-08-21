@@ -154,8 +154,8 @@ Follow these exact steps from a clean clone to run the complete TRIAD stack loca
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Labreo/TRIAD.git
-cd TRIAD
+git clone https://github.com/Labreo/Kanak-Waradkar.git
+cd Kanak-Waradkar
 
 # 2. Create and activate a Python virtual environment
 python3 -m venv .venv
